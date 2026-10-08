@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+  <meta name="theme-color" content="#101115">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="星闻 BREAK">
+  <meta name="description" content="星闻 SIGNAL//BREAK：一屏了解重要新闻，切换观点、查看证据，掌控自己的情报节奏。">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./assets/icon-180.png">
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <style>@charset "utf-8";
+:root{color-scheme:dark;--acid:#dcff42;--black:#0d0f14;--ivory:#f4f1e9;--muted:#9b9ea5;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC",system-ui,sans-serif;background:#0d0f14;color:#fff}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer;font:inherit;border:0}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #4685ff;outline-offset:2px}button:disabled{opacity:.48;cursor:not-allowed}[hidden]{display:none!important}
+.app{height:100vh;height:100dvh;width:100%;overflow:hidden;isolation:isolate;position:relative;background:var(--black);display:grid;grid-template-rows:calc(62px + var(--safe-top)) 58px 26px minmax(0,1fr) calc(48px + var(--safe-bottom));--accent:#dcff42}
+.app[data-tone=cyan]{--accent:#78dcff}.app[data-tone=pink]{--accent:#ff83b5}.app[data-tone=purple]{--accent:#c2a1ff}.app[data-tone=amber]{--accent:#ffc975}
+.topbar{grid-row:1;padding:var(--safe-top) 22px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #ffffff15;background:#111217;z-index:2}.identity{display:flex;align-items:center;gap:9px;min-width:0}.brand-star{color:var(--accent);font-size:33px;line-height:1;transform:rotate(-11deg);font-weight:900;filter:drop-shadow(3px 3px 0 #fff5)}.identity-word strong{font-size:23px;font-weight:1000;display:block;letter-spacing:-1.2px;white-space:nowrap}.identity-word strong span{color:var(--accent)}.identity-word small{display:block;color:#92959d;font-size:8px;letter-spacing:1.2px;margin-top:2px;font-weight:800}.top-actions{display:flex;gap:14px;align-items:center}.snapshot-tag{white-space:nowrap;font:850 11px ui-monospace,monospace;color:#acaeb4;letter-spacing:.3px}.snapshot-tag i{width:7px;height:7px;background:var(--accent);display:inline-block;border-radius:50%;vertical-align:middle;margin-right:6px}.snapshot-tag b{color:#fff}.settings-btn{background:#30323a;color:#fff;width:38px;height:36px;font-size:22px;line-height:1;transition:background .2s}.settings-btn:hover{background:var(--accent);color:#111}
+.edition-tabs{grid-row:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:5px 16px;background:#16171c}.edition-tabs button{display:flex;align-items:center;justify-content:space-between;gap:6px;position:relative;min-width:0;text-align:left;background:#282a32;color:#e1dfe2;clip-path:polygon(0 0,100% 0,96% 100%,0 100%);padding:10px 12px;transition:background .18s,transform .18s}.edition-tabs button:hover{transform:translateY(-2px)}.edition-tabs button.active{background:var(--accent);color:#111}.edition-tabs button span{font:900 9px ui-monospace,monospace;letter-spacing:.15px;color:#a1a3ab}.edition-tabs button.active span{color:#292929}.edition-tabs button b{font-size:15px;font-weight:950;white-space:nowrap}.edition-tabs button.edition-breaking:not(.active) b{color:#ff807f}
+.signal-ribbon{grid-row:3;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 20px;background:#222329;border-top:1px solid #ffffff12;border-bottom:1px solid #ffffff15;font:900 9px ui-monospace,monospace;letter-spacing:.7px;color:#a7aab0}.ribbon-label{color:var(--accent);white-space:nowrap}.ribbon-center{opacity:.65}.ribbon-right{white-space:nowrap;font-size:9px}
+.console{min-height:0;min-width:0;display:grid;grid-template-columns:minmax(182px,215px) minmax(310px,1fr) minmax(335px,365px);overflow:hidden;position:relative}
+.queue{background:#f3f0e7;color:#111;display:flex;flex-direction:column;border-right:5px solid #101115;min-height:0;z-index:2}.queue-head{flex-shrink:0;display:flex;align-items:end;justify-content:space-between;gap:5px;padding:20px 12px 16px;border-bottom:4px solid #111}.queue-head strong{font-weight:1000;font-size:23px;letter-spacing:-.7px;line-height:.96}.queue-head strong span{color:#f04a40}.queue-head>span{font:900 9px ui-monospace,monospace;white-space:nowrap}.queue-list{min-height:0;flex:1;display:flex;flex-direction:column;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#666 transparent}.queue-card{background:transparent;color:#18191b;flex:1;min-height:68px;max-height:115px;width:100%;padding:12px 10px;display:flex;align-items:start;gap:8px;text-align:left;border-bottom:1px solid #d2cec4;position:relative;transition:background .2s}.queue-card:hover{background:#e6e1d7}.queue-card.active{background:var(--accent);clip-path:polygon(0 0,100% 0,96% 100%,0 100%);border-color:transparent}.queue-number{font:italic 1000 16px Impact,"Arial Black",sans-serif;color:#a5a198;min-width:22px}.queue-card.active .queue-number{color:#111}.queue-description{min-width:0;display:flex;flex-direction:column;gap:6px}.queue-description small{font:850 8px ui-monospace,monospace;letter-spacing:.35px;color:#777}.queue-card.active small{color:#303030}.queue-description strong{font-size:12px;font-weight:900;line-height:1.4;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}.queue-footer{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding:12px;font:850 9px ui-monospace,monospace;color:#6b6963;flex-shrink:0}.queue-footer span:last-child{font-size:21px;color:#101115}
+.hero{min-height:0;min-width:0;background:#101115;position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;padding:24px 26px 0;color:#fff}.hero-cross-grid{position:absolute;inset:0;z-index:-2;opacity:.28;background-image:linear-gradient(135deg,#ffffff28 1px,transparent 1px);background-size:15px 15px;mask-image:linear-gradient(90deg,transparent,#000)}.hero-shape{position:absolute;right:-70px;top:8%;width:390px;height:390px;transform:rotate(20deg);background:var(--accent);clip-path:polygon(19% 2%,81% 1%,100% 26%,80% 59%,100% 84%,39% 100%,0 70%,17% 36%);box-shadow:0 0 0 8px #111;z-index:-1}.hero-arc{position:absolute;right:-30px;top:15%;width:320px;height:320px;background:repeating-conic-gradient(from 0deg,#1116 0 5deg,transparent 5deg 19deg);border-radius:50%;z-index:-1;opacity:.66}.hero-ray{position:absolute;right:1%;top:7%;width:250px;height:8px;background:#fff;transform:rotate(-25deg);box-shadow:0 23px 0 -2px #fff,0 50px 0 -3px #111;opacity:.7;z-index:-1}.hero-index-outline{position:absolute;right:-26px;top:3%;font:italic 1000 250px Impact,"Arial Black",system-ui,sans-serif;letter-spacing:-13px;-webkit-text-stroke:3px #1119;color:transparent;transform:rotate(-14deg);pointer-events:none}.hero-sticker{position:absolute;right:12%;top:23%;transform:rotate(14deg);background:#fffef6;color:#111;width:145px;height:151px;border:4px solid #111;box-shadow:9px 9px 0 #111;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:0}.hero-sticker div,.hero-sticker small{font:900 9px ui-monospace,monospace;letter-spacing:1px}.hero-sticker strong{font:1000 65px Impact,"Arial Black",system-ui,sans-serif;letter-spacing:-4px;line-height:1.42}.hero-spark{position:absolute;font-size:38px;font-weight:900;pointer-events:none}.spark-a{right:36%;top:16%}.spark-b{right:8%;top:55%;color:#111}.hero-top{display:flex;justify-content:space-between;gap:10px;position:relative;z-index:2;font:900 10px ui-monospace,monospace;letter-spacing:.3px;white-space:nowrap}.hero-top span:first-child{border-bottom:3px solid var(--accent);padding-bottom:9px}.verified-mark{font-size:9px;color:#f1f0e9}.hero-copy{position:relative;z-index:2;margin-top:auto;padding-top:15px;max-width:460px}.hero-label{display:flex;align-items:center;gap:9px;color:var(--accent);font-weight:900;font-size:12px;margin-bottom:12px}.hero-label i{width:9px;height:9px;background:var(--accent);transform:rotate(45deg)}.hero h1{margin:0;font-size:clamp(33px,4.1vw,62px);line-height:1.18;letter-spacing:-2.5px;font-weight:1000;display:flex;flex-direction:column;align-items:start;filter:drop-shadow(3px 3px 0 #111)}.hero h1 span{display:block;white-space:nowrap}.hero h1 .hero-impact{background:var(--accent);color:#111;clip-path:polygon(0 9%,100% 0,97% 100%,2% 97%);transform:rotate(-2deg) translateX(-6px);padding:5px 13px 10px 7px;margin-top:1px;text-shadow:none}.hero-copy p{font-size:13px;line-height:1.55;color:#edeef1;margin:17px 0 16px;max-width:295px;border-left:4px solid var(--accent);padding-left:10px;text-shadow:0 1px 10px #111;background:#101115bb}.hero-bottom{position:relative;z-index:2;border-top:1px solid #ffffff66;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0 16px}.hero-publication{font:850 10px ui-monospace,monospace;color:#e2e3e9}.hero-controls{display:flex;gap:6px}.hero-controls button{height:37px;min-width:43px;color:#111;background:#f6f3e9;font-size:21px;font-weight:950}.hero-controls button:hover{transform:translateY(-2px)}.hero-controls .hero-next{background:var(--accent)}.hero-controls .hero-save{font-size:24px;background:#33343a;color:var(--accent)}.hero-wipe{position:absolute;inset:-6px;background:var(--accent);pointer-events:none;z-index:10;transform:translateX(-125%) skewX(-15deg);border-right:24px solid #fff}
+.decode{background:#f4f1e9;color:#101115;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;border-left:5px solid #101115;padding:20px 18px 19px}.decode-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:4px solid #131418;padding-bottom:15px}.decode-head div{display:flex;align-items:center;gap:8px}.decode-head b{font-size:17px;font-weight:1000;letter-spacing:-.5px}.decode-rune{color:#f24944;font-size:23px}.decode-head>span{font:800 10px ui-monospace,monospace;white-space:nowrap}.lens-tabs{display:flex;gap:4px;flex-shrink:0;margin:17px 0 0}.lens-tabs button{background:#e0dbd1;color:#585650;padding:12px 7px;flex:1;min-width:0;font-size:12px;font-weight:900;white-space:nowrap;clip-path:polygon(0 0,100% 0,95% 100%,0 100%);transition:transform .17s,background .17s}.lens-tabs button span{font:900 9px ui-monospace,monospace}.lens-tabs button.active{background:var(--accent);color:#111;transform:translateY(-2px)}.decode-article{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#c3bdb2 transparent;border-left:5px solid var(--accent);padding:3px 8px 0 15px;margin:21px 0 14px}.decode-eyebrow{font:900 9px ui-monospace,monospace;color:#89847d;letter-spacing:.6px;margin-bottom:10px}.decode-article h2{font-size:clamp(17px,1.45vw,23px);font-weight:1000;line-height:1.45;letter-spacing:-.3px;margin:0 0 11px}.decode-article p{font-size:13px;line-height:1.75;margin:0;color:#55514a}.decode-meta{border-top:1px solid #d0cbc2;padding:10px 2px;display:flex;justify-content:space-between;gap:8px;color:#5e5b56;font:850 9px ui-monospace,monospace;letter-spacing:.3px;flex-shrink:0}.snapshot-label{color:#a35c37;white-space:nowrap}.decode-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex-shrink:0}.decode-actions>a,.decode-actions button{background:#111318;color:#fff;min-width:0;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:5px;text-decoration:none;padding:10px 12px;font-size:12px;font-weight:900}.decode-actions button{background:var(--accent);color:#111}.decode-actions>a:hover,.decode-actions button:hover{filter:brightness(.86)}.decode-actions a[aria-disabled=true]{opacity:.5;pointer-events:none}
+.empty-edition{grid-column:1/-1;position:absolute;inset:0;overflow:hidden;background:#14151b;display:flex;flex-direction:column;align-items:start;justify-content:center;padding:clamp(24px,7vw,70px);isolation:isolate;z-index:4}.empty-edition:before{content:"";position:absolute;width:65%;height:100%;right:-14%;top:-18%;background:var(--accent);clip-path:polygon(45% 0,100% 0,89% 100%,0 100%);opacity:.6;z-index:-1}.empty-art{position:absolute;right:4%;top:0;font:1000 clamp(150px,32vw,400px) Impact,"Arial Black",system-ui,sans-serif;font-style:italic;color:transparent;-webkit-text-stroke:3px #14141477;line-height:1}.empty-eyebrow{font:900 11px ui-monospace,monospace;letter-spacing:1px;color:var(--accent)}.empty-edition h2{font-size:clamp(34px,7vw,65px);line-height:1.24;font-weight:1000;letter-spacing:-1.8px;margin:17px 0}.empty-edition p{max-width:390px;color:#e1e0db;font-size:14px;line-height:1.8;margin:0 0 22px}.empty-edition>button{background:var(--accent);color:#111;font-weight:1000;padding:15px 19px;clip-path:polygon(0 0,100% 0,95% 100%,0 100%)}.empty-footnote{margin-top:20px;font-size:11px;color:#b6b1aa}
+.mobile-story-strip{display:none;min-width:0;overflow-x:auto;scrollbar-width:none;background:#eeeae0;border-top:4px solid #111;align-items:stretch;gap:4px;padding:4px}.mobile-story-strip::-webkit-scrollbar{display:none}.mobile-story-strip button{min-width:104px;max-width:180px;flex:1 0 auto;display:flex;flex-direction:column;align-items:start;justify-content:center;text-align:left;gap:3px;color:#151515;background:#dad6cc;padding:7px 9px;clip-path:polygon(0 0,100% 0,95% 100%,0 100%)}.mobile-story-strip button.active{background:var(--accent)}.mobile-story-strip button small{font:900 9px ui-monospace,monospace;color:#64615e}.mobile-story-strip button.active small{color:#222}.mobile-story-strip button strong{font-size:11px;font-weight:950;white-space:nowrap}
+.bottom-bar{grid-row:5;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#191b21;padding:0 18px var(--safe-bottom);border-top:1px solid #ffffff1c;font:850 10px ui-monospace,monospace;color:#a4a6af;letter-spacing:.4px}.bottom-title{white-space:nowrap}.bottom-title span{font-size:17px;color:var(--accent);vertical-align:middle}.bottom-center{font-size:10px}.bottom-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block}.bottom-bar button{color:#fff;background:#33353d;padding:8px 12px;font:900 12px -apple-system,system-ui,sans-serif;white-space:nowrap}.bottom-bar button span{font-size:16px;color:var(--accent);vertical-align:middle}.bottom-bar button.active{background:var(--accent);color:#111}.bottom-bar button.active span{color:#111}
+.overlay{position:fixed;inset:0;z-index:45;background:#0007;display:grid;place-items:center;padding:0;overflow:hidden;isolation:isolate}.backdrop{position:absolute;inset:0;z-index:0}.reader{z-index:1;position:relative;max-width:850px;width:100%;height:100%;height:100dvh;display:flex;flex-direction:column;background:#f3f0e8;color:#101116;overflow:hidden;box-shadow:0 0 80px #0008;animation:reader-in .5s cubic-bezier(.18,.85,.3,1) both}.reader-top{padding:calc(13px + var(--safe-top)) 18px 13px;display:flex;align-items:center;justify-content:space-between;gap:8px;background:#101116;color:#fff;flex-shrink:0}.reader-top>span{font:900 11px ui-monospace,monospace;letter-spacing:.6px}.reader-top button{background:#34343a;color:#fff;padding:9px 13px;min-height:35px;font-size:12px;font-weight:950;white-space:nowrap}.reader-top button:first-child{background:var(--accent);color:#111}.reader-top button:last-child{font-size:22px;color:var(--accent)}.reader-cover{background:var(--accent);position:relative;flex-shrink:0;min-height:170px;padding:20px 21px;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between}.reader-cover:before{content:"";position:absolute;right:-90px;top:-130px;width:350px;height:350px;background:repeating-conic-gradient(from 5deg,#1114 0deg 4deg,transparent 4deg 20deg);border-radius:50%;z-index:-1}.reader-cover-code{font:900 11px ui-monospace,monospace;letter-spacing:1.2px}.reader-cover-art{position:absolute;right:-14px;bottom:-30px;font:1000 215px Impact,"Arial Black",sans-serif;color:transparent;-webkit-text-stroke:3px #1115;line-height:1;z-index:-1;letter-spacing:-12px}.reader-cover h2{font-size:clamp(28px,6.5vw,40px);font-weight:1000;line-height:1.24;letter-spacing:-.9px;margin:12px 0;max-width:620px}.reader-cover-time{font:900 10px ui-monospace,monospace}.reader-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:18px 21px calc(24px + var(--safe-bottom))}.reader-lenses{display:flex;gap:4px;position:sticky;top:-18px;z-index:3;background:#f3f0e8;padding:0 0 10px}.reader-lenses button{flex:1;min-width:0;background:#dedad2;padding:11px 4px;clip-path:polygon(0 0,100% 0,96% 100%,0 100%);font-size:12px;font-weight:950}.reader-lenses button.active{background:var(--accent)}.reader-copy{border-left:6px solid var(--accent);padding:4px 0 4px 18px;margin:19px 0 25px}.reader-copy>span{font:900 10px ui-monospace,monospace;letter-spacing:.7px;color:#8b8178}.reader-copy h3{font-size:clamp(21px,4vw,29px);line-height:1.4;font-weight:1000;letter-spacing:-.6px;margin:12px 0}.reader-copy p{font-size:14px;line-height:1.9;color:#4e4b46;margin:0 0 12px}.sources{border-top:3px solid #111;padding-top:13px}.sources-heading{font:1000 11px ui-monospace,monospace;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.sources-heading span{color:#777;font-size:10px}.source-link{border:1px solid #ccc6bc;background:#e9e4db;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;font-size:13px;font-weight:900;min-height:47px;margin-top:7px}.source-link>span:last-child{font-size:21px}.source-link:hover{background:var(--accent)}.reader-footer-actions{display:flex;gap:8px;margin:18px 0}.reader-footer-actions button{flex:1;padding:13px 10px;background:#161719;color:#fff;font-size:13px;font-weight:950}.reader-footer-actions button:last-child{background:var(--accent);color:#111}.source-disclaimer{font-size:11px;line-height:1.7;color:#86827b;margin-top:20px}
+.settings-panel{position:relative;z-index:1;max-width:450px;width:calc(100% - 26px);max-height:calc(100dvh - var(--safe-top) - var(--safe-bottom) - 26px);overflow-y:auto;background:#f4f0e7;color:#111;padding:22px 22px 25px;box-shadow:9px 9px 0 var(--accent);animation:reader-in .35s ease-out both}.settings-heading{display:flex;align-items:start;justify-content:space-between;gap:10px;border-bottom:4px solid #111;padding-bottom:14px}.settings-heading span{font:900 9px ui-monospace,monospace;color:#ba4535}.settings-heading h2{font-size:28px;margin:8px 0 0;font-weight:1000}.settings-heading button{font-size:19px;width:36px;height:36px;background:#111;color:#fff}.settings-row{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:17px 0;border-bottom:1px solid #ccc7bc;cursor:pointer}.settings-row strong{font-size:15px;font-weight:1000;display:block}.settings-row small{font-size:11px;display:block;color:#73706a;margin-top:5px}.settings-row input{accent-color:#111;width:20px;height:20px;flex-shrink:0}.settings-explain{background:#e6e0d6;padding:14px;margin-top:18px}.settings-explain b{font-size:12px}.settings-explain p{font-size:11px;line-height:1.8;margin:5px 0 0;color:#58544e}.settings-done{width:100%;padding:13px;margin-top:20px;background:var(--accent);font-weight:1000;color:#111}
+.toast{position:absolute;top:calc(125px + var(--safe-top));right:12px;z-index:75;background:#17181b;color:#fff;padding:12px 16px;font-size:12px;font-weight:900;box-shadow:5px 5px 0 #0006;border-left:6px solid var(--accent);transform:translateX(140%);opacity:0;pointer-events:none;transition:transform .25s,opacity .2s}.toast.show{transform:translateX(0);opacity:1}.switch-fx{position:absolute;top:calc(62px + var(--safe-top) + 58px);bottom:calc(48px + var(--safe-bottom));left:-50px;right:-50px;background:var(--accent);z-index:35;pointer-events:none;transform:translateX(-130%) skewX(-18deg);border-right:24px solid #111;display:flex;align-items:center;justify-content:center}.switch-fx strong{font:italic 1000 clamp(50px,12vw,100px) Impact,"Arial Black",system-ui,sans-serif;transform:skewX(18deg) rotate(-8deg);-webkit-text-stroke:1px #fff;color:#111;letter-spacing:-3px}
+.app.switching .switch-fx{animation:fx-wipe .67s cubic-bezier(.23,.8,.22,1) both}.app.switching .hero h1 span{animation:fx-slam .55s cubic-bezier(.18,.9,.25,1) both}.app.switching .hero h1 span:nth-child(2){animation-delay:.1s}.app.switching .hero h1 span:nth-child(3){animation-delay:.17s}.app.switching .hero-sticker{animation:fx-sticker .7s .16s cubic-bezier(.14,1.2,.3,1) both}.app.switching .hero-arc{animation:fx-burst .9s cubic-bezier(.15,.8,.3,1) both}.app.switching .decode-article{animation:fx-copy .4s .17s ease-out both}
+@keyframes fx-wipe{0%{transform:translateX(-130%) skewX(-18deg)}49%{transform:translateX(0) skewX(-18deg)}100%{transform:translateX(140%) skewX(-18deg)}}@keyframes fx-slam{0%{opacity:0;transform:translateX(-100px) skewX(-18deg)}65%{opacity:1;transform:translateX(9px) skewX(4deg)}100%{opacity:1;transform:translateX(0) skewX(0)}}@keyframes fx-sticker{0%{opacity:0;transform:translateX(190px) rotate(70deg) scale(.6)}68%{opacity:1;transform:translateX(-10px) rotate(4deg) scale(1.1)}100%{opacity:1;transform:rotate(14deg) scale(1)}}@keyframes fx-burst{0%{transform:rotate(-30deg) scale(.2)}75%{transform:rotate(21deg) scale(1.3)}100%{transform:rotate(13deg) scale(1)}}@keyframes fx-copy{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}@keyframes reader-in{from{opacity:.6;clip-path:polygon(100% 0,100% 0,100% 100%,100% 100%)}to{opacity:1;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}}
+.app[data-motion=off] *, .app[data-motion=off] *::before,.app[data-motion=off] *::after{animation:none!important;transition:none!important}.app[data-large-text=true] .decode-article p{font-size:15px}.app[data-large-text=true] .reader-copy p{font-size:17px}
+@media(max-width:1110px){.console{grid-template-columns:minmax(155px,180px) minmax(0,1fr) minmax(295px,330px)}.hero{padding-left:19px;padding-right:19px}.hero-shape{right:-145px}.hero-sticker{right:4%;width:110px;height:115px}.hero-sticker strong{font-size:49px}.queue-card{padding:10px 6px;gap:5px}.queue-head{padding:18px 9px 12px}.queue-head strong{font-size:20px}.decode{padding:16px 12px}.decode-head b{font-size:15px}.hero h1{font-size:clamp(35px,4.3vw,48px)}}
+@media(max-width:850px){.app{grid-template-rows:calc(57px + var(--safe-top)) 52px 23px minmax(0,1fr) 54px calc(46px + var(--safe-bottom))}.console{grid-template-columns:minmax(0,1.1fr) minmax(285px,1fr)}.queue{display:none}.mobile-story-strip{display:flex;grid-row:5}.bottom-bar{grid-row:6}.hero h1{font-size:clamp(34px,5.1vw,49px)}.hero-shape{right:-100px}.hero-sticker{right:6%}.decode{padding:15px 12px}.decode-head b{font-size:14px}.decode-head{padding-bottom:10px}.lens-tabs{margin-top:10px}.decode-article{margin:12px 0}.switch-fx{top:calc(57px + var(--safe-top) + 52px);bottom:calc(100px + var(--safe-bottom))}}
+@media(max-width:620px){.app{grid-template-rows:calc(52px + var(--safe-top)) 49px 22px minmax(0,1fr) 52px calc(43px + var(--safe-bottom))}.topbar{padding-left:12px;padding-right:12px}.brand-star{font-size:27px}.identity{gap:6px}.identity-word strong{font-size:17px;letter-spacing:-.7px}.identity-word small{font-size:6px;letter-spacing:.7px}.top-actions{gap:8px}.snapshot-tag{font-size:9px}.snapshot-tag i{width:6px;height:6px;margin-right:3px}.settings-btn{width:30px;height:29px;font-size:19px}.edition-tabs{gap:3px;padding:4px 6px}.edition-tabs button{display:flex;flex-direction:column;align-items:start;justify-content:center;gap:4px;padding:5px 7px}.edition-tabs button span{font-size:8px;letter-spacing:-.4px}.edition-tabs button b{font-size:13px}.signal-ribbon{padding:0 10px;font-size:8px;letter-spacing:.3px}.ribbon-center{display:none}.ribbon-right{font-size:8px}.console{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(206px,1.07fr) minmax(196px,.93fr)}.hero{padding:12px 17px 0}.hero-top{font-size:8px}.hero-top span:first-child{padding-bottom:5px;border-bottom-width:2px}.verified-mark{font-size:8px}.hero-shape{width:210px;height:210px;right:-55px;top:9%}.hero-arc{width:170px;height:170px;right:-10px;top:6%}.hero-index-outline{font-size:140px;right:-17px;top:0}.hero-ray{width:120px;right:2%;top:9%}.hero-sticker{width:85px;height:92px;border-width:3px;right:9%;top:20%;box-shadow:5px 5px 0 #111}.hero-sticker div,.hero-sticker small{font-size:6px;letter-spacing:0}.hero-sticker strong{font-size:39px;letter-spacing:-1px}.hero-spark{font-size:21px}.spark-a{right:39%;top:21%}.spark-b{right:7%;top:48%}.hero-label{font-size:10px;margin-bottom:6px;gap:7px}.hero-label i{width:7px;height:7px}.hero h1{font-size:clamp(30px,9vw,42px);line-height:1.12;letter-spacing:-1.3px}.hero h1 .hero-impact{padding:3px 11px 6px 7px}.hero-copy{margin-top:auto;padding-top:12px}.hero-copy p{font-size:11px;line-height:1.45;margin:8px 0 10px;max-width:260px}.hero-bottom{padding:7px 0 8px}.hero-publication{font-size:9px}.hero-controls{gap:5px}.hero-controls button{height:30px;min-width:34px;font-size:17px}.hero-controls .hero-save{font-size:20px}.decode{border-left:0;border-top:4px solid #101115;padding:10px 13px 10px}.decode-head{padding-bottom:7px;border-bottom-width:3px}.decode-head b{font-size:14px}.decode-head>span{font-size:9px}.decode-rune{font-size:18px}.lens-tabs{margin-top:8px;gap:3px}.lens-tabs button{padding:9px 4px;font-size:11px}.lens-tabs button span{font-size:8px}.decode-article{margin:10px 0 7px;padding:1px 2px 1px 12px;border-left-width:4px}.decode-eyebrow{font-size:8px;margin-bottom:5px}.decode-article h2{font-size:16px;margin-bottom:4px;line-height:1.35}.decode-article p{font-size:11px;line-height:1.55}.decode-meta{padding:6px 0;font-size:8px}.decode-actions{gap:5px}.decode-actions>a,.decode-actions button{min-height:33px;padding:8px 10px;font-size:11px}.mobile-story-strip{padding:3px;gap:3px}.mobile-story-strip button{padding:5px 8px;min-width:94px}.mobile-story-strip button small{font-size:8px}.mobile-story-strip button strong{font-size:10px}.bottom-bar{padding-left:12px;padding-right:12px}.bottom-title{font-size:8px}.bottom-center{font-size:9px}.bottom-bar button{padding:7px 9px;font-size:10px}.switch-fx{top:calc(52px + var(--safe-top) + 49px);bottom:calc(95px + var(--safe-bottom))}.empty-edition{padding:20px}.empty-edition h2{font-size:34px}.empty-edition p{font-size:12px}.empty-art{font-size:220px;right:-15%;top:4%}}
+@media(max-width:620px) and (max-height:760px){.signal-ribbon{display:none}.app{grid-template-rows:calc(48px + var(--safe-top)) 45px minmax(0,1fr) 47px calc(40px + var(--safe-bottom))}.console{grid-row:3;grid-template-rows:minmax(175px,1.05fr) minmax(182px,.95fr)}.mobile-story-strip{grid-row:4}.bottom-bar{grid-row:5}.hero{padding:9px 15px 0}.hero-sticker{top:12%;width:68px;height:72px}.hero-sticker strong{font-size:30px}.hero h1{font-size:clamp(27px,8.3vw,34px)}.hero-copy p{margin:6px 0 7px}.decode{padding:7px 10px}.decode-head{padding-bottom:5px}.decode-article{margin:6px 0}.decode-actions>a,.decode-actions button{min-height:30px;padding:6px 8px}.lens-tabs button{padding:7px 2px}.switch-fx{top:calc(48px + var(--safe-top) + 45px);bottom:calc(87px + var(--safe-bottom))}}
+@media(max-width:350px){.identity-word strong{font-size:15px}.identity-word small{font-size:5px}.snapshot-tag{display:none}.hero h1{font-size:28px}.hero-sticker{right:4%;transform:rotate(12deg) scale(.82)}.hero-copy p{max-width:240px}.decode-head b{font-size:12px}.decode-actions>a,.decode-actions button{font-size:10px}.bottom-title{font-size:7px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+  <title>星闻 // BREAK · 单屏情报台</title>
+</head>
+<body>
+<div id="app" class="app" data-tone="lime" data-motion="on" data-edition="morning">
+  <header class="topbar">
+    <div class="identity"><span class="brand-star" aria-hidden="true">✳</span><div class="identity-word"><strong>星闻<span>//</span>BREAK</strong><small>YOUR WORLD. ONE SCREEN.</small></div></div>
+    <div class="top-actions"><span class="snapshot-tag"><i></i><b>10.08</b> THU</span><button type="button" class="settings-btn" data-action="settings" aria-label="设置显示和动效">☷</button></div>
+  </header>
+  <nav class="edition-tabs" aria-label="简报时段">
+    <button type="button" data-edition-choice="morning" class="active" aria-current="true"><span>01 / MORNING</span><b>晨报</b></button>
+    <button type="button" data-edition-choice="noon"><span>02 / MIDDAY</span><b>午报</b></button>
+    <button type="button" data-edition-choice="evening"><span>03 / EVENING</span><b>晚报</b></button>
+    <button type="button" data-edition-choice="breaking" class="edition-breaking"><span>!! / ALERT</span><b>突发</b></button>
+  </nav>
+  <div class="signal-ribbon"><span class="ribbon-label">◈ LIVE UI / STATIC NEWS</span><span class="ribbon-center">READ LESS NOISE ・ SEE MORE WORLD</span><span class="ribbon-right" id="snapshotStatus">2026.10.08 / 早间快照</span></div>
+
+  <div class="console" id="console">
+    <aside class="queue" aria-label="所有新闻，直接点击切换">
+      <div class="queue-head"><strong>CHOOSE<br>YOUR SIGNAL<span>.</span></strong><span id="queueCount">05 FILES</span></div>
+      <div class="queue-list" id="queueList"></div>
+      <div class="queue-footer"><span>◢ PRESS / SWIPE / DISCOVER</span><span>↗</span></div>
+    </aside>
+
+    <section class="hero" id="hero" aria-label="当前新闻">
+      <div class="hero-cross-grid" aria-hidden="true"></div>
+      <div class="hero-arc" aria-hidden="true"></div><div class="hero-ray" aria-hidden="true"></div>
+      <div class="hero-shape" aria-hidden="true"></div><div class="hero-index-outline" aria-hidden="true" id="heroBackNum">01</div>
+      <div class="hero-sticker" aria-hidden="true"><div>SELECTED FILE</div><strong id="heroSymbol">UI</strong><small id="heroSymbolSub">INTERACTIVE</small></div>
+      <span class="hero-spark spark-a" aria-hidden="true">✦</span><span class="hero-spark spark-b" aria-hidden="true">✳</span>
+      <div class="hero-top"><span id="heroChannel">01 / TECHNOLOGY</span><span class="verified-mark">● SOURCE LINKED</span></div>
+      <div class="hero-copy">
+        <div class="hero-label"><i></i><span id="heroPriority">重点推荐</span></div>
+        <h1 id="heroHeadline"><span>聊天不止</span><span>能回答。</span><span class="hero-impact">现在能互动。</span></h1>
+        <p id="heroDek">新闻，不只是往下滑动。</p>
+      </div>
+      <div class="hero-bottom"><span class="hero-publication" id="heroPublished">官方发布：10月7日</span><div class="hero-controls"><button type="button" data-action="prev" aria-label="上一条新闻">←</button><button type="button" class="hero-save" data-action="save" aria-label="收藏新闻" aria-pressed="false">☆</button><button type="button" class="hero-next" data-action="next" aria-label="下一条新闻">→</button></div></div>
+      <div class="hero-wipe" aria-hidden="true"></div>
+    </section>
+
+    <section class="decode" aria-label="新闻阅读与核验">
+      <div class="decode-head"><div><span class="decode-rune">✳</span><b>DECODE / 情报速读</b></div><span id="decodeProgress">FILE 01 / 05</span></div>
+      <div class="lens-tabs" role="tablist" aria-label="切换阅读视角">
+        <button type="button" role="tab" class="active" aria-selected="true" data-lens="brief"><span>01</span> 发生什么</button>
+        <button type="button" role="tab" aria-selected="false" data-lens="personal"><span>02</span> 与你有关</button>
+        <button type="button" role="tab" aria-selected="false" data-lens="verify"><span>03</span> 事实核验</button>
+      </div>
+      <div class="decode-article" id="decodeArticle" aria-live="polite"><div class="decode-eyebrow" id="readEyebrow">01 // WHAT HAPPENED</div><h2 id="readTitle">聊天窗口现在能展示交互内容。</h2><p id="readText">来自已经确认的官方消息。</p></div>
+      <div class="decode-meta"><span id="sourceName">OPENAI / OFFICIAL</span><span class="snapshot-label">● SNAPSHOT</span></div>
+      <div class="decode-actions"><a id="sourceQuick" href="#" target="_blank" rel="noopener noreferrer">↗ 查原始来源</a><button type="button" data-action="open-reader">展开档案 <span>⤢</span></button></div>
+    </section>
+
+    <section class="empty-edition" id="emptyEdition" hidden aria-live="polite"><div class="empty-art" id="emptyArt">02</div><span class="empty-eyebrow" id="emptyEyebrow">NO NEW DATA</span><h2 id="emptyHeading">午间快报<br>尚未同步。</h2><p id="emptyCopy">网页目前只有今早的静态新闻快照。ChatGPT 定时推送不会自动出现在这里。</p><button type="button" data-action="morning">← 返回今早的新闻</button><div class="empty-footnote">不制造虚假的更新，不把演示伪装成实时播报。</div></section>
+  </div>
+  <div class="mobile-story-strip" id="mobileStoryStrip" aria-label="快速选择新闻"></div>
+  <footer class="bottom-bar"><span class="bottom-title"><span>✳</span> STARNEWS / OVERDRIVE</span><div class="bottom-center"><span class="bottom-dot"></span> <span id="bottomEdition">早间情报 · 5 条</span></div><button type="button" data-action="saved-only" id="favoritesButton" aria-pressed="false"><span>☆</span> 收藏</button></footer>
+
+  <div class="overlay" id="readerOverlay" hidden><div class="backdrop" data-action="close-reader"></div><section class="reader" role="dialog" aria-modal="true" aria-labelledby="readerTitle"><header class="reader-top"><button type="button" data-action="close-reader" aria-label="返回情报台">← 返回</button><span>◈ INTELLIGENCE FILE</span><button type="button" data-action="save" id="readerSave" aria-label="收藏新闻">☆</button></header><div class="reader-cover"><span class="reader-cover-code" id="readerCode">FILE_01</span><span class="reader-cover-art" id="readerArt">01</span><h2 id="readerTitle">标题</h2><span class="reader-cover-time" id="readerDate">2026.10.08</span></div><div class="reader-scroll"><div class="reader-lenses"><button type="button" data-lens="brief" class="active">01 / 速览</button><button type="button" data-lens="personal">02 / 与你有关</button><button type="button" data-lens="verify">03 / 核查证据</button></div><div class="reader-copy" id="readerCopy"></div><div class="sources"><div class="sources-heading">SOURCE LOG <span>↗ 原文可追溯</span></div><div id="readerSources"></div></div><div class="reader-footer-actions"><button type="button" data-action="prev">← 上一条</button><button type="button" data-action="next">下一条 →</button></div><p class="source-disclaimer">2026 年 10 月 8 日上午的新闻快照。并非实时新闻、官方紧急警报或自动更新服务。</p></div></section></div>
+
+  <div class="overlay" id="settingsOverlay" hidden><div class="backdrop" data-action="close-settings"></div><section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><div class="settings-heading"><div><span>PERSONAL OPTIONS</span><h2 id="settingsTitle">阅读设置 ✳</h2></div><button type="button" data-action="close-settings" aria-label="关闭设置">✕</button></div><label class="settings-row"><span><strong>动态转场</strong><small>漫画扫屏与标题冲击</small></span><input type="checkbox" id="motionToggle" checked></label><label class="settings-row"><span><strong>防剧透模式</strong><small>不展示游戏剧情内容</small></span><input type="checkbox" id="spoilerToggle" checked></label><label class="settings-row"><span><strong>舒适阅读</strong><small>略微放大正文字号</small></span><input type="checkbox" id="largeTextToggle"></label><div class="settings-explain"><b>数据边界</b><p>本页是离线可用的新闻快照。收藏和显示设置只存储在当前浏览器；午报、晚报与紧急播报尚未接入网页自动更新。</p></div><button type="button" class="settings-done" data-action="close-settings">保存并返回 ✓</button></section></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="switch-fx" aria-hidden="true"><strong>SWITCH!</strong></div>
+</div>
+<script>window.__STARNEWS_SEED = {"edition":{"id":"2026-10-08-morning-v1","date":"2026-10-08","label":"2026 年 10 月 8 日 · 周四","session":"morning","reviewed":"2026-10-08 上午（日本时间）","title":"今早，有五件值得知道的事。","subtitle":"为你筛出真正有意义的变化；每条都保留来源与事实边界。","disclaimer":"这是基于 2026 年 10 月 8 日上午资料整理的静态快照，并非实时新闻或灾害预警。"},"items":[{"id":"openai-ui","category":"tech","categoryLabel":"AI 科技","channel":"01 / INTERACTIVE INTELLIGENCE","tone":"lime","art":"UI","headline":["聊天不止","能回答。","现在能互动。"],"title":"OpenAI 发布 GPT-6 与 Intelligent UI","dek":"昨日公布的新能力，让 ChatGPT 直接组合按钮、图形与可操作界面。","published":"官方发布：10 月 7 日","priority":"重点推荐","badge":"官方发布","reading":{"brief":{"eyebrow":"01 // WHAT HAPPENED","title":"聊天窗口开始变成可操作的界面。","paragraphs":["OpenAI 于 2026 年 10 月 7 日发布面向 ChatGPT 的 GPT-6 和 Intelligent UI。回答可以根据任务使用按钮、图表、交互式图形和小工具，而不只是一段文字。","官方表示这项能力正在面向 ChatGPT 的 Chat 体验推出；开放情况取决于用户使用的产品与配置。"]},"personal":{"eyebrow":"02 // WHY IT MATTERS","title":"这恰好能用来探索你想要的个人新闻。","paragraphs":["我们正在制作的「星闻」就是一种实验：把阅读新闻的动作变成切换证据、展开档案与追踪进展的交互。","但对话内临时界面、真正的独立网站和持续运行的新闻抓取服务是三套不同能力，不应混为一谈。"]},"verify":{"eyebrow":"03 // EVIDENCE & LIMITS","title":"已确认发布，实际边界仍需区分。","paragraphs":["已确认：OpenAI 官方文章明确介绍 GPT-6、Intelligent UI 和面向 ChatGPT 的发布计划。","仍需注意：新闻自动更新、跨设备同步与网页原生全屏不由 Intelligent UI 自动提供。你正在浏览的星闻网页是另外构建的 PWA 原型。"]}},"sources":[{"name":"OpenAI · 官方发布","url":"https://openai.com/index/gpt-6-for-everyone/"}]},{"id":"microsoft-pc","category":"tech","categoryLabel":"AI 科技","channel":"02 / LOCAL COMPUTING","tone":"cyan","art":"PC","headline":["本地 AI，","迎来新的","硬件玩家。"],"title":"微软宣布 Surface Laptop Ultra 与混合 AI 方向","dek":"NVIDIA RTX Spark、最高 128GB 统一内存，以及面向 AI 智能体的执行隔离。","published":"官方发布：10 月 7 日","priority":"你的科技关注","badge":"官方发布","reading":{"brief":{"eyebrow":"01 // WHAT HAPPENED","title":"微软想把更大的 AI 工作负载留在电脑上。","paragraphs":["微软于 10 月 7 日开放 Surface Laptop Ultra 预订，设备基于 NVIDIA RTX Spark，公布了最高 128GB 统一内存以及可在本地运行大型 AI 模型的能力。","Windows 同时公布 Hybrid Intelligence 方向，强调本地与云端按工作负载配合；Microsoft Execution Containers 已被官方宣布可用。"]},"personal":{"eyebrow":"02 // WHY IT MATTERS","title":"它值得放进你的 Mac / 本地 AI 对比清单。","paragraphs":["你关注本地模型、Mac 和桌面自动化软件。更值得观察的是：本地推理性能、模型与显存容量、智能体如何限制文件与网络权限，而非发布会单独展示的峰值算力。","目前没有必要因为一场发布会就重新选择开发平台。"]},"verify":{"eyebrow":"03 // EVIDENCE & LIMITS","title":"配置有官方依据，性能仍需独立实测。","paragraphs":["Surface 规格、预订日期与 MXC 的公开状态由微软官方文章说明。","官方跨平台性能比较在特定条件下测试，不代表每个模型、每种配置都更快。价格、上市范围和售后政策应以所在地区的官方商店为准。"]}},"sources":[{"name":"微软 · Surface 官方博客","url":"https://blogs.windows.com/devices/2026/10/07/pre-order-our-most-powerful-surface-devices-ever/"},{"name":"微软 · Windows 混合 AI","url":"https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/"}]},{"id":"wuthering-event","category":"game","categoryLabel":"游戏动漫","channel":"03 / GAME EVENT","tone":"pink","art":"37","headline":["《鸣潮》","今日迎来","限时活动。"],"title":"《鸣潮》「天工寻物」活动今日开始","dek":"官方资料列出 10 月 8 日至 26 日的活动档期，默认不展示剧情内容。","published":"10 月 8 日 04:00（服务器时间）","priority":"你喜欢的游戏","badge":"活动资讯","reading":{"brief":{"eyebrow":"01 // WHAT HAPPENED","title":"「天工寻物」限时战斗活动按公告开始。","paragraphs":["《鸣潮》官方 Wiki 列出「天工寻物」活动时间为 2026 年 10 月 8 日 04:00 至 10 月 26 日 03:59，均为服务器时间。","活动属于限时挑战玩法；本简报默认只保留必要信息，不涉及剧情解释。"]},"personal":{"eyebrow":"02 // WHY IT MATTERS","title":"今天打开游戏时可以顺便确认一下。","paragraphs":["这条比一般的游戏宣传更有用，因为它确实对应今日的活动档期。你可以按自己所在服务器核对活动页，看看是否满足参与条件。","这里不把服务器时间擅自换成日本时间，也不假设你已经解锁活动。"]},"verify":{"eyebrow":"03 // EVIDENCE & LIMITS","title":"活动时间有来源，剧情不展示。","paragraphs":["活动日期来自库街区《鸣潮》官方 Wiki 所列资料。实际开放时间、参与资格和活动奖励以游戏内显示为准。","防剧透已默认为开启：本网页不会自动展示相关主线故事细节或任务剧情。"]}},"sources":[{"name":"《鸣潮》官方 Wiki · 活动说明","url":"https://wiki.kurobbs.com/mc/item/1554475345910087680"}]},{"id":"nobel-chemistry","category":"science","categoryLabel":"科学发现","channel":"04 / BEYOND YOUR BUBBLE","tone":"violet","art":"N°","headline":["日本科学家","获得今年","化学诺奖。"],"title":"Henri Kagan 与 Kenso Soai 获 2026 诺贝尔化学奖","dek":"不对称合成与镜像分子的研究，让化学反应能更精确地选择方向。","published":"获奖公布：10 月 7 日","priority":"兴趣圈外一条","badge":"权威媒体确认","reading":{"brief":{"eyebrow":"01 // WHAT HAPPENED","title":"有关分子「左右手」的研究获得化学诺奖。","paragraphs":["2026 年诺贝尔化学奖授予法国化学家 Henri B. Kagan 和日本化学家 Kenso Soai，表彰他们在不对称合成、相关非线性效应与自催化方向的贡献。","手性分子可以像左手与右手，结构看起来相似，却可能对生物体系产生不同影响。"]},"personal":{"eyebrow":"02 // WHY IT MATTERS","title":"这条不必与你直接有关，也值得看。","paragraphs":["精准控制分子的手性，对新药和复杂分子的合成有重要意义。理解这些基础研究为何受到关注，比只知道获奖者国籍更有价值。","它也是个人化新闻中保留的一扇窗：偶尔走出 AI、数码和游戏的兴趣范围。"]},"verify":{"eyebrow":"03 // EVIDENCE & LIMITS","title":"获奖者名单由多家新闻机构报道。","paragraphs":["路透社与美联社均报道了获奖者及主要授奖理由。","奖项表彰的是既有科学贡献，不能被解释成某种新药在获奖当天已经研发成功。"]}},"sources":[{"name":"Reuters · 2026 化学诺奖","url":"https://www.reuters.com/world/kagan-soai-win-2026-nobel-chemistry-prize-2026-10-07/"},{"name":"AP · 获奖研究解读","url":"https://apnews.com/article/e92801a294ba29d5ff1fbbf63904c977"}]},{"id":"ibaraki-earthquake","category":"japan","categoryLabel":"日本生活","channel":"05 / JAPAN LOCAL","tone":"orange","art":"JMA","headline":["今晨 07:14","茨城北部","发生地震。"],"title":"日本气象厅记录茨城县北部最大震度 3 地震","dek":"速報值为 M4.0、约 60km 深，周边部分地区有震感。","published":"10 月 8 日 07:14（日本时间）","priority":"在日生活资讯","badge":"官方观测","reading":{"brief":{"eyebrow":"01 // WHAT HAPPENED","title":"今早茨城县北部发生地震。","paragraphs":["日本气象厅记录：2026 年 10 月 8 日约 07:14，茨城县北部发生地震，速報数据为 M4.0、震源深度约 60km、最大震度 3。","当地防灾资料转发的气象厅信息指出，该地震没有海啸风险。"]},"personal":{"eyebrow":"02 // WHY IT MATTERS","title":"这是一条区域记录，不是东京的紧急疏散指令。","paragraphs":["你在东京生活，知道周边发生的地震有意义。不过，茨城县震度 3 的消息本身不能推导出东京目前存在直接危险。","如遇地震应以气象厅、当地政府和手机灾害警报的即时指令为准。"]},"verify":{"eyebrow":"03 // EVIDENCE & LIMITS","title":"以日本气象厅速報值为准，后续可能修订。","paragraphs":["日本气象厅的紧急地震速報历史记录标明 07:14、茨城县北部、M4.0 和最大震度 3。","这是静态新闻快照，不具备实时地震警报功能，也不应替代官方防灾应用。"]}},"sources":[{"name":"日本气象厅 · 地震速報记录","url":"https://www.data.jma.go.jp/eew/data/nc/fc_hist/2026/10/20261008071415/index.html"},{"name":"茨城县防灾 · 震源震度信息","url":"https://inf.bousai.ibaraki.jp/eng/ehis/20261008/2026100807180668800_ehis.html"}]}]};
+</script>
+<script>(() => {
+  'use strict';
+  const app = document.getElementById('app');
+  if (!app) return;
+  const $ = q => app.querySelector(q);
+  const $$ = q => Array.from(app.querySelectorAll(q));
+  const txt = (selector, value) => {const el=$(selector);if (el) el.textContent=String(value ?? '');};
+  const mk = (tag, className, textContent) => {
+    const el=document.createElement(tag);
+    if(className)el.className=className;
+    if(textContent!==undefined)el.textContent=textContent;
+    return el;
+  };
+  const storageKey = 'hoshi-news-console-v2';
+  const seed = window.__STARNEWS_SEED;
+  if (!seed || !Array.isArray(seed.items) || !seed.items.length) {
+    txt('#readTitle','暂时无法加载今早的新闻');
+    txt('#readText','请检查网站文件是否完整。');
+    return;
+  }
+  let data=seed;
+  const state={
+    index:0,
+    edition:'morning',
+    lens:'brief',
+    filterSaved:false,
+    reader:false,
+    settings:false,
+    motion:!window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+    spoiler:true,
+    largeText:false,
+    saved:new Set(),
+    lastFocus:null,
+    toastTimer:null
+  };
+  try {
+    const prefs=JSON.parse(localStorage.getItem(storageKey)||'{}');
+    if (typeof prefs.motion==='boolean') state.motion=prefs.motion;
+    if (typeof prefs.spoiler==='boolean') state.spoiler=prefs.spoiler;
+    if (typeof prefs.largeText==='boolean') state.largeText=prefs.largeText;
+    if (Array.isArray(prefs.saved)) state.saved=new Set(prefs.saved.filter(v=>typeof v==='string'));
+  } catch(e) { /* private browsing and restricted storage: operate in memory */ }
+  function persist(){try{localStorage.setItem(storageKey,JSON.stringify({motion:state.motion,spoiler:state.spoiler,largeText:state.largeText,saved:[...state.saved]}));}catch(e){}}
+  function getItems(){return data.items;}
+  function item(){return getItems()[state.index];}
+  function validUrl(url){try{const u=new URL(url);return u.protocol==='https:'?u.href:null;}catch(e){return null}}
+  function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('show');clearTimeout(state.toastTimer);state.toastTimer=setTimeout(()=>el.classList.remove('show'),1900);}
+  function label(index){const s=getItems()[index];return s?.categoryLabel||'新闻';}
+  function indices(){const all=getItems().map((x,i)=>i);return state.filterSaved?all.filter(i=>state.saved.has(getItems()[i].id)):all;}
+  function bounce(){if(!state.motion || state.edition!=='morning')return;app.classList.remove('switching');void app.offsetWidth;app.classList.add('switching');}
+  function updateTheme(){app.dataset.tone=({violet:'purple',orange:'amber'}[item().tone]||item().tone||'lime');app.dataset.motion=state.motion?'on':'off';app.dataset.largeText=String(state.largeText);app.dataset.edition=state.edition;}
+  function iconNumber(i){return String(i+1).padStart(2,'0');}
+  function renderQueue(){
+    const q=$('#queueList');q.replaceChildren();
+    const strip=$('#mobileStoryStrip');strip.replaceChildren();
+    const visible=indices();
+    if(!visible.length && state.filterSaved){
+      const n=mk('div','queue-none','尚无收藏。点击 ☆ 就能加入。');q.append(n);
+      const b=mk('button','','暂无收藏 · 点击取消筛选');b.dataset.action='saved-only';strip.append(b);
+      return;
+    }
+    visible.forEach(i=>{
+      const s=getItems()[i];
+      const b=mk('button','queue-card'+(i===state.index?' active':''));b.type='button';b.dataset.story=String(i);b.setAttribute('aria-current',i===state.index?'true':'false');
+      b.append(mk('span','queue-number',iconNumber(i)));
+      const middle=mk('span','queue-description');middle.append(mk('small','',s.categoryLabel.toUpperCase()),mk('strong','',s.title));b.append(middle);q.append(b);
+      const chip=mk('button',i===state.index?'active':'');chip.type='button';chip.dataset.story=String(i);chip.setAttribute('aria-current',i===state.index?'true':'false');chip.append(mk('small','',iconNumber(i)+' / '+s.categoryLabel),mk('strong','',s.categoryLabel==='AI 科技'?s.art+' · '+s.categoryLabel:s.categoryLabel));strip.append(chip);
+    });
+  }
+  function updateTabs(){
+    $$('.lens-tabs [data-lens]').forEach(b=>{
+      const yes=b.dataset.lens===state.lens;b.classList.toggle('active',yes);b.setAttribute('aria-selected',String(yes));
+    });
+    $$('.reader-lenses [data-lens]').forEach(b=>b.classList.toggle('active',b.dataset.lens===state.lens));
+  }
+  function renderMain(){
+    const s=item();updateTheme();
+    txt('#heroBackNum',iconNumber(state.index));txt('#heroSymbol',s.art);txt('#heroSymbolSub',s.categoryLabel);
+    txt('#heroChannel',s.channel);txt('#heroPriority',s.priority);txt('#heroDek',s.dek);txt('#heroPublished',s.published);
+    const headline=$('#heroHeadline');headline.replaceChildren();
+    (s.headline||[s.title]).forEach((line,i,lines)=>headline.append(mk('span',i===lines.length-1?'hero-impact':'',line)));
+    txt('#decodeProgress','FILE '+iconNumber(state.index)+' / '+String(getItems().length).padStart(2,'0'));
+    const view=s.reading?.[state.lens]||s.reading.brief;
+    txt('#readEyebrow',view.eyebrow);txt('#readTitle',view.title);
+    txt('#readText',view.paragraphs.join('\n\n'));
+    $('#decodeArticle').scrollTop=0;
+    const sources=(s.sources||[]).filter(src=>validUrl(src.url));
+    txt('#sourceName',sources.length?sources[0].name:'尚无可核实链接');
+    const quick=$('#sourceQuick');
+    if(sources.length){quick.href=validUrl(sources[0].url);quick.removeAttribute('aria-disabled');quick.tabIndex=0;}
+    else{quick.removeAttribute('href');quick.setAttribute('aria-disabled','true');quick.tabIndex=-1;}
+    const marked=state.saved.has(s.id);
+    const save=$('.hero-save');save.textContent=marked?'★':'☆';save.setAttribute('aria-pressed',String(marked));save.setAttribute('aria-label',marked?'取消收藏新闻':'收藏新闻');
+    $('#readerSave').textContent=marked?'★':'☆';$('#readerSave').setAttribute('aria-pressed',String(marked));
+    const favButton=$('#favoritesButton');favButton.classList.toggle('active',state.filterSaved);favButton.setAttribute('aria-pressed',String(state.filterSaved));
+    txt('#bottomEdition',state.filterSaved?'收藏 · '+indices().length+' 条':'早间情报 · '+getItems().length+' 条');
+    updateTabs();renderQueue();
+    if(state.reader)renderReader();
+  }
+  function renderReader(){
+    const s=item();const view=s.reading[state.lens];
+    txt('#readerCode',s.channel);txt('#readerArt',iconNumber(state.index));txt('#readerTitle',s.title);txt('#readerDate',s.published);
+    const body=$('#readerCopy');body.replaceChildren(mk('span','',view.eyebrow),mk('h3','',view.title));
+    view.paragraphs.forEach(p=>body.append(mk('p','',p)));
+    const src=$('#readerSources');src.replaceChildren();
+    (s.sources||[]).forEach(source=>{
+      const safe=validUrl(source.url);if(!safe)return;
+      const a=mk('a','source-link');a.href=safe;a.target='_blank';a.rel='noopener noreferrer';
+      a.append(mk('span','',source.name),mk('span','','↗'));src.append(a);
+    });
+    if(!src.children.length)src.append(mk('p','','尚无可以核实的外部来源链接。'));
+    updateTabs();
+    $('#readerSave').textContent=state.saved.has(s.id)?'★':'☆';
+  }
+  function setIndex(next, animate=true){
+    const available=indices();
+    if(!available.length){toast('还没有收藏的新闻');return;}
+    if(!available.includes(next))return;
+    if(state.index===next&&animate){bounce();return;}
+    state.index=next;state.lens='brief';renderMain();
+    if(animate)bounce();
+    const selected=$(`#mobileStoryStrip button[data-story="${next}"]`);
+    selected?.scrollIntoView({block:'nearest',inline:'nearest',behavior:state.motion?'smooth':'instant'});
+  }
+  function changeStory(dir){
+    const arr=indices();if(!arr.length){toast('没有可切换的新闻');return;}
+    const n=arr.indexOf(state.index);setIndex(arr[(n+dir+arr.length)%arr.length]);
+  }
+  function setLens(lens){
+    if(!['brief','personal','verify'].includes(lens))return;
+    state.lens=lens;
+    renderMain();
+    if(state.reader){$('#readerCopy').parentElement.scrollTop=0;}
+  }
+  function save(){
+    const id=item().id;
+    if(state.saved.has(id)){state.saved.delete(id);toast('☆ 已取消收藏');}else{state.saved.add(id);toast('★ 已保存到本机收藏');}
+    persist();
+    if(state.filterSaved&&!state.saved.has(id)){
+      const available=indices();
+      if(available.length){state.index=available[0];state.lens='brief';}else{state.filterSaved=false;toast('收藏夹已清空');}
+    }
+    renderMain();
+  }
+  const placeholders={
+    noon:{num:'02',eyebrow:'MIDDAY / AWAITING BRIEF',title:'午间简报\n尚未同步。',desc:'目前只有 10 月 8 日早间的已核实快照。ChatGPT 的中午定时消息与此网页尚未自动同步。'},
+    evening:{num:'03',eyebrow:'EVENING / AWAITING BRIEF',title:'夜间回顾\n尚未同步。',desc:'晚上新的报道必须重新收集、核实后才能显示。当前网页不会重复早报冒充实时更新。'},
+    breaking:{num:'!!',eyebrow:'BREAKING / NO LIVE FEED',title:'紧急播报\n未连接实时源。',desc:'此网页不具备实时地震、天气、交通或新闻报警能力。紧急情况请查看日本气象厅及所在地政府的官方警报。'}
+  };
+  function changeEdition(edition){
+    if(!['morning','noon','evening','breaking'].includes(edition))return;
+    state.edition=edition;
+    const morning=edition==='morning';
+    $$('.edition-tabs [data-edition-choice]').forEach(b=>{const active=b.dataset.editionChoice===edition;b.classList.toggle('active',active);b.setAttribute('aria-current',String(active))});
+    $('#emptyEdition').hidden=morning;
+    $('#queueList').hidden=!morning;
+    $('.queue').style.visibility=morning?'visible':'hidden';
+    $('.hero').style.visibility=morning?'visible':'hidden';
+    $('.decode').style.visibility=morning?'visible':'hidden';
+    $('#mobileStoryStrip').style.visibility=morning?'visible':'hidden';
+    if(!morning){
+      const e=placeholders[edition];txt('#emptyArt',e.num);txt('#emptyEyebrow',e.eyebrow);txt('#emptyCopy',e.desc);
+      const heading=$('#emptyHeading');heading.replaceChildren();
+      e.title.split('\n').forEach((line,i)=>{if(i)heading.append(document.createElement('br'));heading.append(document.createTextNode(line));});
+      txt('#bottomEdition',edition==='breaking'?'不提供实时报警':edition==='noon'?'午间 · 待同步':'晚间 · 待同步');
+      txt('#snapshotStatus',edition==='breaking'?'NOT A LIVE ALERT':'EDITION NOT SYNCED');
+      if(state.reader)closeReader();
+    }else{txt('#snapshotStatus','2026.10.08 / 早间快照');renderMain();}
+    app.dataset.edition=edition;
+    if(state.motion)bounce();
+  }
+  function openReader(){
+    if(state.edition!=='morning')return;
+    state.lastFocus=document.activeElement;
+    state.reader=true;$('#readerOverlay').hidden=false;
+    renderReader();$('.reader-scroll').scrollTop=0;
+    $('.reader-top [data-action="close-reader"]').focus({preventScroll:true});
+  }
+  function closeReader(){
+    state.reader=false;$('#readerOverlay').hidden=true;
+    if(state.lastFocus?.isConnected)state.lastFocus.focus({preventScroll:true});
+  }
+  function openSettings(){
+    state.lastFocus=document.activeElement;state.settings=true;
+    $('#settingsOverlay').hidden=false;
+    $('#motionToggle').checked=state.motion;$('#spoilerToggle').checked=state.spoiler;$('#largeTextToggle').checked=state.largeText;
+    $('.settings-heading [data-action="close-settings"]').focus({preventScroll:true});
+  }
+  function closeSettings(){
+    state.settings=false;$('#settingsOverlay').hidden=true;
+    if(state.lastFocus?.isConnected)state.lastFocus.focus({preventScroll:true});
+  }
+  function toggleSavedOnly(){
+    if(state.edition!=='morning'){changeEdition('morning');}
+    if(!state.filterSaved && !state.saved.size){toast('还没有收藏，先点击 ☆ 收藏一条吧');return;}
+    state.filterSaved=!state.filterSaved;
+    const arr=indices();if(arr.length&&!arr.includes(state.index)){state.index=arr[0];state.lens='brief';}
+    renderMain();
+  }
+  app.addEventListener('click', event=>{
+    const b=event.target.closest('button');if(!b||!app.contains(b))return;
+    if(b.dataset.editionChoice){changeEdition(b.dataset.editionChoice);return;}
+    if(b.dataset.story!==undefined){setIndex(Number(b.dataset.story));return;}
+    if(b.dataset.lens){setLens(b.dataset.lens);return;}
+    const action=b.dataset.action;
+    if(action==='prev'){changeStory(-1);return;}
+    if(action==='next'){changeStory(1);return;}
+    if(action==='save'){save();return;}
+    if(action==='open-reader'){openReader();return;}
+    if(action==='close-reader'){closeReader();return;}
+    if(action==='settings'){openSettings();return;}
+    if(action==='close-settings'){closeSettings();return;}
+    if(action==='morning'){changeEdition('morning');return;}
+    if(action==='saved-only'){toggleSavedOnly();return;}
+  });
+  $$('.backdrop').forEach(backdrop=>backdrop.addEventListener('click',()=>{
+    if(!$('#readerOverlay').hidden)closeReader();
+    else if(!$('#settingsOverlay').hidden)closeSettings();
+  }));
+  $('#motionToggle').addEventListener('change',e=>{state.motion=e.target.checked;updateTheme();app.classList.remove('switching');persist();});
+  $('#spoilerToggle').addEventListener('change',e=>{state.spoiler=e.target.checked;persist();toast(state.spoiler?'防剧透已开启':'防剧透已关闭（当前数据本身无剧情）');});
+  $('#largeTextToggle').addEventListener('change',e=>{state.largeText=e.target.checked;updateTheme();persist();});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){if(state.settings)closeSettings();else if(state.reader)closeReader();return;}
+    if(state.settings||state.edition!=='morning')return;
+    const tag=document.activeElement?.tagName||'';
+    if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+    if(e.key==='ArrowLeft'){e.preventDefault();changeStory(-1);}
+    if(e.key==='ArrowRight'){e.preventDefault();changeStory(1);}
+    if(e.key==='1')setLens('brief');if(e.key==='2')setLens('personal');if(e.key==='3')setLens('verify');
+  });
+  // Touch gestures on the visual panel only, so vertical scrolling in reading content remains usable.
+  const hero=$('#hero');let sx=0,sy=0;
+  hero.addEventListener('touchstart',e=>{sx=e.changedTouches[0]?.clientX||0;sy=e.changedTouches[0]?.clientY||0;},{passive:true});
+  hero.addEventListener('touchend',e=>{
+    const dx=(e.changedTouches[0]?.clientX||0)-sx,dy=(e.changedTouches[0]?.clientY||0)-sy;
+    if(Math.abs(dx)>55&&Math.abs(dy)<65&&state.edition==='morning')changeStory(dx<0?1:-1);
+  },{passive:true});
+  const drawer=$('.reader');
+  let tx=0,ty=0;
+  drawer.addEventListener('touchstart',e=>{tx=e.changedTouches[0]?.clientX||0;ty=e.changedTouches[0]?.clientY||0;},{passive:true});
+  drawer.addEventListener('touchend',e=>{
+    const dx=(e.changedTouches[0]?.clientX||0)-tx,dy=(e.changedTouches[0]?.clientY||0)-ty;
+    if(Math.abs(dx)>100&&Math.abs(dy)<55){changeStory(dx<0?1:-1);}
+  },{passive:true});
+  renderMain();
+  // A newer JSON can replace the embedded offline seed when deployed, without assuming live updates exist.
+  if(location.protocol!=='file:'){
+    fetch('./news.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('fetch failed');return r.json()}).then(v=>{
+      if(v?.edition?.id && Array.isArray(v.items) && v.items.length && v.edition.id!==data.edition.id){data=v;state.index=0;state.filterSaved=false;state.lens='brief';renderMain();toast('已加载新的新闻快照');}
+    }).catch(()=>{});
+    if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
+      window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}),{once:true});
+    }
+  }
+})();
+</script>
+</body>
+</html>
