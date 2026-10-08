@@ -34,7 +34,7 @@
     const language=translated?.language||story.source?.language||story.language||(/[\u3040-\u30ff]/.test(story.title||'')?(/[\u4e00-\u9fff]/.test(story.summary||'')&&!/[\u3040-\u30ff]/.test(story.summary||'')?'und':'ja'):/^[\x00-\x7f]+$/.test(story.title||'')?'en':'zh-CN');
     const fallback=!translated||translated.status==='fallback';
     return {...story,...(translated||{}),source:story.source,localized:story.localized,
-      originalLanguage:language,localeFallback:fallback&&language!==locale};
+      originalLanguage:story.source?.language||language,localeFallback:fallback&&language!==locale};
   }
   function localizeItem(story){
     if(story.public)return story;
@@ -270,7 +270,7 @@
     return lines;
   }
   function collectionItems(){
-    const pool=[...data.items,...[...publicAI.editions,...publicArchive.editions].filter(e=>e.locale===locale||e.items?.every(s=>s.localized?.[locale])).slice().sort((a,b)=>Number(a.locale===locale)-Number(b.locale===locale)).flatMap(e=>publicItems(e,true))];
+    const pool=[...data.items,...[...publicAI.editions,...publicArchive.editions].filter(e=>e.locale===locale||(e.items?.length&&e.items.every(s=>s.localized?.[locale]))).slice().sort((a,b)=>Number(a.locale===locale)-Number(b.locale===locale)).flatMap(e=>publicItems(e,true))];
     return Array.from(new Map(pool.map(s=>[s.id,s])).values());
   }
   function getItems(){return (editionItems||data.items).map(localizeItem);}
@@ -688,13 +688,13 @@
   function renderBriefs(edition){
     const desk=$('#briefDesk'),list=$('#briefList');list.replaceChildren();
     const briefs=(edition?.briefs||[]).map(localizeStory).filter(s=>!state.query||[s.title,s.summary,s.source?.name].join(' ').toLocaleLowerCase(locale).includes(state.query.toLocaleLowerCase(locale)));
-    desk.hidden=!briefs.length;txt('#briefHeading','简讯');txt('#briefNotice','这些来源只提供短消息，保留原语，不扩写为长篇档案。');
+    desk.hidden=!briefs.length;txt('#briefHeading','简讯');txt('#briefNotice','简讯按设置语言翻译；失败明确回退，不扩写为长篇档案。');
     for(const s of briefs){
       const url=validUrl(s.source?.url);if(!url)continue;
-      const card=mk('details','brief-card'),head=mk('summary','',s.title);head.lang=s.originalLanguage;
-      const copy=mk('p','',s.summary);copy.lang=s.originalLanguage;
+      const card=mk('details','brief-card'),head=mk('summary','',s.title);head.lang=s.localeFallback?s.originalLanguage:locale;
+      const copy=mk('p','',s.summary);copy.lang=s.localeFallback?s.originalLanguage:locale;
       const a=mk('a','',s.source.name+' · '+t('阅读原文'));a.href=url;a.target='_blank';a.rel='noopener noreferrer';
-      card.append(head,mk('small','',t('原语内容')+' · '+languageName(s.originalLanguage)),copy,a);list.append(card);
+      card.append(head,mk('small','',s.localeFallback?fallbackText(s.originalLanguage):s.translation_status==='translated'?t('AI 翻译')+' · '+languageName(locale):languageName(locale)),copy,a);list.append(card);
     }
   }
   function appendEventEvidence(body,event){

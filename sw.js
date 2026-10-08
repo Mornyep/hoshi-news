@@ -1,6 +1,6 @@
 // Cache only public static site assets and the public editorial snapshot.
 // NEVER cache personal API responses or credentials in this service worker.
-const CACHE_NAME='starnews-public-news-v49-20261008-evidence-analysis-v1';
+const CACHE_NAME='starnews-public-news-v49-20261008-evidence-analysis-v2';
 const ASSETS=['./','./index.html','./app.js','./reading-position.js','./locales.js','./personal-ai.js','./personal-ai.css','./personal-config.js','./style.css','./seed.js','./news.json','./ai-briefs.json','./archive-stories.json','./manifest.webmanifest','./assets/icon.svg','./assets/icon-180.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
