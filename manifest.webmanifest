@@ -16,6 +16,12 @@
   "theme_color": "#101015",
   "icons": [
     {
+      "src": "./assets/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
       "src": "./assets/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
