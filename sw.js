@@ -20,7 +20,10 @@ self.addEventListener('fetch',event=>{
   event.respondWith(fetch(new Request(req,{cache:isNews?'no-store':'no-cache'})).then(r=>{
    if(r.ok){const copy=r.clone();caches.open(CACHE_NAME).then(c=>c.put(req,copy)).catch(()=>{});}
    return r;
-  }).catch(()=>caches.match(req).then(c=>c||(isNews?new Response('{"error":"offline"}',{status:503,headers:{'Content-Type':'application/json'}}):caches.match('./index.html')))));
+  }).catch(()=>caches.match(req).then(c=>{
+   if(c&&isNews){const headers=new Headers(c.headers);headers.set('X-Starnews-Cache','offline');return new Response(c.body,{status:c.status,headers});}
+   return c||(isNews?new Response('{"error":"offline"}',{status:503,headers:{'Content-Type':'application/json'}}):caches.match('./index.html'));
+  })));
  }else{
   event.respondWith(caches.match(req).then(c=>c||fetch(req).then(r=>{
    if(r.ok){const copy=r.clone();caches.open(CACHE_NAME).then(cache=>cache.put(req,copy)).catch(()=>{});}

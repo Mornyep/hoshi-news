@@ -809,13 +809,15 @@
     if(publicFetchPending)return;
     publicFetchPending=true;
     try{
+      let servedOffline=false;
       const [payload,status]=await Promise.all([
-        fetch('./ai-briefs.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('AI publication not found');return r.json();}),
+        fetch('./ai-briefs.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('AI publication not found');servedOffline=r.headers.get('X-Starnews-Cache')==='offline';return r.json();}),
         fetch('./public-status.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null)
       ]);
       if(payload?.schema!==1||!Array.isArray(payload.editions))throw new Error('Invalid AI publication');
-      const changed=publicLoading||publicLoadError||lastPublicDay!==jstDay()||payload.updated_at!==publicAI.updated_at||JSON.stringify(status)!==JSON.stringify(publicationStatus);
-      publicAI=payload;publicationStatus=status?.schema===1?status:null;publicLoadError=false;publicLoading=false;
+      const loadError=servedOffline||navigator.onLine===false;
+      const changed=publicLoading||publicLoadError!==loadError||lastPublicDay!==jstDay()||payload.updated_at!==publicAI.updated_at||JSON.stringify(status)!==JSON.stringify(publicationStatus);
+      publicAI=payload;publicationStatus=status?.schema===1?status:null;publicLoadError=loadError;publicLoading=false;
       lastPublicDay=jstDay();
       if(!changed)return;
       const latest=latestAISession();
