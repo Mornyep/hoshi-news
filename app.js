@@ -142,6 +142,7 @@
   const state={
     index:0,
     edition:'morning',
+    archiveView:false,
     lens:'brief',
     filterSaved:false,
     reader:false,
@@ -328,11 +329,13 @@
     evening:{num:'03',eyebrow:'EVENING / AWAITING BRIEF',title:'夜间回顾\n尚未同步。',desc:'晚上新的报道必须重新收集、核实后才能显示。当前网页不会重复早报冒充实时更新。'},
     breaking:{num:'!!',eyebrow:'BREAKING / NO LIVE FEED',title:'紧急播报\n未连接实时源。',desc:'此网页不具备实时地震、天气、交通或新闻报警能力。紧急情况请查看日本气象厅及所在地政府的官方警报。'}
   };
-  function changeEdition(edition){
+  function changeEdition(edition,{archive=false}={}){
     if(!['morning','noon','evening','breaking','ai'].includes(edition))return;
-    const morning=edition==='morning'&&!aiEditionForSession('morning');
+    const morning=edition==='morning'&&(archive||!aiEditionForSession('morning'));
     const aiMode=edition==='ai'||edition==='noon'||edition==='evening'||(edition==='morning'&&!morning);
     state.edition=edition;
+    state.archiveView=archive;
+    if(!archive)state.filterSaved=false;
     aiOpen=aiMode;
     if(edition==='ai') aiSession=latestAISession();
     else if(['morning','noon','evening'].includes(edition)) { aiSession=edition;aiFilter='all'; }
@@ -363,7 +366,7 @@
       txt('#bottomEdition','不提供实时报警');txt('#snapshotStatus','NOT A LIVE ALERT');
       if(state.reader)closeReader();
     }else{
-      txt('#snapshotStatus',jstDay()==='2026-10-08'?'2026.10.08 / 早间编辑快照':'2026.10.08 / 历史新闻存档');renderMain();
+      txt('#snapshotStatus',state.filterSaved?'历史档案 / 本机收藏':jstDay()==='2026-10-08'?'2026.10.08 / 早间编辑快照':'2026.10.08 / 历史新闻存档');renderMain();
     }
     app.dataset.edition=edition;
     app.dataset.newsMode=aiMode?'feed':'archive';
@@ -373,15 +376,40 @@
   function openReader(){
     if(state.edition!=='morning')return;
     state.lastFocus=document.activeElement;
-    state.reader=true;$('#readerOverlay').hidden=false;
+    state.reader=true;$('#readerOverlay').hidden=false;syncModal();
     renderReader();$('.reader-scroll').scrollTop=0;
     $('.reader-top [data-action="close-reader"]').focus({preventScroll:true});
   }
   function closeReader(){
-    state.reader=false;$('#readerOverlay').hidden=true;
+    state.reader=false;$('#readerOverlay').hidden=true;syncModal();
     if(state.lastFocus?.isConnected)state.lastFocus.focus({preventScroll:true});
   }
+  function renderCurrentView(){
+    updateTheme();
+    if(aiOpen){renderAI();txt('#bottomEdition',aiSessionNames[aiSession]+' · 公共 AI');}
+    else if(state.edition==='morning')renderMain();
+  }
+  function activeModal(){
+    return ['#onboardingOverlay','#settingsOverlay','#readerOverlay'].map($).find(el=>!el.hidden);
+  }
+  function modalControls(modal){
+    return Array.from(modal.querySelectorAll('button,a[href],input,select,textarea,[tabindex]'))
+      .filter(el=>!el.disabled&&el.tabIndex>=0&&!el.closest('[hidden],[inert]')&&el.getClientRects().length&&getComputedStyle(el).visibility!=='hidden');
+  }
+  function syncModal(){
+    const modal=activeModal();
+    Array.from(app.children).forEach(el=>{el.inert=Boolean(modal&&el!==modal&&el.id!=='toast');});
+    document.documentElement.classList.toggle('modal-open',Boolean(modal));
+  }
+  document.addEventListener('focusin',event=>{
+    const modal=activeModal();
+    if(modal&&!modal.contains(event.target))modalControls(modal)[0]?.focus({preventScroll:true});
+  });
   function renderPersonalOptions(){
+    const focused=document.activeElement;
+    const focusBox=focused?.closest('#interestOptions,#onboardingPicks,#themeOptions');
+    const focusKey=['interest','themeChoice'].find(key=>focused?.dataset[key]);
+    const focusValue=focusKey?focused.dataset[focusKey]:null;
     for(const selector of ['#interestOptions','#onboardingPicks']){
       const box=$(selector);box.replaceChildren();
       for(const interest of interests){
@@ -405,12 +433,15 @@
     $('#spoilerToggle').checked=state.spoiler;
     $('#largeTextToggle').checked=state.largeText;
     $('#privateModeToggle').checked=state.privateMode;
+    if(focusBox&&focusKey){
+      Array.from(focusBox.querySelectorAll('button')).find(btn=>btn.dataset[focusKey]===focusValue)?.focus({preventScroll:true});
+    }
   }
   function toggleInterest(value){
     if(!allowedInterests.has(value))return;
     if(state.interests.has(value))state.interests.delete(value);else state.interests.add(value);
-    state.filterSaved=false;state.index=firstAvailable();state.lens='brief';
-    persist();renderMain();renderPersonalOptions();bounce();
+    state.index=firstAvailable();state.lens='brief';
+    persist();renderCurrentView();renderPersonalOptions();bounce();
   }
   function applyTheme(value){
     if(!allowedThemes.has(value))return;
@@ -421,13 +452,13 @@
     state.layout=value;persist();updateTheme();renderPersonalOptions();
   }
   function openOnboarding(){
-    state.onboarding=true;$('#onboardingOverlay').hidden=false;
+    state.onboarding=true;$('#onboardingOverlay').hidden=false;syncModal();
     renderPersonalOptions();
     $('#onboardingOverlay [data-action=onboarding-done]').focus({preventScroll:true});
   }
   function closeOnboarding(){
-    state.onboarding=false;state.onboarded=true;$('#onboardingOverlay').hidden=true;
-    persist();renderMain();
+    state.onboarding=false;state.onboarded=true;$('#onboardingOverlay').hidden=true;syncModal();
+    persist();renderCurrentView();
     $('.settings-btn').focus({preventScroll:true});
   }
   function resetGuest(){
@@ -435,7 +466,7 @@
     state.motion=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     state.spoiler=true;state.largeText=false;state.onboarded=false;state.privateMode=true;
     state.filterSaved=false;state.lens='brief';state.index=0;
-    renderMain();renderPersonalOptions();toast('本机的星闻数据已经清空');
+    renderCurrentView();renderPersonalOptions();toast('本机的星闻数据已经清空');
   }
   async function shareTheme(){
     const url=new URL(location.href);url.search='';url.hash='';
@@ -452,20 +483,20 @@
   }
   function openSettings(){
     state.lastFocus=document.activeElement;state.settings=true;
-    $('#settingsOverlay').hidden=false;
+    $('#settingsOverlay').hidden=false;syncModal();
     renderPersonalOptions();
     $('.settings-heading [data-action="close-settings"]').focus({preventScroll:true});
   }
   function closeSettings(){
-    state.settings=false;$('#settingsOverlay').hidden=true;
+    state.settings=false;$('#settingsOverlay').hidden=true;syncModal();
     if(state.lastFocus?.isConnected)state.lastFocus.focus({preventScroll:true});
   }
   function toggleSavedOnly(){
-    if(state.edition!=='morning'){changeEdition('morning');}
-    if(!state.filterSaved && !state.saved.size){toast('还没有收藏，先点击 ☆ 收藏一条吧');return;}
-    state.filterSaved=!state.filterSaved;
+    if(state.archiveView&&state.filterSaved){changeEdition('morning');return;}
+    if(!state.saved.size){toast('还没有收藏，先点击 ☆ 收藏一条吧');return;}
+    state.filterSaved=true;
     const arr=indices();if(arr.length&&!arr.includes(state.index)){state.index=arr[0];state.lens='brief';}
-    renderMain();
+    changeEdition('morning',{archive:true});
   }
   app.addEventListener('click', event=>{
     const b=event.target.closest('button');if(!b||!app.contains(b))return;
@@ -506,10 +537,19 @@
     else{persist();toast('本机偏好保存已恢复');}
   });
   document.addEventListener('keydown',e=>{
+    const modal=activeModal();
     if(e.key==='Escape'){
-      if(aiOpen)changeEdition('morning');else if(state.onboarding)closeOnboarding();else if(state.settings)closeSettings();else if(state.reader)closeReader();return;
+      if(state.onboarding)closeOnboarding();else if(state.settings)closeSettings();else if(state.reader)closeReader();else if(aiOpen)changeEdition('morning');else return;
+      e.preventDefault();return;
     }
-    if(state.settings||state.onboarding||state.edition!=='morning')return;
+    if(modal&&e.key==='Tab'){
+      const controls=modalControls(modal),first=controls[0],last=controls[controls.length-1];
+      if(!modal.contains(document.activeElement)||(e.shiftKey&&document.activeElement===first)||(!e.shiftKey&&document.activeElement===last)){
+        e.preventDefault();(e.shiftKey?last:first)?.focus({preventScroll:true});
+      }
+      return;
+    }
+    if(state.settings||state.onboarding||aiOpen||state.edition!=='morning')return;
     const tag=document.activeElement?.tagName||'';
     if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
     if(e.key==='ArrowLeft'){e.preventDefault();changeStory(-1);}
@@ -538,7 +578,7 @@
     fetch('./ai-briefs.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('AI publication not found');return r.json()}).then(payload=>{
       if(payload?.schema!==1||!Array.isArray(payload.editions))throw new Error('Invalid AI publication');
       publicAI=payload;
-      if(aiOpen){if(state.edition==='ai')aiSession=latestAISession();renderAI();}else if(state.edition==='morning'&&aiEditionForSession('morning')){changeEdition('morning');}else{const today=publicAI.editions.some(e=>e?.date===jstDay()&&Array.isArray(e.items)&&e.items.length);if(today)txt('#aiTopState','✳ NEWS ONLINE');}
+      if(aiOpen){if(state.edition==='ai')aiSession=latestAISession();renderAI();}else if(state.edition==='morning'&&!state.archiveView&&aiEditionForSession('morning')){changeEdition('morning');}else{const today=publicAI.editions.some(e=>e?.date===jstDay()&&Array.isArray(e.items)&&e.items.length);if(today)txt('#aiTopState','✳ NEWS ONLINE');}
     }).catch(()=>{if(aiOpen)renderAI();});
   }
 
@@ -546,7 +586,7 @@
   if(location.protocol!=='file:'){
     fetch('./news.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('fetch failed');return r.json()}).then(v=>{
       if(v?.edition?.id && Array.isArray(v.items) && v.items.length && v.edition.id!==data.edition.id){
-        data=v;state.index=firstAvailable();state.filterSaved=false;state.lens='brief';renderMain();toast('已加载新的公共新闻快照');
+        data=v;state.index=firstAvailable();state.filterSaved=false;state.lens='brief';renderCurrentView();toast('已加载新的公共新闻快照');
       }
     }).catch(()=>{});
     if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){

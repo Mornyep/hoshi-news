@@ -371,3 +371,8 @@ html{scroll-behavior:smooth;scroll-padding-top:12px}
   99%{visibility:visible;opacity:1;transform:translateX(115%) skewX(-12deg)}
   100%{visibility:hidden;opacity:0;transform:translateX(115%) skewX(-12deg)}
 }
+
+/* Modal dialogs isolate background interaction without changing the page scroll position. */
+html.modal-open{overflow-y:hidden}
+.app[data-large-text=true] .ai-desk .ai-story-preview,
+.app[data-large-text=true] .ai-desk .ai-story-expanded p{font-size:15px;line-height:1.8}

@@ -82,11 +82,11 @@ const sizes = [[1527,1024],[1280,720],[851,650],[850,1024],[768,1024],[621,800],
       if(await page.locator('#hero').isVisible()) {
         await page.locator('[data-action=open-reader]').click();
         assert(await page.locator('#readerOverlay').isVisible(),'Archive reader opens');
-        await page.locator('[data-action=close-reader]').first().click();
+        await page.locator('button[data-action=close-reader]').first().click();
       }
       await page.locator('[data-action=settings]').click();
       assert(await page.locator('#settingsOverlay').isVisible(),'Settings open');
-      await page.locator('[data-action=close-settings]').first().click();
+      await page.locator('button[data-action=close-settings]').first().click();
       assert.deepEqual(errors,[],'No browser errors');
       console.log(JSON.stringify({width,height,fixture,result:'passed'}));
       await context.close();
