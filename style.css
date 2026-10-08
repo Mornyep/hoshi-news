@@ -179,3 +179,35 @@ html{scroll-behavior:smooth;scroll-padding-top:12px}
  .decode-article p{font-size:12.5px}
  .more-card{min-height:80px}
 }
+
+/* AI CORE 4.4: modal keeps the 1.5-screen front page uncluttered. */
+.ai-top-btn{font:950 10px ui-monospace,monospace;background:var(--accent);color:#101115;white-space:nowrap;min-height:34px;padding:9px 10px;clip-path:polygon(0 0,100% 0,94% 100%,0 100%)}
+.ai-top-btn:hover{filter:brightness(1.1)}
+.ai-teaser{display:none;color:#111;background:#d9f48a;padding:15px 17px;gap:12px;align-items:center;justify-content:space-between}
+.ai-teaser div{display:flex;flex-direction:column;gap:4px;min-width:0}.ai-teaser div span{font:950 9px ui-monospace,monospace;letter-spacing:.6px}.ai-teaser strong{font-size:15px;font-weight:950}.ai-teaser small{font-size:10px;line-height:1.5}
+.ai-teaser button{background:#121316;color:#fff;font-size:11px;font-weight:950;padding:11px 12px;min-height:44px;white-space:nowrap}
+.ai-panel{position:relative;width:min(94vw,685px);max-height:min(93dvh,860px);background:#f3efe7;color:#151618;display:flex;flex-direction:column;box-shadow:9px 9px 0 var(--accent)}
+.ai-panel-header{flex-shrink:0;background:#151619;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:19px 19px;border-bottom:8px solid var(--accent)}
+.ai-panel-header span{font:850 9px ui-monospace,monospace;color:var(--accent);letter-spacing:.8px}
+.ai-panel-header h2{font:italic 1000 30px Impact,'Arial Black',system-ui,sans-serif;margin:3px 0 0;letter-spacing:-.7px}
+.ai-panel-header h2 em{color:var(--accent);font-style:normal}
+.ai-panel-header button{background:#fff;color:#111;padding:9px 13px;font-size:16px;font-weight:900;min-height:42px}
+.ai-panel-scroll{overflow-y:auto;overscroll-behavior:contain;min-height:0;padding:17px}
+.ai-panel-status{display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-bottom:2px solid #111;padding-bottom:12px}
+.ai-panel-status strong{font-size:14px;font-weight:1000}.ai-panel-status small{font-size:10px;color:#77716b;flex-basis:100%;padding-left:16px;line-height:1.5}
+.ai-status-light{width:8px;height:8px;background:#979b9a;transform:rotate(45deg)}.ai-status-light.ready{background:#5da94d}
+.ai-sessions{display:flex;gap:5px;padding:16px 0 8px}.ai-sessions button{flex:1;background:#d5d1c9;color:#272626;font-weight:900;font-size:12px;padding:13px 4px;min-height:44px}
+.ai-sessions button.active{background:var(--accent);color:#111;box-shadow:3px 3px 0 #111}
+.ai-intro{border-left:5px solid #111;padding:5px 0 6px 13px;margin:11px 0 15px}.ai-intro span{font:900 9px ui-monospace,monospace;color:#777}.ai-intro p{font-size:12px;line-height:1.8;margin:7px 0 0;color:#45413d}
+.ai-story-list{display:grid;gap:10px}.ai-story-card{padding:16px 15px;background:#fffdf8;color:#161616;border:1px solid #d3cec3;border-left:5px solid var(--accent)}
+.ai-story-top{display:flex;justify-content:space-between;gap:7px;font:850 9px ui-monospace,monospace;color:#71695c}
+.ai-story-card h3{font-size:17px;font-weight:1000;letter-spacing:-.3px;line-height:1.45;margin:10px 0 7px}
+.ai-story-card>p{font-size:13px;line-height:1.8;margin:0 0 12px}.ai-more{margin:10px 0;font-size:12px;color:#4d4841}.ai-more summary{cursor:pointer;font-weight:950;color:#161616;padding:9px 0;list-style:none}.ai-more summary::-webkit-details-marker{display:none}.ai-more p{margin:6px 0;line-height:1.7}
+.ai-source{display:block;color:#111;background:#dfdbd0;font-size:11px;font-weight:900;text-decoration:none;padding:11px 12px;min-height:42px;line-height:1.7}
+.ai-blank{padding:21px 16px;border:2px dashed #acada4}.ai-blank strong{font:900 16px ui-monospace,monospace}.ai-blank p{font-size:12px;line-height:1.8;color:#666}
+.ai-footnote{font-size:11px;line-height:1.8;color:#65625d;margin:21px 0 3px;border-top:1px solid #bbb7ad;padding-top:14px}
+@media(max-width:620px){
+ .snapshot-tag{display:none}.ai-top-btn{font-size:9px;min-height:30px;padding:7px 8px}.ai-teaser{display:flex}.ai-teaser div strong{font-size:13px}.ai-teaser div small{font-size:9px}
+ .ai-panel{width:min(96vw,600px);max-height:92dvh;box-shadow:4px 5px 0 var(--accent)}.ai-panel-header{padding:15px}.ai-panel-header h2{font-size:25px}.ai-panel-scroll{padding:13px}
+}
+@media(max-width:370px){.ai-teaser button{font-size:10px;padding:9px 6px;white-space:normal;min-width:80px}.ai-teaser div span{font-size:8px}}
