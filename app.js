@@ -366,6 +366,7 @@
       txt('#snapshotStatus',jstDay()==='2026-10-08'?'2026.10.08 / 早间编辑快照':'2026.10.08 / 历史新闻存档');renderMain();
     }
     app.dataset.edition=edition;
+    app.dataset.newsMode=aiMode?'feed':'archive';
     if(state.motion && morning)bounce();
     if(window.scrollY>0) window.scrollTo({top:0,behavior:'instant'});
   }
