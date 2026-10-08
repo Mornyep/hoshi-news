@@ -20,7 +20,7 @@
           "title": "SpaceX 第35次空间站补给任务：太阳能阵列与医学实验同行",
           "summary": "NASA 计划在10月13日由 SpaceX 发射第35次商业补给任务，将超过6,300磅物资送往国际空间站。货物包括最后一组展开式太阳能阵列，以及面向视网膜、心脏组织、玻璃和脑类器官的研究材料。以下依据已取得的官方发布稿重新整理；发射和对接时间仍可能调整。",
           "context": "据已取得的 NASA 官方供稿正文原创整理；未独立核验，未确认与网页全文完全一致。",
-          "uncertainty": "翻译未通过来源约束检查，显示原语。",
+          "uncertainty": "发射与对接仍是计划，可能随实际运行调整；未独立核验。",
           "source": {
             "name": "NASA",
             "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
@@ -34,7 +34,7 @@
               "title": "SpaceX 第35次空间站补给任务：太阳能阵列与医学实验同行",
               "summary": "NASA 计划在10月13日由 SpaceX 发射第35次商业补给任务，将超过6,300磅物资送往国际空间站。货物包括最后一组展开式太阳能阵列，以及面向视网膜、心脏组织、玻璃和脑类器官的研究材料。以下依据已取得的官方发布稿重新整理；发射和对接时间仍可能调整。",
               "context": "据已取得的 NASA 官方供稿正文原创整理；未独立核验，未确认与网页全文完全一致。",
-              "uncertainty": "翻译未通过来源约束检查，显示原语。",
+              "uncertainty": "发射与对接仍是计划，可能随实际运行调整；未独立核验。",
               "language": "zh-CN",
               "status": "editorial_retelling",
               "translation_status": "editorial_retelling",
@@ -112,7 +112,52 @@
                 "independently_verified": false,
                 "editorial_at": "2026-10-08T08:27:54.578475Z",
                 "method": "source_bound_editorial_retelling",
-                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                "analysis": {
+                  "title": "AI 补充阅读 · 待核验分析",
+                  "notice": "分析仅基于下列已取得资料，不代表独立核验或各方完整立场。",
+                  "language": "zh-CN",
+                  "method": "source_bound_ai_editorial_example",
+                  "independently_verified": false,
+                  "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+                  "sections": [
+                    {
+                      "kind": "background",
+                      "title": "背景线索",
+                      "text": "这次补给把空间站供电硬件与微重力研究载荷放在同一飞行中。发布稿提到人工视网膜制造和心脏组织模型研究，但不能仅凭设备计划运送，就推断相关治疗已经得到临床验证。",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "questions",
+                      "title": "后续观察问题",
+                      "text": "后续值得核对补给实际抵达、太阳能阵列部署及研究结果发表的记录。任务预告说明的是安排；计划是否兑现，需要后续记录，而不是由这份发布稿自动证明。",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    }
+                  ],
+                  "producer": "Codex-assisted editorial example; source read in this task, not independent fact checking",
+                  "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                  "generated_at": "2026-10-08T14:26:25.453653Z"
+                }
+              },
+              "highlight": {
+                "text": "第35次空间站补给任务",
+                "method": "machine_selected_exact_headline_span"
               }
             }
           },
@@ -188,13 +233,58 @@
             "independently_verified": false,
             "editorial_at": "2026-10-08T08:27:54.578475Z",
             "method": "source_bound_editorial_retelling",
-            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+            "analysis": {
+              "title": "AI 补充阅读 · 待核验分析",
+              "notice": "分析仅基于下列已取得资料，不代表独立核验或各方完整立场。",
+              "language": "zh-CN",
+              "method": "source_bound_ai_editorial_example",
+              "independently_verified": false,
+              "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+              "sections": [
+                {
+                  "kind": "background",
+                  "title": "背景线索",
+                  "text": "这次补给把空间站供电硬件与微重力研究载荷放在同一飞行中。发布稿提到人工视网膜制造和心脏组织模型研究，但不能仅凭设备计划运送，就推断相关治疗已经得到临床验证。",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                },
+                {
+                  "kind": "questions",
+                  "title": "后续观察问题",
+                  "text": "后续值得核对补给实际抵达、太阳能阵列部署及研究结果发表的记录。任务预告说明的是安排；计划是否兑现，需要后续记录，而不是由这份发布稿自动证明。",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                }
+              ],
+              "producer": "Codex-assisted editorial example; source read in this task, not independent fact checking",
+              "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+              "generated_at": "2026-10-08T14:26:25.453653Z"
+            }
           },
           "provenance": {
             "scope": "publisher_feed_article_text",
             "full_text_acquired": true,
             "translation_status": "editorial_retelling",
             "method": "source_bound_editorial_retelling"
+          },
+          "highlight": {
+            "text": "第35次空间站补给任务",
+            "method": "machine_selected_exact_headline_span"
           }
         }
       ]
@@ -218,7 +308,7 @@
           "title": "SpaceX 第35次太空站補給任務：太陽能陣列與醫學實驗同行",
           "summary": "NASA 計畫在10月13日由 SpaceX 執行第35次商業補給任務，將超過6,300磅物資送往國際太空站。貨物包含最後一組展開式太陽能陣列，以及視網膜、心臟組織、玻璃與腦類器官研究材料。本文依取得的官方供稿正文重新整理；時程仍可能調整。",
           "context": "依已取得的 NASA 官方供稿正文原創整理；未獨立查核，未確認與網頁全文完全一致。",
-          "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
+          "uncertainty": "發射與對接仍是計畫，可能隨實際運行調整；未獨立核驗。",
           "source": {
             "name": "NASA",
             "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
@@ -232,7 +322,7 @@
               "title": "SpaceX 第35次太空站補給任務：太陽能陣列與醫學實驗同行",
               "summary": "NASA 計畫在10月13日由 SpaceX 執行第35次商業補給任務，將超過6,300磅物資送往國際太空站。貨物包含最後一組展開式太陽能陣列，以及視網膜、心臟組織、玻璃與腦類器官研究材料。本文依取得的官方供稿正文重新整理；時程仍可能調整。",
               "context": "依已取得的 NASA 官方供稿正文原創整理；未獨立查核，未確認與網頁全文完全一致。",
-              "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
+              "uncertainty": "發射與對接仍是計畫，可能隨實際運行調整；未獨立核驗。",
               "language": "zh-TW",
               "status": "editorial_retelling",
               "translation_status": "editorial_retelling",
@@ -310,7 +400,52 @@
                 "independently_verified": false,
                 "editorial_at": "2026-10-08T08:27:54.578475Z",
                 "method": "source_bound_editorial_retelling",
-                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                "analysis": {
+                  "title": "AI 補充閱讀 · 待查核分析",
+                  "notice": "分析僅依據下列已取得資料，不代表獨立查核或各方完整立場。",
+                  "language": "zh-TW",
+                  "method": "source_bound_ai_editorial_example",
+                  "independently_verified": false,
+                  "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+                  "sections": [
+                    {
+                      "kind": "background",
+                      "title": "背景線索",
+                      "text": "這次補給把太空站供電硬體與微重力研究載荷安排在同一飛行中。發布稿提到人工視網膜製造和心臟組織模型研究，但不能僅憑設備計畫運送，就推斷相關治療已獲臨床驗證。",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "questions",
+                      "title": "後續觀察問題",
+                      "text": "後續值得核對補給實際抵達、太陽能陣列部署及研究結果發表的紀錄。任務預告說明的是安排；計畫是否兌現，需要後續紀錄，而不是由這份發布稿自動證明。",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    }
+                  ],
+                  "producer": "Codex-assisted editorial example; source read in this task, not independent fact checking",
+                  "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                  "generated_at": "2026-10-08T14:26:25.453653Z"
+                }
+              },
+              "highlight": {
+                "text": "第35次太空站補給任務",
+                "method": "machine_selected_exact_headline_span"
               }
             }
           },
@@ -386,13 +521,58 @@
             "independently_verified": false,
             "editorial_at": "2026-10-08T08:27:54.578475Z",
             "method": "source_bound_editorial_retelling",
-            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+            "analysis": {
+              "title": "AI 補充閱讀 · 待查核分析",
+              "notice": "分析僅依據下列已取得資料，不代表獨立查核或各方完整立場。",
+              "language": "zh-TW",
+              "method": "source_bound_ai_editorial_example",
+              "independently_verified": false,
+              "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+              "sections": [
+                {
+                  "kind": "background",
+                  "title": "背景線索",
+                  "text": "這次補給把太空站供電硬體與微重力研究載荷安排在同一飛行中。發布稿提到人工視網膜製造和心臟組織模型研究，但不能僅憑設備計畫運送，就推斷相關治療已獲臨床驗證。",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                },
+                {
+                  "kind": "questions",
+                  "title": "後續觀察問題",
+                  "text": "後續值得核對補給實際抵達、太陽能陣列部署及研究結果發表的紀錄。任務預告說明的是安排；計畫是否兌現，需要後續紀錄，而不是由這份發布稿自動證明。",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                }
+              ],
+              "producer": "Codex-assisted editorial example; source read in this task, not independent fact checking",
+              "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+              "generated_at": "2026-10-08T14:26:25.453653Z"
+            }
           },
           "provenance": {
             "scope": "publisher_feed_article_text",
             "full_text_acquired": true,
             "translation_status": "editorial_retelling",
             "method": "source_bound_editorial_retelling"
+          },
+          "highlight": {
+            "text": "第35次太空站補給任務",
+            "method": "machine_selected_exact_headline_span"
           }
         }
       ]
@@ -416,7 +596,7 @@
           "title": "SpaceX の第35回補給飛行：太陽電池アレイと医学研究を宇宙ステーションへ",
           "summary": "NASA は10月13日、SpaceX の第35回商業補給ミッションで6,300ポンドを超える物資を国際宇宙ステーションに運ぶ計画を発表した。最後の展開式太陽電池アレイや、網膜・心臓組織・ガラス・脳オルガノイドの研究材料を搭載する。取得した公式配信本文を基に再構成したもので、日程は変更され得る。",
           "context": "取得した NASA 公式配信本文を基に独自に再構成。独立検証・ウェブ全文との完全一致確認は未実施。",
-          "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
+          "uncertainty": "打ち上げとドッキングは予定であり、運用状況により変更される可能性があります。独立した検証は行っていません。",
           "source": {
             "name": "NASA",
             "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
@@ -430,7 +610,7 @@
               "title": "SpaceX の第35回補給飛行：太陽電池アレイと医学研究を宇宙ステーションへ",
               "summary": "NASA は10月13日、SpaceX の第35回商業補給ミッションで6,300ポンドを超える物資を国際宇宙ステーションに運ぶ計画を発表した。最後の展開式太陽電池アレイや、網膜・心臓組織・ガラス・脳オルガノイドの研究材料を搭載する。取得した公式配信本文を基に再構成したもので、日程は変更され得る。",
               "context": "取得した NASA 公式配信本文を基に独自に再構成。独立検証・ウェブ全文との完全一致確認は未実施。",
-              "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
+              "uncertainty": "打ち上げとドッキングは予定であり、運用状況により変更される可能性があります。独立した検証は行っていません。",
               "language": "ja",
               "status": "editorial_retelling",
               "translation_status": "editorial_retelling",
@@ -508,7 +688,52 @@
                 "independently_verified": false,
                 "editorial_at": "2026-10-08T08:27:54.578475Z",
                 "method": "source_bound_editorial_retelling",
-                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                "analysis": {
+                  "title": "AI 補足読解・未検証の分析",
+                  "notice": "以下の取得済み資料のみに基づく分析。独立検証や各当事者の立場を網羅するものではありません。",
+                  "language": "ja",
+                  "method": "source_bound_ai_editorial_example",
+                  "independently_verified": false,
+                  "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+                  "sections": [
+                    {
+                      "kind": "background",
+                      "title": "背景の手がかり",
+                      "text": "今回の補給は、宇宙ステーションの電力設備と微小重力での研究用資材を同じ飛行で運ぶ計画です。発表文には人工網膜や心臓組織モデルの研究が挙げられていますが、それ自体が治療効果の実証を示すわけではありません。",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "questions",
+                      "title": "今後の確認事項",
+                      "text": "今後は物資の到着、太陽電池アレイの展開、実験結果について実際の記録を確認したいところです。発表文は計画の説明であり、成果がすでに達成されたことの証明ではありません。",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    }
+                  ],
+                  "producer": "Codex-assisted editorial example; source read in this task, not independent fact checking",
+                  "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                  "generated_at": "2026-10-08T14:26:25.453653Z"
+                }
+              },
+              "highlight": {
+                "text": "第35回補給飛行",
+                "method": "machine_selected_exact_headline_span"
               }
             }
           },
@@ -584,13 +809,58 @@
             "independently_verified": false,
             "editorial_at": "2026-10-08T08:27:54.578475Z",
             "method": "source_bound_editorial_retelling",
-            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+            "analysis": {
+              "title": "AI 補足読解・未検証の分析",
+              "notice": "以下の取得済み資料のみに基づく分析。独立検証や各当事者の立場を網羅するものではありません。",
+              "language": "ja",
+              "method": "source_bound_ai_editorial_example",
+              "independently_verified": false,
+              "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+              "sections": [
+                {
+                  "kind": "background",
+                  "title": "背景の手がかり",
+                  "text": "今回の補給は、宇宙ステーションの電力設備と微小重力での研究用資材を同じ飛行で運ぶ計画です。発表文には人工網膜や心臓組織モデルの研究が挙げられていますが、それ自体が治療効果の実証を示すわけではありません。",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                },
+                {
+                  "kind": "questions",
+                  "title": "今後の確認事項",
+                  "text": "今後は物資の到着、太陽電池アレイの展開、実験結果について実際の記録を確認したいところです。発表文は計画の説明であり、成果がすでに達成されたことの証明ではありません。",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                }
+              ],
+              "producer": "Codex-assisted editorial example; source read in this task, not independent fact checking",
+              "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+              "generated_at": "2026-10-08T14:26:25.453653Z"
+            }
           },
           "provenance": {
             "scope": "publisher_feed_article_text",
             "full_text_acquired": true,
             "translation_status": "editorial_retelling",
             "method": "source_bound_editorial_retelling"
+          },
+          "highlight": {
+            "text": "第35回補給飛行",
+            "method": "machine_selected_exact_headline_span"
           }
         }
       ]
@@ -614,7 +884,7 @@
           "title": "SpaceX resupply flight 35: station power hardware and medical research share the cargo",
           "summary": "NASA plans a 13 October launch for SpaceX’s 35th commercial station resupply mission. More than 6,300 pounds of cargo include the final set of roll-out solar arrays and equipment or materials for retina, cardiac tissue, glass and brain-organoid research. This account reorganizes the official syndicated release; the schedule remains provisional.",
           "context": "Original retelling from acquired NASA syndicated article text; no independent verification or complete website comparison.",
-          "uncertainty": "The source excerpt provides no reliable information for this section.",
+          "uncertainty": "Launch and docking remain planned and may change with operations; not independently verified.",
           "source": {
             "name": "NASA",
             "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
@@ -628,7 +898,7 @@
               "title": "SpaceX resupply flight 35: station power hardware and medical research share the cargo",
               "summary": "NASA plans a 13 October launch for SpaceX’s 35th commercial station resupply mission. More than 6,300 pounds of cargo include the final set of roll-out solar arrays and equipment or materials for retina, cardiac tissue, glass and brain-organoid research. This account reorganizes the official syndicated release; the schedule remains provisional.",
               "context": "Original retelling from acquired NASA syndicated article text; no independent verification or complete website comparison.",
-              "uncertainty": "The source excerpt provides no reliable information for this section.",
+              "uncertainty": "Launch and docking remain planned and may change with operations; not independently verified.",
               "language": "en",
               "status": "editorial_retelling",
               "translation_status": "editorial_retelling",
@@ -706,7 +976,52 @@
                 "independently_verified": false,
                 "editorial_at": "2026-10-08T08:27:54.578475Z",
                 "method": "source_bound_editorial_retelling",
-                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                "analysis": {
+                  "title": "AI further reading · unverified analysis",
+                  "notice": "Analysis uses only the acquired material below; it is neither independent verification nor a complete account of stakeholder positions.",
+                  "language": "en",
+                  "method": "source_bound_ai_editorial_example",
+                  "independently_verified": false,
+                  "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+                  "sections": [
+                    {
+                      "kind": "background",
+                      "title": "Background context",
+                      "text": "The flight combines station power hardware with microgravity research cargo. NASA describes work involving artificial retinas and heart tissue models; the release outlines planned research rather than establishing clinical efficacy.",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "questions",
+                      "title": "Questions to follow",
+                      "text": "Follow-up reporting should distinguish planned cargo delivery, solar-array deployment and published experiment results from completed milestones. The release describes plans rather than proof that these goals have already been met.",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    }
+                  ],
+                  "producer": "Codex-assisted editorial example; source read in this task, not independent fact checking",
+                  "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                  "generated_at": "2026-10-08T14:26:25.453653Z"
+                }
+              },
+              "highlight": {
+                "text": "resupply flight 35",
+                "method": "machine_selected_exact_headline_span"
               }
             }
           },
@@ -782,13 +1097,58 @@
             "independently_verified": false,
             "editorial_at": "2026-10-08T08:27:54.578475Z",
             "method": "source_bound_editorial_retelling",
-            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+            "analysis": {
+              "title": "AI further reading · unverified analysis",
+              "notice": "Analysis uses only the acquired material below; it is neither independent verification nor a complete account of stakeholder positions.",
+              "language": "en",
+              "method": "source_bound_ai_editorial_example",
+              "independently_verified": false,
+              "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+              "sections": [
+                {
+                  "kind": "background",
+                  "title": "Background context",
+                  "text": "The flight combines station power hardware with microgravity research cargo. NASA describes work involving artificial retinas and heart tissue models; the release outlines planned research rather than establishing clinical efficacy.",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                },
+                {
+                  "kind": "questions",
+                  "title": "Questions to follow",
+                  "text": "Follow-up reporting should distinguish planned cargo delivery, solar-array deployment and published experiment results from completed milestones. The release describes plans rather than proof that these goals have already been met.",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                }
+              ],
+              "producer": "Codex-assisted editorial example; source read in this task, not independent fact checking",
+              "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+              "generated_at": "2026-10-08T14:26:25.453653Z"
+            }
           },
           "provenance": {
             "scope": "publisher_feed_article_text",
             "full_text_acquired": true,
             "translation_status": "editorial_retelling",
             "method": "source_bound_editorial_retelling"
+          },
+          "highlight": {
+            "text": "resupply flight 35",
+            "method": "machine_selected_exact_headline_span"
           }
         }
       ]
