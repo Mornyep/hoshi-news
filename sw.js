@@ -1,7 +1,7 @@
 // Cache only public static site assets and the public editorial snapshot.
 // NEVER cache personal API responses or credentials in this service worker.
-const CACHE_NAME='starnews-public-v43-20261008-v1';
-const ASSETS=['./','./index.html','./app.js','./style.css','./seed.js','./news.json','./manifest.webmanifest','./assets/icon.svg','./assets/icon-180.png'];
+const CACHE_NAME='starnews-public-ai-v44-20261008-v1';
+const ASSETS=['./','./index.html','./app.js','./style.css','./seed.js','./news.json','./ai-briefs.json','./manifest.webmanifest','./assets/icon.svg','./assets/icon-180.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });
@@ -11,7 +11,7 @@ self.addEventListener('activate',event=>{
 self.addEventListener('fetch',event=>{
  const req=event.request;
  if(req.method!=='GET'||new URL(req.url).origin!==self.location.origin)return;
- const url=new URL(req.url),isNews=url.pathname.endsWith('/news.json');
+ const url=new URL(req.url),isNews=url.pathname.endsWith('/news.json')||url.pathname.endsWith('/ai-briefs.json');
  // Limit service worker to listed public assets. Any future authenticated route must not be cached.
  const known=ASSETS.some(asset=>new URL(asset,self.registration.scope).pathname===url.pathname);
  if(!known)return;
