@@ -1,71 +1,225 @@
 {
   "schema": 1,
-  "updated_at": "2026-10-08T03:08:22.236927Z",
-  "notice": "公开 AI 摘录，仅依据新闻源 RSS 标题与简讯。不是独立核验、完整报道或实时灾害警报。",
+  "updated_at": "2026-10-08T04:20:24.704138Z",
+  "notice": "综合新闻 AI 摘录，按公共新闻重要性与类别多样性选材，仅依据 RSS 标题与简讯；非全文核验、独立采访或紧急灾害警报。",
   "editions": [
     {
       "id": "2026-10-08-noon",
       "date": "2026-10-08",
       "session": "noon",
-      "generated_at": "2026-10-08T03:08:22.236927Z",
+      "generated_at": "2026-10-08T04:20:24.704138Z",
       "provider": "groq",
       "model": "openai/gpt-oss-20b",
       "scope": "rss_title_excerpt_only",
       "items": [
         {
-          "id": "f0cfa9e453a6d0",
-          "category": "tech",
-          "categoryLabel": "AI 科技",
-          "title": "Microsoft event debuts new AI-friendly hardware and Windows changes",
-          "published_at": "2026-10-08T00:00:24Z",
-          "summary": "微软发布新 AI 友好硬件和 Windows 更新。",
-          "context": "该活动展示了微软在桌面 AI 领域的硬件与软件改进。",
-          "uncertainty": "具体硬件规格和 Windows 版本细节需进一步确认。",
+          "id": "bbf4005133f832",
+          "category": "world",
+          "categoryLabel": "国际",
+          "title": "サウジアラビアの2つの空港に攻撃 3人死亡 フーシ派が攻撃主張",
+          "published_at": "2026-10-08T04:19:59Z",
+          "is_headline": false,
+          "summary": "沙特两机场遭袭，3人死亡，30多人受伤，胡塞武装宣称负责。",
+          "context": "袭击发生在沙特首都利雅得等机场，涉及伊朗支持的胡塞武装。",
+          "uncertainty": "具体袭击方式及责任方需进一步核实。",
           "source": {
-            "name": "Ars Technica",
-            "url": "https://arstechnica.com/gadgets/2026/10/microsoft-event-debuts-new-ai-friendly-hardware-and-windows-changes/"
+            "name": "NHK 国际",
+            "url": "https://news.web.nhk/newsweb/na/nd-20261008de56411"
           }
         },
         {
-          "id": "fbb1e012c43d81",
+          "id": "2051408e94531d",
+          "category": "japan",
+          "categoryLabel": "日本",
+          "title": "首相“消費税減税 社会保障財源影響与えず” 簗農相続投の考え",
+          "published_at": "2026-10-08T03:29:47Z",
+          "is_headline": false,
+          "summary": "日本首相强调消费税减税不影响社会保障财政。",
+          "context": "议会讨论中，首相提出税收调整方案。",
+          "uncertainty": "减税细节及财政影响需进一步确认。",
+          "source": {
+            "name": "NHK 主要新闻",
+            "url": "https://news.web.nhk/newsweb/na/nd-20261008de56280"
+          }
+        },
+        {
+          "id": "223938daf479fe",
+          "category": "politics",
+          "categoryLabel": "政治",
+          "title": "参議院自民 参議院幹事長人事で石井氏交代の説明を求める声",
+          "published_at": "2026-10-08T04:14:26Z",
+          "is_headline": false,
+          "summary": "参议院自民党更换参议院幹事長石井氏，议员要求解释。",
+          "context": "议员会议上对人事变动提出质询。",
+          "uncertainty": "更换原因及新任者身份需核实。",
+          "source": {
+            "name": "NHK 政治",
+            "url": "https://news.web.nhk/newsweb/na/nd-20261008de56463"
+          }
+        },
+        {
+          "id": "3f49bb22535297",
+          "category": "economy",
+          "categoryLabel": "经济金融",
+          "title": "【きょうのおはBiz 10月8日(木)】 TOPIX 構成銘柄どう変わる",
+          "published_at": "2026-10-08T03:24:44Z",
+          "is_headline": false,
+          "summary": "NHK《おはBiz》报道TOPIX成分股变动。",
+          "context": "节目聚焦股市指数成分调整。",
+          "uncertainty": "具体成分股变动细节需查阅节目内容。",
+          "source": {
+            "name": "NHK 经济",
+            "url": "https://news.web.nhk/newsweb/na/nd-20261008de56269"
+          }
+        },
+        {
+          "id": "afce50d4c0ec12",
+          "category": "society",
+          "categoryLabel": "社会民生",
+          "title": "特殊詐欺の金を暗号資産に交換し資金洗浄か 6人逮捕 警視庁",
+          "published_at": "2026-10-08T03:32:10Z",
+          "is_headline": false,
+          "summary": "大阪警方逮捕6人，涉嫌将诈骗所得转为加密资产洗钱。",
+          "context": "特殊诈骗团伙将400万日元以上资金兑换为加密货币。",
+          "uncertainty": "案件细节及涉案金额需进一步核实。",
+          "source": {
+            "name": "NHK 社会",
+            "url": "https://news.web.nhk/newsweb/na/nd-20261008de56189"
+          }
+        },
+        {
+          "id": "1992c310d7b6f2",
           "category": "science",
           "categoryLabel": "科学",
-          "title": "NASA Sets Coverage for SpaceX 35th Station Resupply Launch, Arrival",
-          "published_at": "2026-10-07T21:16:42Z",
-          "summary": "NASA 与 SpaceX 计划10月13日发射第35次补给任务。",
-          "context": "任务将运送科学设备和国际空间站太阳能板。",
-          "uncertainty": "发射时间、载荷完整性及到达时间需核实。",
+          "title": "NASA’s SpaceX 35th Commercial Resupply Mission Overview",
+          "published_at": "2026-10-07T20:17:16Z",
+          "is_headline": false,
+          "summary": "NASA与SpaceX计划于10月13日或之后发射补给任务。",
+          "context": "该任务将运送科学实验、补给和设备至国际空间站。",
+          "uncertainty": "具体发射时间、任务细节需查阅原文。",
           "source": {
             "name": "NASA",
-            "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/"
+            "url": "https://www.nasa.gov/general/nasas-spacex-35th-commercial-resupply-mission-overview/"
           }
         },
         {
-          "id": "c91f3e5ec8a506",
-          "category": "game",
-          "categoryLabel": "游戏动漫",
-          "title": "Toyota Demos Initial D's Drifting Without Spilling Water Cup in Real Life",
-          "published_at": "2026-10-08T03:00:00Z",
-          "summary": "丰田展示 AE86 在真实赛道上漂移不洒水。",
-          "context": "该演示旨在验证车辆漂移技术的可行性。",
-          "uncertainty": "漂移演示的具体技术细节和安全措施需进一步确认。",
+          "id": "1a950a99b03068",
+          "category": "environment",
+          "categoryLabel": "环境气候",
+          "title": "Next UK banknotes to feature barn owls, bumblebees, puffins and hedgehogs",
+          "published_at": "2026-10-08T04:00:11Z",
+          "is_headline": false,
+          "summary": "英国银行将新一代纸币上印四种本土动物。",
+          "context": "选定的动物包括猫头鹰、大黄蜂、海鸥和刺猬，具体分配到哪种面额尚未决定。",
+          "uncertainty": "何种动物印在何种面额纸币上仍未确定。",
           "source": {
-            "name": "Anime News Network",
-            "url": "https://www.animenewsnetwork.com/interest/2026-10-07/toyota-demos-initial-d-drifting-without-spilling-water-cup-in-real-life/.242567"
+            "name": "The Guardian Environment",
+            "url": "https://www.theguardian.com/business/2026/oct/08/uk-banknotes-new-design-barn-owl-bumblebee-puffin-hedgehog"
           }
         },
         {
-          "id": "188acac79052c7",
+          "id": "127697b01f98af",
+          "category": "sports",
+          "categoryLabel": "体育",
+          "title": "柔道世界選手権で金メダルの阿部きょうだいが帰国 喜び語る",
+          "published_at": "2026-10-07T20:22:30Z",
+          "is_headline": false,
+          "summary": "阿部一二三和妹妹在阿塞拜疆柔道世锦赛夺金后返回日本。",
+          "context": "兄妹两人均获得金牌，回国后表达喜悦。",
+          "uncertainty": "具体比赛项目、获奖细节需核实。",
+          "source": {
+            "name": "NHK 体育",
+            "url": "https://news.web.nhk/newsweb/na/nd-20261008de56217"
+          }
+        },
+        {
+          "id": "bc27f08975972e",
           "category": "tech",
-          "categoryLabel": "AI 科技",
-          "title": "“Software is over”: Bold AI developer takes aim at Adobe with open source clones",
-          "published_at": "2026-10-07T21:56:42Z",
-          "summary": "开源 AI 开发者推出 Adobe 替代方案。",
-          "context": "这些 Creative Cloud 克隆软件免费且尚未完成。",
-          "uncertainty": "兼容性、功能完整性及未来更新计划需核实。",
+          "categoryLabel": "科技产业",
+          "title": "PA measles outbreak tops 1,000 cases, largest since disease was eliminated",
+          "published_at": "2026-10-07T20:01:14Z",
+          "is_headline": false,
+          "summary": "费城州出现1,066例麻疹病例，创自消除以来最大规模。",
+          "context": "该数字为与疫情相关的病例数。",
+          "uncertainty": "是否为确诊病例、是否包含疑似病例需查原文。",
           "source": {
             "name": "Ars Technica",
-            "url": "https://arstechnica.com/ai/2026/10/software-is-over-bold-ai-developer-takes-aim-at-adobe-with-open-source-clones/"
+            "url": "https://arstechnica.com/health/2026/10/pa-measles-outbreak-tops-1000-cases-largest-since-disease-was-eliminated/"
+          }
+        },
+        {
+          "id": "4814adbb1ffae0",
+          "category": "game",
+          "categoryLabel": "游戏动漫",
+          "title": "Muramasa: Revenant Blades is the Definitive Remaster You've Been Waiting For",
+          "published_at": "2026-10-08T04:00:00Z",
+          "is_headline": false,
+          "summary": "《Muramasa: Revenant Blades》被称为备受期待的完整重制版。",
+          "context": "该游戏已重新制作，画面和玩法得到提升。",
+          "uncertainty": "具体改动细节、发行平台等需查原文。",
+          "source": {
+            "name": "Anime News Network",
+            "url": "https://www.animenewsnetwork.com/convention/2026/tokyo-game-show/muramasa-revenant-blades-is-the-definitive-remaster-youve-been-waiting-for/.242162"
+          }
+        },
+        {
+          "id": "72e3d27ce53073",
+          "category": "world",
+          "categoryLabel": "国际",
+          "title": "トランプ大統領 中間選挙前のイラン攻撃を検討か 米報道",
+          "published_at": "2026-10-08T04:16:33Z",
+          "is_headline": false,
+          "summary": "特朗普可能在中期选举前考虑对伊朗发动攻击",
+          "context": "美国多家媒体报道，特朗普正在评估在11月中期选举前对伊朗采取军事行动。",
+          "uncertainty": "需核实特朗普是否确实在考虑此行动，及其来源可靠性。",
+          "source": {
+            "name": "NHK 国际",
+            "url": "https://news.web.nhk/newsweb/na/nd-20261008de56415"
+          }
+        },
+        {
+          "id": "23d4d3fa7c8a8b",
+          "category": "world",
+          "categoryLabel": "国际",
+          "title": "Teenager becomes first person to have testicular tissue transplant in UK",
+          "published_at": "2026-10-08T04:00:10Z",
+          "is_headline": false,
+          "summary": "英国首例睾丸组织移植手术成功",
+          "context": "手术为因化疗导致无精子者提供生育希望，首次在英国完成。",
+          "uncertainty": "需确认手术细节、成功率及后续生育可能性。",
+          "source": {
+            "name": "The Guardian World",
+            "url": "https://www.theguardian.com/society/2026/oct/08/teenager-first-person-testicular-tissue-transplant-uk-cancer-chemotherapy-fertility"
+          }
+        },
+        {
+          "id": "62f21803e7c994",
+          "category": "world",
+          "categoryLabel": "国际",
+          "title": "Sardinian village where more women reach 100 may be new centenarian ‘blue zone’",
+          "published_at": "2026-10-08T04:00:09Z",
+          "is_headline": false,
+          "summary": "撒丁岛博洛塔纳村女性百岁率高，可能成为新蓝区",
+          "context": "研究显示70岁女性中13%活到100岁，提示该地区女性寿命长。",
+          "uncertainty": "需核实研究方法、样本量及是否确认为蓝区。",
+          "source": {
+            "name": "The Guardian World",
+            "url": "https://www.theguardian.com/world/2026/oct/08/bolotana-sardinia-centenarians-blue-zone"
+          }
+        },
+        {
+          "id": "e94cfd61d171ed",
+          "category": "environment",
+          "categoryLabel": "环境气候",
+          "title": "This is one of Norway’s most pristine fjords. So why is it being used as a dumping site for mine waste?",
+          "published_at": "2026-10-08T04:00:09Z",
+          "is_headline": false,
+          "summary": "挪威菲尔德峡湾被批准排放矿山废料",
+          "context": "政府已批准矿业公司将废料排入菲尔德峡湾，尽管已有17年抗议与最高法院裁决。",
+          "uncertainty": "需核实许可细节、废料种类及对环境影响评估。",
+          "source": {
+            "name": "The Guardian Environment",
+            "url": "https://www.theguardian.com/environment/2026/oct/08/norway-environment-nordic-mining-waste-pollution-fjord-dumping-salmon"
           }
         }
       ]
