@@ -1,5 +1,5 @@
-const CACHE_NAME = 'starnews-onescreen-20261008-v3';
-const ASSETS=['./','./index.html','./news.json','./manifest.webmanifest','./assets/icon.svg'];
+const CACHE_NAME = 'starnews-onescreen-20261008-v4';
+const ASSETS=['./','./index.html','./news.json','./manifest.webmanifest','./assets/icon.svg','./assets/icon-180.png'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });
