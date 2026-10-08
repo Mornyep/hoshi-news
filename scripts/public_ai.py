@@ -158,7 +158,7 @@ def retrieve_feeds(now=None, opener=None):
 
 
 def select_provider(env=None):
-    env = env or os.environ
+    env = os.environ if env is None else env
     preferred = env.get("AI_PROVIDER", "auto").lower().strip()
     candidates = ("groq", "gemini", "openrouter") if preferred == "auto" else (preferred,)
     keys = {"groq": "GROQ_API_KEY", "gemini": "GEMINI_API_KEY", "openrouter": "OPENROUTER_API_KEY"}
