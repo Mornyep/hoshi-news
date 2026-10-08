@@ -12,8 +12,8 @@ from unittest.mock import patch
 
 NOW=dt.datetime(2026,10,8,8,0,tzinfo=dt.timezone.utc)
 def story(locale='ja',n=0,category='world'):
-    return {'id':f'{locale}-{n}','title':'NHK 12 people on 2026-10-08','excerpt':'NHK reports 12 people. No further confirmed details.',
-            'url':f'https://news.web.nhk/articles/{locale}-{n}','publisher':'NHK','category':category,'language':locale,
+    return {'id':f'{locale}-{n}','title':'NHK 12 people on 2026-10-08'+(f' item {n}' if n else ''),'excerpt':'NHK reports 12 people. No further confirmed details. '*6,
+            'url':f'https://news.web.nhk/articles/{locale}-{n}','publisher':('NHK' if n==0 else f'Outlet {n%3}'),'category':category,'language':locale,
             'published_at':'2026-10-08T07:00:00Z','retrieved_at':'2026-10-08T08:00:00Z'}
 def translation(ref,title='NHK reports 12 people on 2026-10-08',summary='NHK reports 12 people; further details are unavailable.'):
     return {'id':ref['id'],'title':title,'summary':summary}

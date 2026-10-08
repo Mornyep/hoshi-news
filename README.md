@@ -53,3 +53,30 @@ node tests/browser-editions.cjs http://127.0.0.1:8877 --fixture
 - [Supabase 邮箱登录](https://supabase.com/docs/guides/auth/auth-email-passwordless)
 - [Cloudflare Workers 价格](https://developers.cloudflare.com/workers/platform/pricing/)
 - [Cloudflare D1 价格](https://developers.cloudflare.com/d1/platform/pricing/)
+
+### Evidence depth and reading positions (2026-10-08)
+
+The main edition now selects acquired, reusable article bodies before substantial
+RSS excerpts. An RSS excerpt remains an excerpt: it never implies full-text
+access. Thin excerpts appear in a separate original-language brief rail (maximum
+four), not as invented long archives. Selection uses acquired text rather than
+model-generated length: five paragraphs and 600 characters for article bodies;
+140 CJK characters or 280 predominantly Latin characters for substantial excerpts.
+A main edition has at most six stories, three per publisher, and one acquired
+article per publisher. Insufficient material can produce fewer main stories or
+briefs only, without old morning content used as filler.
+
+Conservative same-event associations preserve up to four attributed sources.
+Same language/category, close publication times, matching figures and explicit
+Latin entities are required; CJK headlines must match after normalization.
+This is a duplicate-report association, not independent verification, and does
+not establish a persistent event timeline or merge across languages. Each source's
+original excerpt, timestamp and link remain separate in the reading archive.
+
+Reading positions are optional local browser data, separated by article URL,
+language and reading view. Reopening/reloading and viewport changes restore the
+fractional scroll position; changed article content starts at the beginning.
+Records contain only URL hashes, content fingerprints, ratios and timestamps,
+with a 200-record / 90-day bound. They are not uploaded or account-synchronized.
+Temporary mode and local-data reset clear them. Shared browser profiles still
+share local data; server-side account isolation does not isolate guest storage.

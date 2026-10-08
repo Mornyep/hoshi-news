@@ -447,3 +447,13 @@ html.modal-open{overflow-y:hidden}
 .reader-original-top{color:var(--accent);font-size:12px;font-weight:800;padding:10px}.source-timestamp,.archive-stamp{display:block;font-size:11px;line-height:1.7;margin:8px 0;color:#65625b}.archive-rights{display:inline-block;font-size:12px;color:#3d551a;margin:10px 0;text-decoration:underline}
 
 .archive-btn{background:var(--accent);color:#111;font:800 11px system-ui,sans-serif;padding:10px;white-space:nowrap;flex-shrink:0}
+
+/* Evidence depth, brief rail and optional local reading progress. */
+.brief-desk{margin:24px clamp(16px,3vw,44px) 90px;padding:24px;border:1px solid #7775;background:var(--surface,#18191c)}
+.brief-desk h2{font-size:22px;margin:0 0 8px}.brief-desk>p{font-size:13px;line-height:1.7;color:#aaa}
+#briefList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.brief-card{padding:16px;background:#ffffff08;border:1px solid #7775;overflow-wrap:anywhere}.brief-card summary{cursor:pointer;font-weight:800;line-height:1.6}.brief-card p{font-size:14px;line-height:1.8}.brief-card a{color:var(--accent);font-size:13px}.brief-card small{display:block;margin-top:9px;color:#999}
+.event-evidence{border-top:2px solid #bbb;margin-top:28px;padding-top:12px}.event-source{padding:16px;background:#e8e5dc;margin:12px 0}.event-source a{color:#242719;font-weight:800;line-height:1.6;overflow-wrap:anywhere}.event-source small{display:block;font-size:11px;line-height:1.6;color:#666;margin:8px 0}
+.reader-position{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:11px;color:#65645d;padding:8px 0 14px;border-bottom:1px solid #ccc}.reader-position progress{width:70px;height:5px;accent-color:#6c7828}.reader-position button{margin-left:auto;background:#e3e0d7;color:#20221a;padding:8px 10px;min-height:34px;font-size:11px;font-weight:800}
+@media(max-width:600px){#briefList{grid-template-columns:1fr}.brief-desk{padding:18px}.reader-position{gap:6px}.reader-position progress{width:45px}}
+
+.content-evidence{display:block;font-size:11px;line-height:1.7;margin:9px 0;color:#687039;font-weight:700}

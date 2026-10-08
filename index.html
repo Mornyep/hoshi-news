@@ -98,6 +98,7 @@
     <div class="more-list" id="moreList"></div>
     <div class="more-privacy">✳ 共用事实，不共用个人数据。这里没有登录、服务器收藏或个人 AI 密钥。</div>
   </section>
+  <section class="brief-desk" id="briefDesk" hidden aria-labelledby="briefHeading"><h2 id="briefHeading">简讯</h2><p id="briefNotice"></p><div id="briefList"></div></section>
   <footer class="bottom-bar"><span class="bottom-title"><span>✳</span> STARNEWS / PUBLIC BETA</span><div class="bottom-center"><span class="bottom-dot"></span> <span id="bottomEdition">早间情报 · 5 条</span></div><button type="button" data-action="saved-only" id="favoritesButton" aria-pressed="false"><span>☆</span> 收藏</button></footer>
 
   <div class="overlay" id="readerOverlay" hidden><div class="backdrop" data-action="close-reader"></div><section class="reader" role="dialog" aria-modal="true" aria-labelledby="readerTitle"><header class="reader-top"><button type="button" data-action="close-reader" aria-label="返回情报台">← 返回</button><span>◈ INTELLIGENCE FILE</span><button type="button" data-action="save" id="readerSave" aria-label="收藏新闻">☆</button></header><div class="reader-scroll"><div class="reader-cover"><span class="reader-cover-code" id="readerCode">FILE_01</span><span class="reader-cover-art" id="readerArt">01</span><h2 id="readerTitle">标题</h2><span class="reader-cover-time" id="readerDate">2026.10.08</span></div><div class="reader-lenses"><button type="button" data-lens="brief" class="active">01 / 速览</button><button type="button" data-lens="personal">02 / 与你有关</button><button type="button" data-lens="verify">03 / 核查证据</button></div><div class="reader-copy" id="readerCopy"></div><div class="sources"><div class="sources-heading">SOURCE LOG <span>↗ 原文可追溯</span></div><div id="readerSources"></div></div><button class="reader-analysis" type="button" data-personal-ai="analyze">AI · 分析这条新闻</button><div class="reader-footer-actions"><button type="button" data-action="prev">← 上一条</button><button type="button" data-action="next">下一条 →</button></div><p class="source-disclaimer">2026 年 10 月 8 日上午的新闻快照。并非实时新闻、官方紧急警报或自动更新服务。</p></div></section></div>
@@ -119,6 +120,7 @@
 </div>
 <script src="./seed.js"></script>
 <script src="./locales.js"></script>
+<script src="./reading-position.js"></script>
 <script src="./app.js"></script>
 <script src="./personal-config.js"></script>
 <script src="./personal-ai.js"></script>

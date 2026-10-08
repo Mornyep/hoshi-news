@@ -348,7 +348,7 @@ def recent_edition_ids(now, output=OUT, locale=None):
         today = now.astimezone(JST).strftime("%Y-%m-%d")
         return {story["id"] for edition in current.get("editions", [])
                 if edition.get("date") == today and (locale is None or edition.get("locale", "zh-CN") == locale)
-                for story in edition.get("items", [])
+                for story in [*edition.get("items", []), *edition.get("briefs", [])]
                 if isinstance(story, dict) and isinstance(story.get("id"), str)}
     except (OSError, ValueError, TypeError, KeyError):
         return set()
@@ -384,7 +384,7 @@ def publish_edition(edition, output=OUT):
     all_editions.sort(key=lambda x: x.get("generated_at", ""), reverse=True)
     # Keep a bounded public cache only, not any browsing history or profile.
     current = {"schema": 1, "updated_at": edition["generated_at"],
-               "notice": "综合新闻 AI 摘录，按公共新闻重要性与类别多样性选材，仅依据 RSS 标题与简讯；非全文核验、独立采访或紧急灾害警报。",
+               "notice": "公共新闻按取得的材料充分程度、语言及类别多样性选材；正文与 RSS 摘录范围逐篇标注。非独立核验、采访或紧急灾害警报。",
                "editions": all_editions[:36]}
     output.write_text(json.dumps(current, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return len(current["editions"])

@@ -11,6 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 import public_ai as core
 import source_text
 import editorial_archives
+import editorial_quality as quality
 
 LOCALES = ('zh-CN', 'zh-TW', 'ja', 'en')
 MAX_LOCALE_ITEMS = 6
@@ -68,18 +69,31 @@ def retrieve_pool(now=None, opener=None):
 
 def select_locale_items(pool,locale,excluded_ids=(),limit=MAX_LOCALE_ITEMS):
     if locale not in LOCALES: raise ValueError('Unsupported locale')
+    if not 1<=limit<=MAX_LOCALE_ITEMS:raise ValueError('Invalid locale selection limit')
     eligible=[x for x in pool if x['id'] not in set(excluded_ids)]
+    # Main reading excludes thin excerpts. Language remains a preference within
+    # each evidence tier; an acquired article outranks a short local snippet.
+    eligible=[x for x in eligible if quality.depth(x)!='brief']
+    eligible.sort(key=lambda x:(quality.depth(x)=='article',x['language']==locale,x['published_at']),reverse=True)
     local=[x for x in eligible if x['language']==locale]
     cross=[x for x in eligible if x['language']!=locale]
     def editorial(items):
         return core.select_editorial_items({k:[x for x in items if x['category']==k] for k in core.CATEGORIES})
     # Reserve one slot for a major cross-language headline/world report when available.
-    chosen=editorial(local)[:max(1,limit-1)]
+    chosen=[]
+    def can_pick(item):
+        return not any(core.same_story(item,x) for x in chosen) and sum(x['publisher']==item['publisher'] for x in chosen)<3 and not (quality.depth(item)=='article' and any(quality.depth(x)=='article' and x['publisher']==item['publisher'] for x in chosen))
+    for item in eligible:
+        if quality.depth(item)=='article' and not any(x['publisher']==item['publisher'] for x in chosen):chosen.append(item)
+        if len(chosen)>=min(2,limit):break
+    for item in editorial(local):
+        if len(chosen)>=max(1,limit-1):break
+        if can_pick(item):chosen.append(item)
     important=editorial([x for x in cross if x['category'] in ('headlines','world','japan')])
     longreads=[x for x in eligible if x.get('article_text')]
     for item in longreads[:1]+important+editorial(local)+editorial(cross):
         if len(chosen)>=limit: break
-        if not any(core.same_story(item,x) for x in chosen): chosen.append(item)
+        if can_pick(item): chosen.append(item)
     return chosen
 
 
@@ -198,7 +212,12 @@ def make_item(ref,locale,answer=None):
             'title':title,'summary':summary,'context':variant['context'],'uncertainty':variant['uncertainty'],
             'source':source,'localized':{locale:variant},'archive':variant['archive'],
             'provenance':{'scope':variant['archive']['scope'],'full_text_acquired':variant['archive']['full_text_acquired'],'translation_status':status}}
-    return editorial_archives.apply_editorial(item,ref,locale)
+    item=editorial_archives.apply_editorial(item,ref,locale)
+    sources=quality.source_records(ref)
+    item.update(evidence_depth=quality.depth(ref),event={'id':ref.get('event_id',ref['id']),
+        'association':'conservative_headline_match' if len(sources)>1 else 'single_report',
+        'sources':sources,'independently_verified':False})
+    return item
 
 
 def translate_batch(refs,locale,provider,key,caller=core.request_json):
@@ -250,13 +269,21 @@ def translate_batch(refs,locale,provider,key,caller=core.request_json):
 
 def build_editions(pool,coverage,now,provider=None,key=None,caller=core.request_json,excluded_ids=None):
     editions=[]
+    pool=quality.group_events(pool)
     for locale in LOCALES:
         refs=select_locale_items(pool,locale,(excluded_ids or {}).get(locale,()))
-        if not refs: continue
+        excluded=set((excluded_ids or {}).get(locale,()))
+        briefs=sorted((x for x in pool if quality.depth(x)=='brief' and x['id'] not in excluded),key=lambda x:(x['language']==locale,x['category']=='headlines',x['published_at']),reverse=True)[:4]
+        if not refs and not briefs: continue
         items,model=translate_batch(refs,locale,provider,key,caller)
         edition=core.pack_edition(items,model,provider or 'rss',now,locale=locale)
+        # Briefs remain attributed source-language snippets; no additional API
+        # request and no invented background to fill a publication quota.
+        edition['briefs']=[make_item(x,locale) for x in briefs]
+        edition['editorial_policy']='evidence_depth_first_v1'
         if any(item['archive']['full_text_acquired'] for item in items): edition['scope']='mixed_rss_and_publisher_feed_article_text'
         edition['coverage']={'feeds':coverage,'preferred_language':locale,'preferred_items':sum(x['language']==locale for x in refs),
-                            'translation_fallbacks':sum(x['localized'][locale]['status']=='fallback' for x in items)}
+                            'translation_fallbacks':sum(x['localized'][locale]['status']=='fallback' for x in items),
+                            'brief_items':len(briefs),'main_items':len(items)}
         editions.append(edition)
     return editions

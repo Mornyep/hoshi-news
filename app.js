@@ -5,6 +5,8 @@
   const $ = q => app.querySelector(q);
   const $$ = q => Array.from(app.querySelectorAll(q));
   const locales=window.StarnewsLocales;
+  const positions=window.StarnewsReading;
+  let readerPosition=null, restoringPosition=false, positionTimer=null, readerReturn=null;
   const supported=Object.keys(locales.names);
   const detectLocale=()=>{for(const language of navigator.languages||[navigator.language]){if(/^zh/i.test(language))return /TW|HK|Hant/i.test(language)?'zh-TW':'zh-CN';if(/^ja/i.test(language))return 'ja';if(/^en/i.test(language))return 'en';}return 'en';};
   let locale=detectLocale();
@@ -101,15 +103,16 @@
   function latestAISession(){
     const day=jstDay();
     const matches=(Array.isArray(publicAI.editions)?publicAI.editions:[])
-      .filter(e=>e&&e.date===day&&['morning','noon','evening'].includes(e.session)&&Array.isArray(e.items)&&e.items.length)
+      .filter(e=>e&&e.date===day&&['morning','noon','evening'].includes(e.session)&&Array.isArray(e.items)&&(e.items.length||e.briefs?.length))
       .sort((a,b)=>String(b.generated_at||'').localeCompare(String(a.generated_at||'')));
     return matches.find(e=>e.locale===locale)?.session||matches[0]?.session||'morning';
   }
   function aiEditionForSession(session){
-    const matches=(Array.isArray(publicAI.editions)?publicAI.editions:[]).filter(e=>e&&e.date===jstDay()&&e.session===session&&Array.isArray(e.items)&&e.items.length);
+    const matches=(Array.isArray(publicAI.editions)?publicAI.editions:[]).filter(e=>e&&e.date===jstDay()&&e.session===session&&Array.isArray(e.items)&&(e.items.length||e.briefs?.length));
     return matches.find(e=>e.locale===locale)||matches.find(e=>e.items.some(s=>s.localized?.[locale]))||matches[0];
   }
   function renderAI(){
+    renderBriefs(aiEditionForSession(aiSession));
     $$('#aiDesk [data-ai-session]').forEach(b=>{
       const active=b.dataset.aiSession===aiSession;
       b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
@@ -148,7 +151,7 @@
     const categories=new Set(edition.items.map(s=>s.category));
     txt('#aiStatus',sessionName(aiSession)+' · '+t('综合新闻')+' · '+edition.items.length);
     txt('#aiGenerated',edition.date+' · '+(edition.provider||'PUBLIC')+' / '+(edition.model||'AI'));
-    txt('#aiIntro','先展示综合头条与有公共价值的重要领域，再考虑个人兴趣。AI 仅整理原报道标题与简讯，不代表已阅读全文。');
+    txt('#aiIntro',edition.editorial_policy?'优先展示资料充分的报道；短消息单列，正文获取状态以档案标注为准。':'先展示综合头条与有公共价值的重要领域，再考虑个人兴趣。AI 仅整理原报道标题与简讯，不代表已阅读全文。');
     txt('#aiEditNote',categories.size+' · '+t('综合头条优先 · 各类别适当兼顾 · 兴趣只影响次序'));
     const ordered=edition.items.map((raw,index)=>({s:localizeStory(raw),index})).sort((a,b)=>{
       const rank=x=>x.s.is_headline||x.s.category==='headlines'?2:(state.interests.has(x.s.category)?1:0);
@@ -173,7 +176,7 @@
         mk('div','ai-story-section-label','UNCERTAINTY / 待核实'),mk('p','',s.uncertainty||'仅基于 RSS 简讯，尚需核实更多细节。'));
       const source=mk('a','ai-source','↗ '+(s.source.name||'公开新闻来源')+' · '+t('阅读原文'));
       source.href=safe;source.target='_blank';source.rel='noopener noreferrer';more.append(source);
-      appendArchive(more,s.archive);
+      appendArchive(more,s.archive);appendEventEvidence(more,s.event);
       card.append(more);list.append(card);
     });
     if(!list.childElementCount)list.append(mk('p','ai-no-category','这一类别本期尚无可用报道。换个栏目看看。'));
@@ -231,22 +234,22 @@
     const payload={version:43,locale,onboarded:state.onboarded,motion:state.motion,spoiler:state.spoiler,largeText:state.largeText,theme:state.theme,layout:state.layout,interests:[...state.interests],saved:[...state.saved]};
     try{localStorage.setItem(storageKey,JSON.stringify(payload));}catch(e){}
   }
-  function forget(){try{localStorage.removeItem(storageKey);localStorage.removeItem(oldStorageKey);}catch(e){}}
-  function publicItems(edition){
+  function forget(){positions?.clear();try{localStorage.removeItem(storageKey);localStorage.removeItem(oldStorageKey);}catch(e){}}
+  function publicItems(edition,includeBriefs=false){
     if(!edition||!Array.isArray(edition.items))return [];
     const symbols={headlines:'✳',world:'◎',japan:'JP',politics:'⚑',economy:'↗',society:'◇',health:'✚',science:'SCI',environment:'♧',culture:'✳',sports:'◩',tech:'TECH',game:'GAME'};
-    return edition.items.filter(s=>typeof s.title==='string'&&typeof s.summary==='string'&&validUrl(s.source?.url)).map(s=>{
+    return [...edition.items,...(includeBriefs&&Array.isArray(edition.briefs)?edition.briefs:[])].filter(s=>typeof s.title==='string'&&typeof s.summary==='string'&&validUrl(s.source?.url)).map(s=>{
       s=localizeStory(s);
       const category=t(interests.find(i=>i.id===s.category)?.label||'综合头条'),session=sessionName(edition.session);
       const text=(eyebrow,title,paragraphs)=>({eyebrow,title,paragraphs});
       return {
         id:'public:'+edition.date+':'+edition.session+':'+(s.id||s.source.url),
-        public:true,archive:s.archive,originalLanguage:s.originalLanguage,localeFallback:s.localeFallback,is_headline:Boolean(s.is_headline||s.category==='headlines'),
+        public:true,event:s.event,evidenceDepth:s.evidence_depth,archive:s.archive,originalLanguage:s.originalLanguage,localeFallback:s.localeFallback,is_headline:Boolean(s.is_headline||s.category==='headlines'),
         title:s.title,category:s.category,categoryLabel:category,art:symbols[s.category]||'✳',tone:'lime',
         channel:session+' / '+category,priority:s.is_headline?'综合头条':category,
         headline:headlineLines(s.title),dek:s.summary,
         published:edition.date+' · '+session,
-        sources:[{name:s.source.name||'公开报道',url:s.source.url,published_at:s.source.published_at||s.published_at,retrieved_at:s.source.retrieved_at}],
+        sources:(s.event?.sources?.length?s.event.sources:[{name:s.source.name||'公开报道',url:s.source.url,published_at:s.source.published_at||s.published_at,retrieved_at:s.source.retrieved_at}]),
         reading:{
           brief:text('01 // RSS / AI',s.title,[s.summary,s.context||'请阅读原始报道了解更多背景。']),
           personal:text('02 // CONTEXT',s.title,[s.context||s.summary]),
@@ -267,7 +270,7 @@
     return lines;
   }
   function collectionItems(){
-    const pool=[...data.items,...[...publicAI.editions,...publicArchive.editions].slice().sort((a,b)=>Number(a.locale===locale)-Number(b.locale===locale)).flatMap(publicItems)];
+    const pool=[...data.items,...[...publicAI.editions,...publicArchive.editions].slice().sort((a,b)=>Number(a.locale===locale)-Number(b.locale===locale)).flatMap(e=>publicItems(e,true))];
     return Array.from(new Map(pool.map(s=>[s.id,s])).values());
   }
   function getItems(){return (editionItems||data.items).map(localizeItem);}
@@ -279,7 +282,7 @@
     const query=state.query.toLocaleLowerCase(locale);
     const all=getItems().map((x,i)=>i).filter(i=>!query||[getItems()[i].title,getItems()[i].dek,...(getItems()[i].sources||[]).map(x=>x.name)].join(' ').toLocaleLowerCase(locale).includes(query));
     // Local ranking only. Public news, source links and original facts are unchanged.
-    const score=i=>getItems()[i].is_headline?2:(state.interests.has(getItems()[i].category)?1:0);
+    const score=i=>(getItems()[i].archive?.full_text_acquired?10:0)+(getItems()[i].is_headline?2:(state.interests.has(getItems()[i].category)?1:0));
     const ordered=all.sort((a,b)=>score(b)-score(a)||a-b);
     return state.filterSaved?ordered.filter(i=>state.saved.has(getItems()[i].id)):ordered;
   }
@@ -357,6 +360,8 @@
     txt('#readText',view.paragraphs.slice(0,1).join('\n\n'));
     let notice=$('#contentLanguageNotice');if(!notice){notice=mk('small','language-fallback');notice.id='contentLanguageNotice';$('#decodeArticle').append(notice);}notice.hidden=!s.localeFallback;notice.textContent=s.localeFallback?fallbackText(s.originalLanguage):'';
     $('#heroHeadline').lang=s.localeFallback?s.originalLanguage:locale;
+    let evidence=$('#contentEvidence');if(!evidence){evidence=mk('small','content-evidence');evidence.id='contentEvidence';$('#decodeArticle').append(evidence);}
+    evidence.textContent=t(s.archive?.full_text_acquired?'正文资料整理':!s.public?'据来源整理':s.evidenceDepth==='brief'?'短简讯':'RSS 摘录')+(s.event?.sources?.length>1?' · '+s.event.sources.length+' '+t('来源对照'):'');
     $('#decodeArticle').scrollTop=0;
     const sources=(s.sources||[]).filter(src=>validUrl(src.url));
     txt('#sourceName',sources.length?sources[0].name:'尚无可核实链接');
@@ -374,6 +379,7 @@
     if(state.reader)renderReader();
   }
   function renderReader(){
+    saveReaderPosition();
     const s=item();const view=reading(s);
     let original=$('#readerOriginalTop');if(!original){original=mk('a','reader-original-top');original.id='readerOriginalTop';original.target='_blank';original.rel='noopener noreferrer';$('#readerOverlay .reader-top span').replaceWith(original);}
     const sourceURL=validUrl(s.sources?.[0]?.url);original.hidden=!sourceURL;if(sourceURL)original.href=sourceURL;else original.removeAttribute('href');original.textContent='↗ '+t('阅读原文');
@@ -385,6 +391,8 @@
     // A single title lives in the cover; source-bounded sections form the reading body.
     if(s.archive&&state.lens==='brief')appendArchive(body,s.archive);
     else{body.append(mk('span','',view.eyebrow));view.paragraphs.forEach(p=>body.append(mk('p','',p)));}
+    body.prepend(mk('small','content-evidence',t(s.archive?.full_text_acquired?'正文资料整理':!s.public?'据来源整理':s.evidenceDepth==='brief'?'短简讯':'RSS 摘录')));
+    appendEventEvidence(body,s.event);
     const src=$('#readerSources');src.replaceChildren();
     (s.sources||[]).forEach(source=>{
       const safe=validUrl(source.url);if(!safe)return;
@@ -396,13 +404,14 @@
     txt('.source-disclaimer',s.archive?.full_text_acquired?s.archive.notice:s.public?'本条由公开 RSS 标题与简讯整理，未经独立全文核验；不是实时灾害警报。':'2026-10-08 · ARCHIVE · '+t('仅供新闻阅读，不是实时灾害警报'));
     updateTabs();
     $('#readerSave').textContent=state.saved.has(s.id)?'★':'☆';
+    restoreReaderPosition();
   }
   function setIndex(next, animate=true){
     const available=indices();
     if(!available.length){toast('还没有收藏的新闻');return;}
     if(!available.includes(next))return;
     if(state.index===next&&animate){bounce();return;}
-    state.index=next;state.lens='brief';renderMain();
+    saveReaderPosition();state.index=next;state.lens='brief';renderMain();
     if(animate)bounce();
     const selected=$(`#mobileStoryStrip button[data-story="${next}"]`);
     if(selected){const strip=$('#mobileStoryStrip');strip.scrollTo({left:selected.offsetLeft-strip.offsetLeft-12,behavior:state.motion?'smooth':'instant'});}
@@ -413,9 +422,8 @@
   }
   function setLens(lens){
     if(!['brief','personal','verify'].includes(lens))return;
-    state.lens=lens;
+    saveReaderPosition();state.lens=lens;
     renderMain();
-    if(state.reader){$('#readerCopy').parentElement.scrollTop=0;}
   }
   function save(){
     const id=item().id;
@@ -445,7 +453,8 @@
     const publicEdition=!archive?aiEditionForSession(edition):null;
     const mapped=publicItems(publicEdition);
     editionItems=archive?collectionItems():(mapped.length?mapped:null);
-    const consoleMode=!aiOpen&&(archive||mapped.length>0||edition==='morning');
+    const consoleMode=!aiOpen&&(archive||mapped.length>0||(!publicEdition&&edition==='morning'));
+    renderBriefs(archive||aiOpen?null:publicEdition);
     state.index=archive?Math.max(0,getItems().findIndex(s=>s.id===previousId)):firstAvailable();
     if(!indices().includes(state.index))state.index=firstAvailable();
     state.lens='brief';
@@ -468,14 +477,14 @@
     }else{
       const e=edition==='breaking'?{...placeholders.breaking,title:t('紧急播报')+'\n'+t('未连接实时源。')}:{
         num:edition==='noon'?'02':'03',eyebrow:'AWAITING / '+edition.toUpperCase(),
-        title:sessionName(edition)+'\n'+t('简报尚未发布。'),
+        title:sessionName(edition)+'\n'+t(publicEdition?.briefs?.length?'本期暂无充分资料':'简报尚未发布。'),
         desc:'本期尚无已发布的公共新闻。你可以切换其他时段或查看综合新闻；这里不会用晨报代替本期内容。'
       };
-      txt('#emptyArt',e.num);txt('#emptyEyebrow',e.eyebrow);txt('#emptyCopy',e.desc);
+      txt('#emptyArt',e.num);txt('#emptyEyebrow',e.eyebrow);txt('#emptyCopy',publicEdition?.briefs?.length?'本期只有短简讯，可在下方阅读；完整档案仍可从顶部进入。':e.desc);
       const heading=$('#emptyHeading');heading.replaceChildren();
       e.title.split('\n').forEach((line,i)=>{if(i)heading.append(document.createElement('br'));heading.append(document.createTextNode(line));});
-      txt('#bottomEdition',edition==='breaking'?'不提供实时报警':sessionName(edition)+' · '+t('简报尚未发布。'));
-      txt('#snapshotStatus',edition==='breaking'?'NOT A LIVE ALERT':'等待本期公开简报');
+      txt('#bottomEdition',edition==='breaking'?'不提供实时报警':sessionName(edition)+' · '+t(publicEdition?.briefs?.length?'简讯':'简报尚未发布。'));
+      txt('#snapshotStatus',edition==='breaking'?'NOT A LIVE ALERT':publicEdition?.briefs?.length?t('简讯'):'等待本期公开简报');
     }
     if(window.scrollY>0)window.scrollTo({top:0,behavior:'instant'});
   }
@@ -483,16 +492,20 @@
     if($('#hero').hidden)return;
     state.editionChosen=true;
     state.lastFocus=document.activeElement;
+    readerReturn={page:window.scrollY,decode:$('#decodeArticle').scrollTop};
     state.reader=true;$('#readerOverlay').hidden=false;syncModal();
-    renderReader();$('.reader-scroll').scrollTop=0;
+    renderReader();
     $('.reader-top [data-action="close-reader"]').focus({preventScroll:true});
   }
   function closeReader(){
+    saveReaderPosition();readerPosition=null;clearTimeout(positionTimer);
     state.reader=false;$('#readerOverlay').hidden=true;syncModal();
+    if(readerReturn){window.scrollTo({top:readerReturn.page,behavior:'instant'});$('#decodeArticle').scrollTop=readerReturn.decode;}
     if(state.lastFocus?.isConnected)state.lastFocus.focus({preventScroll:true});
   }
   function renderCurrentView(){
     updateTheme();
+    renderBriefs(state.archiveView||aiOpen?null:aiEditionForSession(state.edition));
     if(aiOpen){renderAI();txt('#bottomEdition',sessionName(aiSession)+' · '+t('综合新闻'));}
     else if(!$('#hero').hidden)renderMain();
   }
@@ -509,6 +522,7 @@
     document.documentElement.classList.toggle('modal-open',Boolean(modal));
   }
   document.addEventListener('focusin',event=>{
+    if(app.inert)return;
     const modal=activeModal();
     if(modal&&!modal.contains(event.target))modalControls(modal)[0]?.focus({preventScroll:true});
   });
@@ -569,7 +583,7 @@
     $('.settings-btn').focus({preventScroll:true});
   }
   function resetGuest(){
-    forget();state.interests.clear();state.saved.clear();state.theme='auto';state.layout='overdrive';
+    forget();positions?.temporary(true);readerPosition=null;state.interests.clear();state.saved.clear();state.theme='auto';state.layout='overdrive';
     state.motion=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     state.spoiler=true;state.largeText=false;state.onboarded=false;state.privateMode=true;
     state.filterSaved=false;state.lens='brief';state.index=0;locale=detectLocale();translateInterface();
@@ -619,6 +633,7 @@
     if(action==='prev'){changeStory(-1);return;}
     if(action==='next'){changeStory(1);return;}
     if(action==='save'){save();return;}
+    if(action==='restart-reading'){positions?.reset(readerPosition?.key);$('.reader-scroll').scrollTop=0;saveReaderPosition();return;}
     if(action==='open-reader'){openReader();return;}
     if(action==='close-reader'){closeReader();return;}
     if(action==='archive'){changeEdition('morning',{archive:true});return;}
@@ -640,11 +655,12 @@
   $('#spoilerToggle').addEventListener('change',e=>{state.spoiler=e.target.checked;persist();toast(state.spoiler?'防剧透已开启':'防剧透已关闭（当前数据本身无剧情）');});
   $('#largeTextToggle').addEventListener('change',e=>{state.largeText=e.target.checked;updateTheme();persist();});
   $('#privateModeToggle').addEventListener('change',e=>{
-    state.privateMode=e.target.checked;
+    state.privateMode=e.target.checked;positions?.temporary(state.privateMode);
     if(state.privateMode){forget();toast('临时模式已开启，不再写入本机存储');}
     else{persist();toast('本机偏好保存已恢复');}
   });
   document.addEventListener('keydown',e=>{
+    if(app.inert)return;
     const modal=activeModal();
     if(e.key==='Escape'){
       if(state.onboarding)closeOnboarding();else if(state.settings)closeSettings();else if(state.reader)closeReader();else if(aiOpen)changeEdition('morning');else return;
@@ -665,6 +681,57 @@
     if(e.key==='1')setLens('brief');if(e.key==='2')setLens('personal');if(e.key==='3')setLens('verify');
   });
 
+
+  function renderBriefs(edition){
+    const desk=$('#briefDesk'),list=$('#briefList');list.replaceChildren();
+    const briefs=(edition?.briefs||[]).map(localizeStory).filter(s=>!state.query||[s.title,s.summary,s.source?.name].join(' ').toLocaleLowerCase(locale).includes(state.query.toLocaleLowerCase(locale)));
+    desk.hidden=!briefs.length;txt('#briefHeading','简讯');txt('#briefNotice','这些来源只提供短消息，保留原语，不扩写为长篇档案。');
+    for(const s of briefs){
+      const url=validUrl(s.source?.url);if(!url)continue;
+      const card=mk('details','brief-card'),head=mk('summary','',s.title);head.lang=s.originalLanguage;
+      const copy=mk('p','',s.summary);copy.lang=s.originalLanguage;
+      const a=mk('a','',s.source.name+' · '+t('阅读原文'));a.href=url;a.target='_blank';a.rel='noopener noreferrer';
+      card.append(head,mk('small','',t('原语内容')+' · '+languageName(s.originalLanguage)),copy,a);list.append(card);
+    }
+  }
+  function appendEventEvidence(body,event){
+    if(!event?.sources||event.sources.length<2)return;
+    const block=mk('section','event-evidence');block.append(mk('h3','','同一事件 · 来源对照'),mk('p','',t('按标题、日期和关键实体保守归并；多来源不等于事实已交叉核验。')));
+    for(const source of event.sources.slice(0,4)){
+      const url=validUrl(source.url);if(!url)continue;
+      const entry=mk('article','event-source'),link=mk('a','',source.name+' · '+source.title);link.href=url;link.target='_blank';link.rel='noopener noreferrer';link.lang=source.language||'und';
+      const text=mk('p','',source.excerpt||'');text.lang=source.language||'und';entry.append(link,mk('small','',t('原语内容')+' · '+languageName(source.language)),text);
+      if(source.published_at)entry.append(mk('small','',t('原文发表')+' · '+source.published_at));block.append(entry);
+    }
+    body.append(block);
+  }
+  function saveReaderPosition(){
+    if(!state.reader||!readerPosition||restoringPosition)return;
+    const scroll=$('.reader-scroll'),max=scroll.scrollHeight-scroll.clientHeight;
+    const ratio=max>0?scroll.scrollTop/max:0;
+    positions?.save(readerPosition.key,readerPosition.fingerprint,ratio);
+    const label=$('#readerPositionLabel');if(label)label.textContent=t('阅读位置')+' · '+Math.round(ratio*100)+'% · '+t('仅本机');
+    const progress=$('#readerPositionProgress');if(progress)progress.value=ratio*100;
+  }
+  function restoreReaderPosition(){
+    let bar=$('#readerPositionBar');if(!bar){
+      bar=mk('div','reader-position');bar.id='readerPositionBar';const label=mk('span');label.id='readerPositionLabel';
+      const progress=mk('progress');progress.id='readerPositionProgress';progress.max=100;progress.setAttribute('aria-label',t('阅读位置'));
+      const restart=mk('button','','从头阅读');restart.type='button';restart.dataset.action='restart-reading';bar.append(label,progress,restart);$('.reader-lenses').after(bar);
+    }
+    bar.querySelector('button').textContent=t('从头阅读');$('#readerPositionProgress').setAttribute('aria-label',t('阅读位置'));
+    const s=item(),key=positions?.key(validUrl(s.sources?.[0]?.url)||s.id,locale,state.lens),fingerprint=positions?.fingerprint(s.title+'|'+$('#readerCopy').textContent),previous=positions?.get(key);
+    readerPosition={key,fingerprint};restoringPosition=true;
+    requestAnimationFrame(()=>{
+      if(!state.reader||readerPosition?.key!==key){restoringPosition=false;return;}
+      const scroll=$('.reader-scroll'),matched=previous?.fingerprint===fingerprint;
+      scroll.scrollTop=matched?previous.ratio*Math.max(0,scroll.scrollHeight-scroll.clientHeight):0;restoringPosition=false;saveReaderPosition();
+      if(previous&&!matched)toast('资料已更新，从头阅读');
+    });
+  }
+  $('.reader-scroll').addEventListener('scroll',()=>{clearTimeout(positionTimer);positionTimer=setTimeout(saveReaderPosition,180);},{passive:true});
+  window.addEventListener('pagehide',saveReaderPosition);
+
   function appendArchive(body,archive){
     if(!archive)return;
     const scope=mk('p','archive-scope',archive.notice||t(archive.full_text_acquired?'已获取全文用于事实整理':'仅获取 RSS 摘要')+' · '+t('据来源整理'));
@@ -680,8 +747,8 @@
   $('#languageSelect').addEventListener('change',event=>{
     if(!supported.includes(event.target.value))return;
     const wasReader=state.reader;const currentId=item()?.id;
-    locale=event.target.value;persist();translateInterface();
-    const edition=aiEditionForSession(state.edition);if(state.archiveView)editionItems=collectionItems();else if(edition)editionItems=publicItems(edition);
+    saveReaderPosition();locale=event.target.value;persist();translateInterface();
+    const edition=aiEditionForSession(state.edition);if(state.archiveView)editionItems=collectionItems();else if(edition){const mapped=publicItems(edition);editionItems=mapped.length?mapped:null;}
     if(editionItems){const i=editionItems.findIndex(s=>s.id===currentId);if(i>=0)state.index=i;}
     if(!wasReader&&$('#hero').hidden&&!aiOpen)changeEdition(state.edition,{archive:state.archiveView,automatic:true});else renderCurrentView();renderPersonalOptions();if(wasReader)renderReader();
     window.dispatchEvent(new CustomEvent('starnews:locale',{detail:{locale}}));
