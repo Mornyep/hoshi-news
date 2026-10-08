@@ -36,7 +36,7 @@ iPhone Safari 打开 HTTPS 网站后：`分享 → 添加到主屏幕 → 作为
 - `index.html`：自包含的单屏界面（HTML/CSS/JS），内置今日快照供离线回退
 - `news.json`：可按日更换的新闻快照
 - `manifest.webmanifest`：PWA 独立窗口设置
-- `assets/icon.svg`：可缩放矢量图标（Safari 可能使用自动生成的主屏幕图标）
+- `assets/icon.svg` 和 `assets/icon-180.png`：可缩放网页图标及 iPhone 主屏幕图标
 - `sw.js`：静态资源和新闻快照缓存
 
 未来若自动更新新闻数据，请严格核实文章来源、日期、真实性，更新 `news.json` 的 `edition.id`，并同步核查缓存策略。更新 PWA 外壳时，还应递增 `sw.js` 中的 `CACHE_NAME`。
