@@ -1,0 +1,276 @@
+{
+  "edition": {
+    "id": "2026-10-08-morning-v1",
+    "date": "2026-10-08",
+    "label": "2026 年 10 月 8 日 · 周四",
+    "session": "morning",
+    "reviewed": "2026-10-08 上午（日本时间）",
+    "title": "今早，有五件值得知道的事。",
+    "subtitle": "为你筛出真正有意义的变化；每条都保留来源与事实边界。",
+    "disclaimer": "这是基于 2026 年 10 月 8 日上午资料整理的静态快照，并非实时新闻或灾害预警。"
+  },
+  "items": [
+    {
+      "id": "openai-ui",
+      "category": "tech",
+      "categoryLabel": "AI 科技",
+      "channel": "01 / INTERACTIVE INTELLIGENCE",
+      "tone": "lime",
+      "art": "UI",
+      "headline": [
+        "聊天不止",
+        "能回答。",
+        "现在能互动。"
+      ],
+      "title": "OpenAI 发布 GPT-6 与 Intelligent UI",
+      "dek": "昨日公布的新能力，让 ChatGPT 直接组合按钮、图形与可操作界面。",
+      "published": "官方发布：10 月 7 日",
+      "priority": "重点推荐",
+      "badge": "官方发布",
+      "reading": {
+        "brief": {
+          "eyebrow": "01 // WHAT HAPPENED",
+          "title": "聊天窗口开始变成可操作的界面。",
+          "paragraphs": [
+            "OpenAI 于 2026 年 10 月 7 日发布面向 ChatGPT 的 GPT-6 和 Intelligent UI。回答可以根据任务使用按钮、图表、交互式图形和小工具，而不只是一段文字。",
+            "官方表示这项能力正在面向 ChatGPT 的 Chat 体验推出；开放情况取决于用户使用的产品与配置。"
+          ]
+        },
+        "personal": {
+          "eyebrow": "02 // WHY IT MATTERS",
+          "title": "这恰好能用来探索你想要的个人新闻。",
+          "paragraphs": [
+            "我们正在制作的「星闻」就是一种实验：把阅读新闻的动作变成切换证据、展开档案与追踪进展的交互。",
+            "但对话内临时界面、真正的独立网站和持续运行的新闻抓取服务是三套不同能力，不应混为一谈。"
+          ]
+        },
+        "verify": {
+          "eyebrow": "03 // EVIDENCE & LIMITS",
+          "title": "已确认发布，实际边界仍需区分。",
+          "paragraphs": [
+            "已确认：OpenAI 官方文章明确介绍 GPT-6、Intelligent UI 和面向 ChatGPT 的发布计划。",
+            "仍需注意：新闻自动更新、跨设备同步与网页原生全屏不由 Intelligent UI 自动提供。你正在浏览的星闻网页是另外构建的 PWA 原型。"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "name": "OpenAI · 官方发布",
+          "url": "https://openai.com/index/gpt-6-for-everyone/"
+        }
+      ]
+    },
+    {
+      "id": "microsoft-pc",
+      "category": "tech",
+      "categoryLabel": "AI 科技",
+      "channel": "02 / LOCAL COMPUTING",
+      "tone": "cyan",
+      "art": "PC",
+      "headline": [
+        "本地 AI，",
+        "迎来新的",
+        "硬件玩家。"
+      ],
+      "title": "微软宣布 Surface Laptop Ultra 与混合 AI 方向",
+      "dek": "NVIDIA RTX Spark、最高 128GB 统一内存，以及面向 AI 智能体的执行隔离。",
+      "published": "官方发布：10 月 7 日",
+      "priority": "你的科技关注",
+      "badge": "官方发布",
+      "reading": {
+        "brief": {
+          "eyebrow": "01 // WHAT HAPPENED",
+          "title": "微软想把更大的 AI 工作负载留在电脑上。",
+          "paragraphs": [
+            "微软于 10 月 7 日开放 Surface Laptop Ultra 预订，设备基于 NVIDIA RTX Spark，公布了最高 128GB 统一内存以及可在本地运行大型 AI 模型的能力。",
+            "Windows 同时公布 Hybrid Intelligence 方向，强调本地与云端按工作负载配合；Microsoft Execution Containers 已被官方宣布可用。"
+          ]
+        },
+        "personal": {
+          "eyebrow": "02 // WHY IT MATTERS",
+          "title": "它值得放进你的 Mac / 本地 AI 对比清单。",
+          "paragraphs": [
+            "你关注本地模型、Mac 和桌面自动化软件。更值得观察的是：本地推理性能、模型与显存容量、智能体如何限制文件与网络权限，而非发布会单独展示的峰值算力。",
+            "目前没有必要因为一场发布会就重新选择开发平台。"
+          ]
+        },
+        "verify": {
+          "eyebrow": "03 // EVIDENCE & LIMITS",
+          "title": "配置有官方依据，性能仍需独立实测。",
+          "paragraphs": [
+            "Surface 规格、预订日期与 MXC 的公开状态由微软官方文章说明。",
+            "官方跨平台性能比较在特定条件下测试，不代表每个模型、每种配置都更快。价格、上市范围和售后政策应以所在地区的官方商店为准。"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "name": "微软 · Surface 官方博客",
+          "url": "https://blogs.windows.com/devices/2026/10/07/pre-order-our-most-powerful-surface-devices-ever/"
+        },
+        {
+          "name": "微软 · Windows 混合 AI",
+          "url": "https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/"
+        }
+      ]
+    },
+    {
+      "id": "wuthering-event",
+      "category": "game",
+      "categoryLabel": "游戏动漫",
+      "channel": "03 / GAME EVENT",
+      "tone": "pink",
+      "art": "37",
+      "headline": [
+        "《鸣潮》",
+        "今日迎来",
+        "限时活动。"
+      ],
+      "title": "《鸣潮》「天工寻物」活动今日开始",
+      "dek": "官方资料列出 10 月 8 日至 26 日的活动档期，默认不展示剧情内容。",
+      "published": "10 月 8 日 04:00（服务器时间）",
+      "priority": "你喜欢的游戏",
+      "badge": "活动资讯",
+      "reading": {
+        "brief": {
+          "eyebrow": "01 // WHAT HAPPENED",
+          "title": "「天工寻物」限时战斗活动按公告开始。",
+          "paragraphs": [
+            "《鸣潮》官方 Wiki 列出「天工寻物」活动时间为 2026 年 10 月 8 日 04:00 至 10 月 26 日 03:59，均为服务器时间。",
+            "活动属于限时挑战玩法；本简报默认只保留必要信息，不涉及剧情解释。"
+          ]
+        },
+        "personal": {
+          "eyebrow": "02 // WHY IT MATTERS",
+          "title": "今天打开游戏时可以顺便确认一下。",
+          "paragraphs": [
+            "这条比一般的游戏宣传更有用，因为它确实对应今日的活动档期。你可以按自己所在服务器核对活动页，看看是否满足参与条件。",
+            "这里不把服务器时间擅自换成日本时间，也不假设你已经解锁活动。"
+          ]
+        },
+        "verify": {
+          "eyebrow": "03 // EVIDENCE & LIMITS",
+          "title": "活动时间有来源，剧情不展示。",
+          "paragraphs": [
+            "活动日期来自库街区《鸣潮》官方 Wiki 所列资料。实际开放时间、参与资格和活动奖励以游戏内显示为准。",
+            "防剧透已默认为开启：本网页不会自动展示相关主线故事细节或任务剧情。"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "name": "《鸣潮》官方 Wiki · 活动说明",
+          "url": "https://wiki.kurobbs.com/mc/item/1554475345910087680"
+        }
+      ]
+    },
+    {
+      "id": "nobel-chemistry",
+      "category": "science",
+      "categoryLabel": "科学发现",
+      "channel": "04 / BEYOND YOUR BUBBLE",
+      "tone": "violet",
+      "art": "N°",
+      "headline": [
+        "日本科学家",
+        "获得今年",
+        "化学诺奖。"
+      ],
+      "title": "Henri Kagan 与 Kenso Soai 获 2026 诺贝尔化学奖",
+      "dek": "不对称合成与镜像分子的研究，让化学反应能更精确地选择方向。",
+      "published": "获奖公布：10 月 7 日",
+      "priority": "兴趣圈外一条",
+      "badge": "权威媒体确认",
+      "reading": {
+        "brief": {
+          "eyebrow": "01 // WHAT HAPPENED",
+          "title": "有关分子「左右手」的研究获得化学诺奖。",
+          "paragraphs": [
+            "2026 年诺贝尔化学奖授予法国化学家 Henri B. Kagan 和日本化学家 Kenso Soai，表彰他们在不对称合成、相关非线性效应与自催化方向的贡献。",
+            "手性分子可以像左手与右手，结构看起来相似，却可能对生物体系产生不同影响。"
+          ]
+        },
+        "personal": {
+          "eyebrow": "02 // WHY IT MATTERS",
+          "title": "这条不必与你直接有关，也值得看。",
+          "paragraphs": [
+            "精准控制分子的手性，对新药和复杂分子的合成有重要意义。理解这些基础研究为何受到关注，比只知道获奖者国籍更有价值。",
+            "它也是个人化新闻中保留的一扇窗：偶尔走出 AI、数码和游戏的兴趣范围。"
+          ]
+        },
+        "verify": {
+          "eyebrow": "03 // EVIDENCE & LIMITS",
+          "title": "获奖者名单由多家新闻机构报道。",
+          "paragraphs": [
+            "路透社与美联社均报道了获奖者及主要授奖理由。",
+            "奖项表彰的是既有科学贡献，不能被解释成某种新药在获奖当天已经研发成功。"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "name": "Reuters · 2026 化学诺奖",
+          "url": "https://www.reuters.com/world/kagan-soai-win-2026-nobel-chemistry-prize-2026-10-07/"
+        },
+        {
+          "name": "AP · 获奖研究解读",
+          "url": "https://apnews.com/article/e92801a294ba29d5ff1fbbf63904c977"
+        }
+      ]
+    },
+    {
+      "id": "ibaraki-earthquake",
+      "category": "japan",
+      "categoryLabel": "日本生活",
+      "channel": "05 / JAPAN LOCAL",
+      "tone": "orange",
+      "art": "JMA",
+      "headline": [
+        "今晨 07:14",
+        "茨城北部",
+        "发生地震。"
+      ],
+      "title": "日本气象厅记录茨城县北部最大震度 3 地震",
+      "dek": "速報值为 M4.0、约 60km 深，周边部分地区有震感。",
+      "published": "10 月 8 日 07:14（日本时间）",
+      "priority": "在日生活资讯",
+      "badge": "官方观测",
+      "reading": {
+        "brief": {
+          "eyebrow": "01 // WHAT HAPPENED",
+          "title": "今早茨城县北部发生地震。",
+          "paragraphs": [
+            "日本气象厅记录：2026 年 10 月 8 日约 07:14，茨城县北部发生地震，速報数据为 M4.0、震源深度约 60km、最大震度 3。",
+            "当地防灾资料转发的气象厅信息指出，该地震没有海啸风险。"
+          ]
+        },
+        "personal": {
+          "eyebrow": "02 // WHY IT MATTERS",
+          "title": "这是一条区域记录，不是东京的紧急疏散指令。",
+          "paragraphs": [
+            "你在东京生活，知道周边发生的地震有意义。不过，茨城县震度 3 的消息本身不能推导出东京目前存在直接危险。",
+            "如遇地震应以气象厅、当地政府和手机灾害警报的即时指令为准。"
+          ]
+        },
+        "verify": {
+          "eyebrow": "03 // EVIDENCE & LIMITS",
+          "title": "以日本气象厅速報值为准，后续可能修订。",
+          "paragraphs": [
+            "日本气象厅的紧急地震速報历史记录标明 07:14、茨城县北部、M4.0 和最大震度 3。",
+            "这是静态新闻快照，不具备实时地震警报功能，也不应替代官方防灾应用。"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "name": "日本气象厅 · 地震速報记录",
+          "url": "https://www.data.jma.go.jp/eew/data/nc/fc_hist/2026/10/20261008071415/index.html"
+        },
+        {
+          "name": "茨城县防灾 · 震源震度信息",
+          "url": "https://inf.bousai.ibaraki.jp/eng/ehis/20261008/2026100807180668800_ehis.html"
+        }
+      ]
+    }
+  ]
+}
