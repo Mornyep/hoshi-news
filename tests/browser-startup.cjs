@@ -36,10 +36,11 @@ const cases=[
       if(scenario.old||scenario.manual==='morning'){
         assert(await page.locator('#hero').isVisible(),'Morning archive remains available');
       }else if(!scenario.manual){
-        assert(await page.locator('#aiStoryList > details').count()>0,'Latest published news visible on homepage');
-        assert.equal(await page.locator('#aiDesk [aria-pressed=true][data-ai-session]').getAttribute('data-ai-session'),scenario.expected);
+        assert(await page.locator('#hero').isVisible(),'Latest briefing uses console on homepage');
+        assert(await page.locator('#queueList button').count()>0,'Latest published news available');
+        assert(!(await page.locator('#aiDesk').isVisible()),'Daily homepage does not use general list');
       }else{
-        assert(await page.locator('.ai-blank').isVisible(),'Unpublished manually selected session stays explicit');
+        assert(await page.locator('#emptyEdition').isVisible(),'Unpublished manually selected session stays explicit');
       }
       console.log(JSON.stringify({width,...scenario,result:'passed'}));
       await context.close();

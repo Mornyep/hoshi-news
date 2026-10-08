@@ -43,19 +43,20 @@ async function trap(page,overlay,count=38){
       assert.equal(await page.locator('#app').getAttribute('data-edition'),'noon','Escape preserves channel');
       assert.equal(await page.evaluate(()=>document.activeElement.dataset.action),'settings','Focus returns to settings entry');
       assert(!(await page.locator('.edition-tabs').evaluate(e=>e.inert)),'Background unlocked');
-      const before=await page.locator('.ai-story-preview').first().evaluate(e=>parseFloat(getComputedStyle(e).fontSize));
+      const before=await page.locator('#readText').evaluate(e=>parseFloat(getComputedStyle(e).fontSize));
       await page.locator('[data-action=settings]').click();
       await page.locator('#interestOptions [data-interest=game]').click();
       assert(await page.evaluate(()=>!!document.activeElement.closest('#settingsOverlay')),'Interest rebuild preserves focus');
       await page.locator('#largeTextToggle').check();
       await page.keyboard.press('Escape');
-      assert.equal(await page.locator('#bottomEdition').textContent(),'午间 · 公共 AI','Footer keeps current session');
-      assert.equal(await page.locator('.ai-story-category').first().textContent(),'游戏动漫','Interest ranking updates immediately');
-      const after=await page.locator('.ai-story-preview').first().evaluate(e=>parseFloat(getComputedStyle(e).fontSize));
+      assert.equal(await page.locator('#bottomEdition').textContent(),'午间情报 · 14 条','Footer keeps current session');
+      assert.equal(await page.locator('#queueList button small').first().textContent(),'游戏动漫','Interest ranking updates immediately');
+      const after=await page.locator('#readText').evaluate(e=>parseFloat(getComputedStyle(e).fontSize));
       assert(after>before,'Large text enlarges feed preview');
-      await page.locator('.ai-story-summary').first().click();
-      assert.equal(await page.locator('.ai-story-expanded p').first().evaluate(e=>getComputedStyle(e).fontSize),'15px','Expanded text is large');
+      await page.locator('[data-action=open-reader]').click();
+      assert.equal(await page.locator('#readerCopy p').first().evaluate(e=>getComputedStyle(e).fontSize),'17px','Expanded text is large');
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Large text fits viewport');
+      await page.keyboard.press('Escape');
       const ids=await page.evaluate(()=>window.__STARNEWS_SEED.items.slice(0,2).map(s=>s.id));
       await page.evaluate(ids=>{const key='starnews:guest:v4.3',prefs=JSON.parse(localStorage.getItem(key));prefs.saved=ids;localStorage.setItem(key,JSON.stringify(prefs));},ids);
       // Delay public AI arrival to confirm it cannot hide an explicitly opened collection.
@@ -75,7 +76,7 @@ async function trap(page,overlay,count=38){
       await page.locator('.hero-save').click();
       assert.equal(await page.locator('#favoritesButton').getAttribute('aria-pressed'),'false','Last cancellation leaves empty filter safely');
       await page.locator('[data-edition-choice=morning]').click();
-      assert(await page.locator('#aiDesk').isVisible(),'Morning button returns to public morning edition');
+      assert(await page.locator('#hero').isVisible(),'Morning button returns to public morning console');
       const edition=await page.locator('#app').getAttribute('data-edition');
       await page.locator('#favoritesButton').click();
       assert.equal(await page.locator('#app').getAttribute('data-edition'),edition,'Empty collection preserves channel');

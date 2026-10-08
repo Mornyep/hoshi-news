@@ -376,3 +376,30 @@ html{scroll-behavior:smooth;scroll-padding-top:12px}
 html.modal-open{overflow-y:hidden}
 .app[data-large-text=true] .ai-desk .ai-story-preview,
 .app[data-large-text=true] .ai-desk .ai-story-expanded p{font-size:15px;line-height:1.8}
+
+/* Daily editions share the original console; only the general channel uses the list. */
+.app[data-story-kind=public] .hero-copy{max-width:620px}
+.app[data-story-kind=public] .hero h1{font-size:clamp(28px,3.1vw,46px);letter-spacing:-1px}
+.app[data-story-kind=public] .hero h1 span{white-space:normal;overflow-wrap:anywhere;max-width:100%}
+.app[data-story-kind=public] .hero h1 .hero-impact{clip-path:none}
+@media(max-width:620px){
+ .app[data-news-mode=console] .scroll-nudge{display:flex}
+ .app[data-story-kind=public] .hero h1{font-size:clamp(27px,7.6vw,34px)}
+ .app[data-story-kind=public] .reader-cover h2{font-size:26px}
+}
+
+.app[data-story-kind=public] .reader-cover{max-height:42dvh;min-height:160px;overflow-y:auto}
+@media(min-width:851px){
+ .app[data-news-mode=console] .console{height:max(560px,calc(100dvh - 194px));grid-template-rows:minmax(0,1fr)}
+}
+@media(min-width:621px) and (max-width:850px){
+ .app[data-news-mode=console] .console{height:max(540px,calc(100dvh - 232px));grid-template-rows:minmax(0,1fr)}
+}
+.app[data-story-kind=public] .hero h1{text-shadow:2px 2px 0 #101115}
+.app[data-story-kind=public] .hero h1 .hero-impact{text-shadow:none}
+.app[data-story-kind=public] .hero h1{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
+.app[data-story-kind=public] .hero-copy p{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+
+@media(max-width:620px){
+ .app[data-story-kind=public] .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,transparent 20%,#101115dd 65%)}
+}

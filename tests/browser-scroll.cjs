@@ -31,7 +31,7 @@ const sizes = [[1527,1024],[1280,720],[851,650],[850,1024],[768,1024],[621,800],
         await page.locator('[data-edition-choice='+edition+']').click();
         await page.waitForTimeout(100);
         const cards = page.locator('#aiStoryList > details');
-        if (await cards.count()) {
+        if (await page.locator('#aiDesk').isVisible() && await cards.count()) {
           assert(await page.evaluate(()=>window.scrollY)<=1,'Channel starts at top (allow pixel rounding)');
           const box = await cards.first().boundingBox();
           await page.mouse.move(Math.min(width-15,box.x+box.width/2),Math.min(height-30,box.y+35));
