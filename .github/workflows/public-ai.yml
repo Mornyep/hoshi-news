@@ -18,7 +18,7 @@ concurrency:
 jobs:
   digest:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     env:
       # Four requests per edition: six main stories + four briefs per locale.
       # Once-only legacy title backfill can add four requests; no retries.

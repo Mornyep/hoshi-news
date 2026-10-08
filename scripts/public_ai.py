@@ -339,7 +339,7 @@ def generate_summaries_batched(candidates, provider, key, caller=request_json, b
     return final, model_name
 
 
-def recent_edition_ids(now, output=OUT, locale=None):
+def recent_edition_ids(now, output=OUT, locale=None, exclude_current_session=False):
     """Avoid repeating a story in morning, noon, evening on the same JST date."""
     if not output.exists():
         return set()
@@ -347,7 +347,7 @@ def recent_edition_ids(now, output=OUT, locale=None):
         current = json.loads(output.read_text(encoding="utf-8"))
         today = now.astimezone(JST).strftime("%Y-%m-%d")
         return {story["id"] for edition in current.get("editions", [])
-                if edition.get("date") == today and (locale is None or edition.get("locale", "zh-CN") == locale)
+                if edition.get("date") == today and (not exclude_current_session or edition.get("session") != jst_session(now)) and (locale is None or edition.get("locale", "zh-CN") == locale)
                 for story in [*edition.get("items", []), *edition.get("briefs", [])]
                 if isinstance(story, dict) and isinstance(story.get("id"), str)}
     except (OSError, ValueError, TypeError, KeyError):
@@ -413,9 +413,12 @@ def main():
         return 0
     try:
         if key and not args.rss_only: multilingual.backfill_legacy_editions(OUT,provider,key)
-        excluded = {locale: recent_edition_ids(now, locale=locale) for locale in multilingual.LOCALES}
+        excluded = {locale: recent_edition_ids(now, locale=locale, exclude_current_session=True) for locale in multilingual.LOCALES}
         editions = multilingual.build_editions(pool, coverage, now, None if args.rss_only else provider, None if args.rss_only else key, excluded_ids=excluded)
         for edition in editions:
+            if edition.get('ai_status')=='unavailable':
+                print(f"Retained existing {edition['locale']} edition: public AI unavailable.")
+                continue
             publish_edition(edition)
             print(f"Published {edition['id']}: {len(edition['items'])} RSS-grounded items, {edition['coverage']['translation_fallbacks']} explicit translation fallbacks")
         return 0

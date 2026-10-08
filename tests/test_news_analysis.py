@@ -86,3 +86,17 @@ class LegacyLanguageTests(unittest.TestCase):
             self.assertEqual(len(calls),4)
             editions=json.loads(path.read_text())['editions'];self.assertEqual(len(editions),5)
             self.assertTrue(all(not e['items'] for e in editions if e.get('locale')))
+
+class ProviderFailureTests(unittest.TestCase):
+    def test_failed_locale_is_marked_without_claiming_ai_completion(self):
+        def offline(*args,**kwargs):raise OSError('offline')
+        editions=ml.build_editions([story('en',1)],[],ml.dt.datetime(2026,10,8,13,tzinfo=ml.dt.timezone.utc),'groq','TEST',offline)
+        self.assertTrue(all(e['ai_status']=='unavailable' for e in editions))
+    def test_same_session_refresh_does_not_exclude_existing_story(self):
+        import tempfile
+        import public_ai as core
+        now=ml.dt.datetime(2026,10,8,13,tzinfo=ml.dt.timezone.utc)
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'briefs.json';core.publish_edition(core.pack_edition([{'id':'same'}],'m','p',now,'en'),path)
+            self.assertEqual(core.recent_edition_ids(now,path,locale='en'),{'same'})
+            self.assertEqual(core.recent_edition_ids(now,path,locale='en',exclude_current_session=True),set())

@@ -6,6 +6,7 @@ A failed/missing translation exposes attributed original text, never fake fluenc
 import datetime as dt
 import json
 import re
+import time
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 import public_ai as core
@@ -17,6 +18,7 @@ import editorial_quality as quality
 LOCALES = ('zh-CN', 'zh-TW', 'ja', 'en')
 MAX_LOCALE_ITEMS = 6
 MAX_BATCH_ITEMS = 10
+_LAST_MODEL_REQUEST = 0.0
 LANG_NAMES = {'zh-CN':'Simplified Chinese', 'zh-TW':'Traditional Chinese', 'ja':'Japanese', 'en':'English'}
 COPY = {
  'zh-CN': {'scope':'据 RSS 标题与简讯整理；未获取或核验全文。', 'missing':'来源简讯未提供可靠资料，不能推断。', 'failed':'翻译未通过来源约束检查，显示原语。', 'sections':['可靠摘要','事件背景','经过与时间线','重要数据','利益相关方','事实核验'], 'verify':'仅核对来源链接与 RSS 元数据，未独立交叉核验。'},
@@ -261,6 +263,14 @@ def translate_batch(refs,locale,provider,key,caller=core.request_json):
     prompt=json.dumps([{**{k:x[k] for k in ('id','title','excerpt','language')},'evidence_packet':news_analysis.evidence_packet(x),**({'article_text':True,'rights':x['article_text']['rights_basis']} if x.get('article_text') else {})} for x in needed],ensure_ascii=False)
     model=None
     try:
+        # Groq's shared free token window can reject rapid locale calls. This
+        # pacing is server-side only; fixtures and no-key mode never sleep.
+        global _LAST_MODEL_REQUEST
+        if provider=='groq' and caller is core.request_json:
+            interval=65
+            if _LAST_MODEL_REQUEST:time.sleep(max(0,interval-(time.monotonic()-_LAST_MODEL_REQUEST)))
+            _LAST_MODEL_REQUEST=time.monotonic()
+
         if provider in ('groq','openrouter'):
             model=core.os.getenv('GROQ_MODEL','openai/gpt-oss-20b') if provider=='groq' else core.os.getenv('OPENROUTER_MODEL','openrouter/free')
             url='https://api.groq.com/openai/v1/chat/completions' if provider=='groq' else 'https://openrouter.ai/api/v1/chat/completions'
@@ -287,7 +297,9 @@ def translate_batch(refs,locale,provider,key,caller=core.request_json):
     except (OSError,ValueError,KeyError,IndexError,TypeError) as error:
         print(f'Locale {locale}: AI unavailable ({type(error).__name__}; HTTP {getattr(error, "code", "n/a")}).',file=core.sys.stderr)
         # Failure is visible per item; no raw response or key enters public logs.
-        return [make_item(x,locale) for x in refs],model
+        fallback=[make_item(x,locale) for x in refs]
+        for item in fallback:item['provenance']['generation_status']='model_unavailable'
+        return fallback,model
 
 
 def build_editions(pool,coverage,now,provider=None,key=None,caller=core.request_json,excluded_ids=None):
@@ -301,6 +313,7 @@ def build_editions(pool,coverage,now,provider=None,key=None,caller=core.request_
         combined,model=translate_batch(refs+briefs,locale,provider,key,caller)
         items=combined[:len(refs)]
         edition=core.pack_edition(items,model,provider or 'rss',now,locale=locale)
+        edition['ai_status']='unavailable' if any(x['provenance'].get('generation_status')=='model_unavailable' for x in combined) else 'completed'
         # Briefs share the same bounded translation request; no invented background.
         edition['briefs']=combined[len(refs):]
         edition['editorial_policy']='evidence_depth_first_v1'
