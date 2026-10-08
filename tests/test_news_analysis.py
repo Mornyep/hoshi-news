@@ -1,0 +1,88 @@
+import json
+import sys
+from pathlib import Path
+import unittest
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
+import multilingual as ml
+import news_analysis as analysis
+import source_text
+from test_multilingual import story,translation
+
+class EvidenceAnalysisTests(unittest.TestCase):
+    def answer(self,ref):
+        return {**translation(ref),'analysis':[{'kind':'questions','text':'Which details in the NHK report still require follow-up evidence?', 'evidence':[{'source_id':'s1','quote':'NHK reports 12 people.'}]}]}
+    def test_valid_analysis_attributed_without_model_urls(self):
+        ref=story();ref['related_sources']=[{**story('ja',2),'excerpt':'Second account available.'}]
+        item=ml.make_item(ref,'en',self.answer(ref));a=item['archive']['analysis']
+        self.assertFalse(a['independently_verified']);self.assertEqual(a['sections'][0]['sources'][0]['url'],ref['url'])
+        self.assertIs(item['localized']['en']['archive']['analysis'],a)
+    def test_invalid_anchors_and_unsupported_claims_omit_only_analysis(self):
+        ref=story()
+        for mutation in ('quote','source','figure','name','markup','duplicate','wrong_language'):
+            a=self.answer(ref);row=a['analysis'][0]
+            if mutation=='quote':row['evidence'][0]['quote']='This did not occur in source'
+            if mutation=='source':row['evidence'][0]['source_id']='invented'
+            if mutation=='figure':row['text']+=' There are 99 casualties.'
+            if mutation=='name':row['text']+=' NASA is involved.'
+            if mutation=='markup':row['text']+='<script>bad</script>'
+            if mutation=='duplicate':a['analysis']*=2
+            if mutation=='wrong_language':row['text']='这里提供的是不符合英文要求的分析问题以及后续观察。'
+            item=ml.make_item(ref,'en',a)
+            self.assertNotIn('analysis',item['archive'],mutation);self.assertEqual(item['title'],a['title'])
+    def test_exact_emphasis_preserves_qualifier(self):
+        title='NHK claims 12 people died in airport attack'
+        self.assertIsNone(analysis.highlight({'highlight':'12 people died'},title))
+        self.assertIsNotNone(analysis.highlight({'highlight':'claims 12 people died'},title))
+        self.assertIsNone(analysis.highlight({'highlight':'claims 13 people died'},title))
+        self.assertIsNone(analysis.highlight({'highlight':'<b>attack</b>'},title))
+        self.assertIsNone(analysis.highlight({'highlight':'attack'},'attack and attack'))
+    def test_highlight_attaches_to_exact_localized_title_only(self):
+        ref=story();a={**translation(ref),'highlight':'12 people'}
+        item=ml.make_item(ref,'en',a)
+        self.assertEqual(item['localized']['en']['highlight']['text'],'12 people')
+        a['title']='NHK 13 people';self.assertNotIn('highlight',ml.make_item(ref,'en',a))
+    def test_nasa_rest_exact_identity_failures_and_feed_fallback(self):
+        url='https://www.nasa.gov/news-release/test/'
+        body=''.join('<p>NASA release describes 12 experiments with detailed scientific background for public informational use and reading.</p>' for _ in range(8))
+        class Response:
+            def __init__(self,data):self.data=data
+            def __enter__(self):return self
+            def __exit__(self,*a):pass
+            def geturl(self):return 'https://www.nasa.gov/wp-json/wp/v2/press-release'
+            def read(self,n):return json.dumps(self.data).encode()
+        def opener(req,timeout):return Response([{'link':url,'content':{'rendered':body}}])
+        result=source_text.nasa_api_text(url,opener);self.assertEqual(result['acquired_via'],'official_public_rest_api')
+        self.assertFalse(result['website_completeness_verified'])
+        self.assertIsNone(source_text.nasa_api_text('https://evil.test/news-release/test/',opener))
+        self.assertIsNone(source_text.nasa_api_text(url,lambda *a,**kw:Response([{'link':url+'other','content':{'rendered':body}}])))
+        def failed(*a,**kw):raise OSError('offline')
+        ref={**story('en'),'publisher':'NASA','url':url,'article_text':result}
+        source_text.enrich_articles([ref],failed);self.assertEqual(ref['article_text'],result)
+        self.assertEqual(ref['body_retrieval']['status'],'unavailable')
+    def test_nasa_requests_bounded_and_redirect_rejected_before_follow(self):
+        calls=[]
+        def failed(*a,**kw):calls.append(1);raise OSError()
+        source_text.enrich_articles([{**story('en',i),'publisher':'NASA','url':f'https://www.nasa.gov/news-release/test-{i}/'} for i in range(8)],failed)
+        self.assertEqual(len(calls),2)
+        with self.assertRaises(ValueError):source_text.NASAOnlyRedirect().redirect_request(None,None,302,'',{},'https://evil.test/')
+
+class LegacyLanguageTests(unittest.TestCase):
+    def test_backfill_uses_source_titles_never_old_ai_summary(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'briefs.json';ref=story('ja')
+            legacy={'id':'legacy-noon','date':'2026-10-08','session':'noon','generated_at':ref['retrieved_at'],
+                    'items':[{'id':ref['id'],'title':ref['title'],'summary':'UNVERIFIED OLD AI CLAIM 99',
+                              'category':'world','source':{'name':'NHK','url':ref['url']}}]}
+            path.write_text(json.dumps({'schema':1,'editions':[legacy]}));calls=[]
+            def caller(url,payload,headers):
+                packet=json.loads(payload['messages'][1]['content']);calls.append(packet)
+                self.assertNotIn('UNVERIFIED OLD AI CLAIM',json.dumps(packet))
+                self.assertEqual(packet[0]['excerpt'],'')
+                return {'choices':[{'message':{'content':'{"items":[]}'}}]}
+            self.assertEqual(ml.backfill_legacy_editions(path,'groq','TEST',caller),4)
+            self.assertEqual(len(calls),4)
+            self.assertEqual(ml.backfill_legacy_editions(path,'groq','TEST',caller),0)
+            self.assertEqual(len(calls),4)
+            editions=json.loads(path.read_text())['editions'];self.assertEqual(len(editions),5)
+            self.assertTrue(all(not e['items'] for e in editions if e.get('locale')))

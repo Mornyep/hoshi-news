@@ -412,6 +412,7 @@ def main():
             print(f"DRY RUN {locale}: {len(chosen)} items, {sum(x['language']==locale for x in chosen)} preferred-language sources; no API call, no write")
         return 0
     try:
+        if key and not args.rss_only: multilingual.backfill_legacy_editions(OUT,provider,key)
         excluded = {locale: recent_edition_ids(now, locale=locale) for locale in multilingual.LOCALES}
         editions = multilingual.build_editions(pool, coverage, now, None if args.rss_only else provider, None if args.rss_only else key, excluded_ids=excluded)
         for edition in editions:

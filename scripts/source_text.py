@@ -47,3 +47,49 @@ def nasa_release_text(xml_bytes):
                      'extraction':'complete_supplied_paragraphs_no_images_or_logos',
                      'website_completeness_verified':False}
     return result
+
+class NASAOnlyRedirect(core.urllib.request.HTTPRedirectHandler):
+    def redirect_request(self,req,fp,code,msg,headers,newurl):
+        if not core.validated_source_url(newurl,('www.nasa.gov',)):
+            raise ValueError('Untrusted NASA redirect')
+        return super().redirect_request(req,fp,code,msg,headers,newurl)
+
+
+def nasa_api_text(url, opener=None):
+    """Public publisher REST body, exact canonical article match; fail closed."""
+    import json
+    canonical=core.validated_source_url(url,('www.nasa.gov',))
+    if not canonical or not core.urllib.parse.urlsplit(canonical).path.startswith('/news-release/'):return None
+    slug=core.urllib.parse.urlsplit(canonical).path.rstrip('/').split('/')[-1]
+    if not re.fullmatch(r'[a-z0-9-]+',slug):return None
+    api='https://www.nasa.gov/wp-json/wp/v2/press-release?'+core.urllib.parse.urlencode({'slug':slug,'_fields':'link,content'})
+    opener=opener or core.urllib.request.build_opener(NASAOnlyRedirect()).open
+    try:
+        with opener(core.urllib.request.Request(api,headers={'User-Agent':core.USER_AGENT}),timeout=8) as response:
+            if not core.validated_source_url(response.geturl(),('www.nasa.gov',)):return None
+            raw=response.read(200001)
+        if len(raw)>200000:return None
+        rows=json.loads(raw)
+        if not isinstance(rows,list) or len(rows)!=1 or core.validated_source_url(rows[0]['link'],('www.nasa.gov',))!=canonical:return None
+        content=rows[0]['content']['rendered']
+        if not isinstance(content,str) or len(content)>100000 or re.search(r'copyright|©|all rights reserved',content,re.I):return None
+        parser=ArticleParagraphs();parser.feed(content);parser.close()
+        text='\n\n'.join(parser.paragraphs)
+        if parser.active or parser.skip or len(parser.paragraphs)<5 or not 600<=len(text)<=20000:return None
+        return {'paragraphs':parser.paragraphs,'language':'en','rights_basis':'NASA factual informational use; no implied endorsement',
+                'rights_url':NASA_TERMS,'source_url':canonical,'acquired_via':'official_public_rest_api',
+                'extraction':'complete_supplied_paragraphs_no_images_or_logos','website_completeness_verified':False}
+    except (OSError,ValueError,KeyError,TypeError):return None
+
+
+def enrich_articles(pool,opener=None,limit=2):
+    """At most two public REST requests per edition; keep feed body on failure."""
+    count=0
+    for ref in sorted(pool,key=lambda x:x['published_at'],reverse=True):
+        if ref['publisher']!='NASA' or '/news-release/' not in ref['url']:continue
+        if count>=limit:break
+        count+=1
+        body=nasa_api_text(ref['url'],opener)
+        ref['body_retrieval']={'method':'official_public_rest_api','status':'acquired' if body else 'unavailable'}
+        if body:ref['article_text']=body
+    return pool

@@ -15,7 +15,7 @@
 
 ## 公共新闻更新
 
-`.github/workflows/public-ai.yml` 每天日本时间约 08:13、12:13、19:13 运行（GitHub 定时任务可能延迟）。按公开来源语言选择每版最多六条，每语种最多一次模型请求，总计最多四次；失败显式回退，不隐藏来源缺口。
+`.github/workflows/public-ai.yml` 每天日本时间约 08:13、12:13、19:13 运行（GitHub 定时任务可能延迟）。按公开来源语言选择每版最多六条主报道和四条简讯，每语种最多一次模型请求，总计最多四次；失败显式回退，不隐藏来源缺口。
 
 模型 Key 仅放仓库 Actions Secret：`GROQ_API_KEY`、`GEMINI_API_KEY` 或 `OPENROUTER_API_KEY`。默认自动选择有 Secret 的供应商。免费额度会变化，供应商可拒绝请求；不要承诺永久免费或无限量。ChatGPT 订阅不能直接给站点提供 API。
 
@@ -80,3 +80,14 @@ Records contain only URL hashes, content fingerprints, ratios and timestamps,
 with a 200-record / 90-day bound. They are not uploaded or account-synchronized.
 Temporary mode and local-data reset clear them. Shared browser profiles still
 share local data; server-side account isolation does not isolate guest storage.
+
+
+### 来源补充、分析与重点标记（2026-10-08）
+
+RSS 用于发现报道。NASA news-release 额外通过官方公开 REST 接口取得正文，每次运行最多两次正文请求，严格限制主机、文章身份、响应大小、超时和第三方版权声明；失败保留已取得供稿正文。其他媒体仍以已授权的 RSS 摘录为依据，尚未接入任意网页搜索或全文抓取。
+
+公共 AI 在原有四语请求内同时处理主报道与简讯翻译、重点选择和可选补充分析。证据包包含主来源正文/摘录及已归并的最多三个其他来源。补充阅读最多包含背景线索、条件式影响分析、后续观察问题三段，明确标为未独立核验，每段依据来源 ID 和精确文本锚点验证；数字、显式名称、引用、语言和长段复制另做检查。锚点只用于内部验证，公开显示来源链接。这些检查不证明语义正确，也不代表获取了各方立场；没有不同来源时不得编造反方意见，失败省略分析。
+
+标题亮色只来自 AI 选择的当前标题连续片段，禁止固定高亮末行；必须完整保留标题中的声称/疑似等限定词。前后端使用纯文本，标题变化或译文回退后不套用其他语言的重点。AI 未给出可靠重点时不高亮。
+
+旧版无语言元数据的混合标题/摘要不再自动代替当前语言版本。生成任务会一次性将一个旧时段最多六条原始标题转换为四语短简讯（额外最多四次模型请求）；旧 AI 摘要没有保留来源证据，不用于翻译或分析。历史原始记录保留作审计。后续旧版本回填需明确维护，不将旧新闻冒充当期报道。翻译失败仍以整条原语标记回退，不能承诺全部来源都翻译成功。

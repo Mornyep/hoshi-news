@@ -20,7 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      # At most four requests per edition, six stories per locale; no retries.
+      # Four requests per edition: six main stories + four briefs per locale.
+      # Once-only legacy title backfill can add four requests; no retries.
       # Free/low-cost availability is provider-dependent, not guaranteed.
       # Set true to disable CNA feeds if the site becomes commercial/monetized.
       PUBLIC_SITE_COMMERCIAL: ${{ vars.PUBLIC_SITE_COMMERCIAL || 'false' }}

@@ -18,11 +18,15 @@ class EditorialQualityTests(unittest.TestCase):
         long=story('en',1)
         selected=ml.select_locale_items([short,long],'ja')
         self.assertEqual([x['id'] for x in selected],[long['id']])
-    def test_briefs_are_separate_and_do_not_trigger_model_calls(self):
+    def test_briefs_share_bounded_translation_calls_without_long_read_expansion(self):
         pool=[{**story(locale,n),'excerpt':'Short source excerpt.'} for n,locale in enumerate(ml.LOCALES)]
-        def forbidden(*args,**kwargs):self.fail('Short RSS must not be expanded or translated to fill main quota')
+        calls=[]
+        def forbidden(*args,**kwargs):
+            calls.append(1)
+            return {'choices':[{'message':{'content':'{"items":[]}'}}]}
         editions=ml.build_editions(pool,[],NOW,'groq','TEST',forbidden)
         self.assertEqual(len(editions),4)
+        self.assertEqual(len(calls),4)
         for edition in editions:
             self.assertEqual(edition['items'],[])
             self.assertEqual(len(edition['briefs']),4)

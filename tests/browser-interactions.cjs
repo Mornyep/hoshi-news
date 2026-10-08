@@ -23,10 +23,11 @@ async function trap(page,overlay,count=38){
       let delay=0;
       await page.route('**/ai-briefs.json',async route=>{
         const response=await route.fetch(),data=await response.json();
-        const source=data.editions.find(e=>e.items?.some(s=>s.category==='game'));
+        const source=data.editions.find(e=>!e.locale&&e.items?.some(s=>s.category==='game'));
         assert(source,'Need public game story to test interest ranking');
         const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-        data.editions=['morning','noon','evening'].map(session=>({...source,date,session}));
+        // Interaction fixture declares its locale; legacy untagged editions are no longer eligible.
+        data.editions=['morning','noon','evening'].map(session=>({...source,date,session,locale:'zh-CN'}));
         if(delay)await new Promise(r=>setTimeout(r,delay));
         await route.fulfill({response,json:data});
       });

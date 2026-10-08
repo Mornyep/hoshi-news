@@ -457,3 +457,8 @@ html.modal-open{overflow-y:hidden}
 @media(max-width:600px){#briefList{grid-template-columns:1fr}.brief-desk{padding:18px}.reader-position{gap:6px}.reader-position progress{width:45px}}
 
 .content-evidence{display:block;font-size:11px;line-height:1.7;margin:9px 0;color:#687039;font-weight:700}
+
+.hero h1 mark.hero-impact{display:inline;background:var(--accent);color:#101115;padding:0 .08em;clip-path:none;transform:none;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ai-analysis{border-color:var(--accent)}
+
+.archive-section>summary{cursor:pointer;font-weight:800;line-height:1.7;padding:10px 0}

@@ -75,11 +75,11 @@ class MultilingualTests(unittest.TestCase):
             self.assertEqual(variant['language'],'ja')
             self.assertEqual(variant['title'],ref['title'])
             self.assertIn('failed',variant['uncertainty'])
-    def test_source_language_needs_no_ai(self):
-        def forbidden(*a,**kw):self.fail('Must not call AI for original sources')
+    def test_source_language_keeps_original_when_ai_unavailable(self):
+        def forbidden(*a,**kw):return {'choices':[{'message':{'content':'{"items":[]}'}}]}
         ref=story('en')
         items,model=ml.translate_batch([ref],'en','groq','TEST',forbidden)
-        self.assertIsNone(model)
+        self.assertIsNotNone(model)
         self.assertEqual(items[0]['localized']['en']['status'],'original')
     def test_no_key_no_network_translation(self):
         def forbidden(*a,**kw):self.fail('No key must mean no network API')
@@ -139,7 +139,7 @@ class MultilingualTests(unittest.TestCase):
             ml.retrieve_pool(NOW,opener)
         self.assertFalse(any('feedburner.com/rsscna/' in u for u in calls))
     def test_locale_batch_limit(self):
-        with self.assertRaises(ValueError):ml.translate_batch([story(n=n) for n in range(7)],'en','groq','TEST')
+        with self.assertRaises(ValueError):ml.translate_batch([story(n=n) for n in range(11)],'en','groq','TEST')
     def test_wrong_script_does_not_count_as_translation(self):
         ref=story('en')
         self.assertFalse(ml.valid_translation(translation(ref),ref,'ja'))
