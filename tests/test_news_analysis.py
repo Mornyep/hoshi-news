@@ -138,3 +138,16 @@ class SupplementRetentionTests(unittest.TestCase):
             self.assertIn('analysis',edition['items'][0]['archive'])
             fresh=copy.deepcopy(item);del fresh['archive']['analysis'];fresh['archive']['source_text_sha256']='changed';edition=core.pack_edition([fresh],'m','p',now,'en');core.publish_edition(edition,path)
             self.assertNotIn('analysis',edition['items'][0]['archive'])
+
+class SourceNameReferenceTests(unittest.TestCase):
+    def test_translation_retains_original_name_reference_without_new_entities(self):
+        ref=story('en');ref['title']='UK reports 12 people';ref['excerpt']='UK reports 12 people.'
+        def caller(url,payload,headers):
+            return {'choices':[{'message':{'content':json.dumps({'items':[{'id':ref['id'],'title':'英国は12人を報告','summary':'英国は12人について報告しています。','highlight':'12人を報告'}]})}}]}
+        items,_=ml.translate_batch([ref],'ja','groq','TEST',caller)
+        self.assertEqual(items[0]['localized']['ja']['status'],'translated')
+        self.assertIn('原文表記：UK',items[0]['summary'])
+        def bad(url,payload,headers):
+            return {'choices':[{'message':{'content':json.dumps({'items':[{'id':ref['id'],'title':'NASAは12人を報告','summary':'NASAは12人について報告しています。'}]})}}]}
+        items,_=ml.translate_batch([ref],'ja','groq','TEST',bad)
+        self.assertEqual(items[0]['localized']['ja']['status'],'fallback')

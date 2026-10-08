@@ -85,9 +85,11 @@ def generate(ref,titles,call,numbers,names,quotes):
            'For analysis provide at most two short paragraphs, separating factual background from conditional implications or open questions. '
            'Keep exact numeric notation, original Latin names and quotations; invent no new figures or entities. '
            'Never claim independent verification or opposing stakeholder views absent in sources. One publisher is a single perspective. '
+           'Fill output_template using its exact locale codes and story id; never return placeholders. '
            'Omit unsupported paragraphs, no URLs, HTML or long copied passages. If text_truncated is true do not assume the omitted material.')
     try:
-        response=json.loads(call(rules,json.dumps({'id':ref['id'],'display_titles':titles,'evidence_packet':packet},ensure_ascii=False)))
+        response=json.loads(call(rules,json.dumps({'id':ref['id'],'display_titles':titles,'evidence_packet':packet,
+            'output_template':{'locales':{locale:{'id':ref['id'],'highlight':None,'analysis':[{'kind':'questions','text':'','evidence':[{'source_id':packet[0]['id'],'quote':''}]}]} for locale in titles}}},ensure_ascii=False)))
         locales=response.get('locales',{})
         if not isinstance(locales,dict):return {}
         result={}

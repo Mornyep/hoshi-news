@@ -113,7 +113,7 @@ def quote_tokens(text):
 
 def protected_names(text):
     """Conservative explicit Latin names/acronyms; not a complete entity recognizer."""
-    return set(re.findall(r'\b[A-Z][a-z]+(?: [A-Z][a-z]+)+\b|\b[A-Z]{2,}[A-Z0-9]*\b',text))
+    return set(re.findall(r'(?<![A-Za-z0-9])[A-Z][a-z]+(?: [A-Z][a-z]+)+(?![A-Za-z0-9])|(?<![A-Za-z0-9])[A-Z]{2,}[A-Z0-9]*(?![A-Za-z0-9])',text))
 
 
 def valid_translation(answer,ref,locale):
@@ -237,7 +237,7 @@ def make_item(ref,locale,answer=None):
                           'model_item_present':isinstance(answer,dict),'model_analysis_present':isinstance(answer,dict) and isinstance(answer.get('analysis'),list),
                           'model_highlight_present':isinstance(answer,dict) and isinstance(answer.get('highlight'),str)}}
     item=editorial_archives.apply_editorial(item,ref,locale)
-    emphasis=news_analysis.highlight(answer,item['title']) if isinstance(answer,dict) and answer.get('id')==ref['id'] and (original or accepted) else None
+    emphasis=news_analysis.highlight(answer,item['title']) if isinstance(answer,dict) and answer.get('id')==ref['id'] and (original or accepted or item['localized'][locale]['status']=='editorial_retelling') else None
     if emphasis:
         item['highlight']=emphasis
         item['localized'][locale]['highlight']=emphasis
@@ -287,8 +287,16 @@ def translate_batch(refs,locale,provider,key,caller=core.request_json):
            'Return JSON {"items":[{"id":"exact supplied id","title":"faithful title","summary":"short faithful summary",'
            '"highlight":"ONE exact continuous substring of this title, or null"}]}. '
            'Select the core news fact for highlight, preserving ALL attribution and uncertainty markers. '
-           'For same-language sources select highlight from the original title. Never pick a suffix just because it is the last line.')
-    prompt=json.dumps([{k:x[k] for k in ('id','title','excerpt','language')} for x in needed],ensure_ascii=False)
+           'For same-language sources select highlight from the original title. '
+           'If display_title is supplied, it is an approved source-bound account: return that title exactly and select highlight from it. '
+           'Never pick a suffix just because it is the last line.')
+    inputs=[]
+    for ref in needed:
+        entry={k:ref[k] for k in ('id','title','excerpt','language')}
+        approved=make_item(ref,locale)
+        if approved['localized'][locale]['status']=='editorial_retelling':entry['display_title']=approved['title']
+        inputs.append(entry)
+    prompt=json.dumps(inputs,ensure_ascii=False)
     model=None
     try:
         content,model=call_model(rules,prompt,provider,key,caller)
@@ -301,6 +309,14 @@ def translate_batch(refs,locale,provider,key,caller=core.request_json):
                 if answer['id'] in by_id: duplicate.add(answer['id'])
                 by_id[answer['id']]=answer
         for item_id in duplicate: by_id.pop(item_id,None)
+        labels={'zh-CN':'原文名称：','zh-TW':'原文名稱：','ja':'原文表記：','en':'Source names: '}
+        for ref in refs:
+            answer=by_id.get(ref['id'])
+            if not isinstance(answer,dict) or ref.get('article_text') or not isinstance(answer.get('title'),str) or not isinstance(answer.get('summary'),str):continue
+            missing=protected_names(ref['title'])-protected_names(answer['title']+' '+answer['summary'])
+            # Retain actual source spellings beside localized names; this does
+            # not introduce a new entity or bypass figures/new-name checks.
+            if missing:answer['summary']+=' ('+labels[locale]+', '.join(sorted(missing))+')'
         return [make_item(x,locale,by_id.get(x['id'])) for x in refs],model
     except (OSError,ValueError,KeyError,IndexError,TypeError) as error:
         code='n/a'
