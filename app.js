@@ -143,6 +143,7 @@
     index:0,
     edition:'morning',
     archiveView:false,
+    editionChosen:false,
     lens:'brief',
     filterSaved:false,
     reader:false,
@@ -329,11 +330,12 @@
     evening:{num:'03',eyebrow:'EVENING / AWAITING BRIEF',title:'夜间回顾\n尚未同步。',desc:'晚上新的报道必须重新收集、核实后才能显示。当前网页不会重复早报冒充实时更新。'},
     breaking:{num:'!!',eyebrow:'BREAKING / NO LIVE FEED',title:'紧急播报\n未连接实时源。',desc:'此网页不具备实时地震、天气、交通或新闻报警能力。紧急情况请查看日本气象厅及所在地政府的官方警报。'}
   };
-  function changeEdition(edition,{archive=false}={}){
+  function changeEdition(edition,{archive=false,automatic=false}={}){
     if(!['morning','noon','evening','breaking','ai'].includes(edition))return;
     const morning=edition==='morning'&&(archive||!aiEditionForSession('morning'));
     const aiMode=edition==='ai'||edition==='noon'||edition==='evening'||(edition==='morning'&&!morning);
     state.edition=edition;
+    if(!automatic)state.editionChosen=true;
     state.archiveView=archive;
     if(!archive)state.filterSaved=false;
     aiOpen=aiMode;
@@ -578,7 +580,9 @@
     fetch('./ai-briefs.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('AI publication not found');return r.json()}).then(payload=>{
       if(payload?.schema!==1||!Array.isArray(payload.editions))throw new Error('Invalid AI publication');
       publicAI=payload;
-      if(aiOpen){if(state.edition==='ai')aiSession=latestAISession();renderAI();}else if(state.edition==='morning'&&!state.archiveView&&aiEditionForSession('morning')){changeEdition('morning');}else{const today=publicAI.editions.some(e=>e?.date===jstDay()&&Array.isArray(e.items)&&e.items.length);if(today)txt('#aiTopState','✳ NEWS ONLINE');}
+      const latest=latestAISession();
+      if(!state.editionChosen&&aiEditionForSession(latest)){changeEdition(latest,{automatic:true});}
+      else if(aiOpen){if(state.edition==='ai')aiSession=latest;renderAI();}else if(state.edition==='morning'&&!state.archiveView&&aiEditionForSession('morning')){changeEdition('morning',{automatic:true});}else{const today=publicAI.editions.some(e=>e?.date===jstDay()&&Array.isArray(e.items)&&e.items.length);if(today)txt('#aiTopState','✳ NEWS ONLINE');}
     }).catch(()=>{if(aiOpen)renderAI();});
   }
 
