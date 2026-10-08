@@ -87,6 +87,7 @@
   let editionItems=null;
   // Public AI publication is independent of individual preferences.
   let publicAI={schema:1,editions:[]};
+  let publicArchive={schema:1,editions:[]};
   let aiSession='morning';
   let aiOpen=false;
   let aiLastFocus=null;
@@ -266,7 +267,7 @@
     return lines;
   }
   function collectionItems(){
-    const pool=[...data.items,...publicAI.editions.slice().sort((a,b)=>Number(a.locale===locale)-Number(b.locale===locale)).flatMap(publicItems)];
+    const pool=[...data.items,...[...publicAI.editions,...publicArchive.editions].slice().sort((a,b)=>Number(a.locale===locale)-Number(b.locale===locale)).flatMap(publicItems)];
     return Array.from(new Map(pool.map(s=>[s.id,s])).values());
   }
   function getItems(){return (editionItems||data.items).map(localizeItem);}
@@ -367,8 +368,8 @@
     $('#readerSave').textContent=marked?'★':'☆';$('#readerSave').setAttribute('aria-pressed',String(marked));
     const favButton=$('#favoritesButton');favButton.classList.toggle('active',state.filterSaved);favButton.setAttribute('aria-pressed',String(state.filterSaved));
     const count=state.filterSaved?indices().length:getItems().length;
-    const channel=state.filterSaved?t('收藏'):sessionName(state.edition);
-    txt('#bottomEdition',locale==='zh-CN'?channel+(state.filterSaved?'':'情报')+' · '+count+' 条':locale==='zh-TW'?channel+(state.filterSaved?'':'情報')+' · '+count+' 則':channel+' · '+count+(locale==='en'?' stories':' 件'));
+    const channel=state.filterSaved?t('收藏'):state.archiveView?t('新闻档案'):sessionName(state.edition);
+    txt('#bottomEdition',locale==='zh-CN'?channel+(state.filterSaved||state.archiveView?'':'情报')+' · '+count+' 条':locale==='zh-TW'?channel+(state.filterSaved||state.archiveView?'':'情報')+' · '+count+' 則':channel+' · '+count+(locale==='en'?' stories':' 件'));
     updateTabs();renderQueue();
     if(state.reader)renderReader();
   }
@@ -443,7 +444,7 @@
     if(aiOpen){aiSession=latestAISession();state.sessionChosen=false;aiFilter='all';}
     const publicEdition=!archive?aiEditionForSession(edition):null;
     const mapped=publicItems(publicEdition);
-    editionItems=archive?(state.filterSaved?collectionItems():data.items):(mapped.length?mapped:null);
+    editionItems=archive?collectionItems():(mapped.length?mapped:null);
     const consoleMode=!aiOpen&&(archive||mapped.length>0||edition==='morning');
     state.index=archive?Math.max(0,getItems().findIndex(s=>s.id===previousId)):firstAvailable();
     if(!indices().includes(state.index))state.index=firstAvailable();
@@ -462,7 +463,7 @@
       renderAI();txt('#bottomEdition',sessionName(aiSession)+' · '+t('综合新闻'));
       txt('#snapshotStatus',t('综合新闻')+' / AI · RSS');
     }else if(consoleMode){
-      txt('#snapshotStatus',state.filterSaved?t('收藏')+' / ARCHIVE':mapped.length?publicEdition.date+' / '+sessionName(edition)+' · AI / RSS':'2026.10.08 / ARCHIVE');
+      txt('#snapshotStatus',state.archiveView&&!state.filterSaved?t('新闻档案')+' / '+t('原文可追溯'):state.filterSaved?t('收藏')+' / ARCHIVE':mapped.length?publicEdition.date+' / '+sessionName(edition)+' · AI / RSS':'2026.10.08 / ARCHIVE');
       renderMain();if(state.motion)bounce();
     }else{
       const e=edition==='breaking'?{...placeholders.breaking,title:t('紧急播报')+'\n'+t('未连接实时源。')}:{
@@ -680,7 +681,7 @@
     if(!supported.includes(event.target.value))return;
     const wasReader=state.reader;const currentId=item()?.id;
     locale=event.target.value;persist();translateInterface();
-    const edition=aiEditionForSession(state.edition);if(state.archiveView)editionItems=state.filterSaved?collectionItems():data.items;else if(edition)editionItems=publicItems(edition);
+    const edition=aiEditionForSession(state.edition);if(state.archiveView)editionItems=collectionItems();else if(edition)editionItems=publicItems(edition);
     if(editionItems){const i=editionItems.findIndex(s=>s.id===currentId);if(i>=0)state.index=i;}
     if(!wasReader&&$('#hero').hidden&&!aiOpen)changeEdition(state.edition,{archive:state.archiveView,automatic:true});else renderCurrentView();renderPersonalOptions();if(wasReader)renderReader();
     window.dispatchEvent(new CustomEvent('starnews:locale',{detail:{locale}}));
@@ -718,6 +719,15 @@
       else if(!state.reader)changeEdition(state.edition,{archive:state.archiveView,automatic:true});
       if(aiEditionForSession(latest))txt('#aiTopState','✳ NEWS ONLINE');
     }).catch(()=>{if(aiOpen)renderAI();});
+  }
+
+  // Durable public long reads are independent of scheduled edition replacement.
+  if(location.protocol!=='file:'){
+    fetch('./archive-stories.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('archive unavailable');return r.json();}).then(payload=>{
+      if(payload?.schema!==1||!Array.isArray(payload.editions))throw new Error('invalid archive');
+      publicArchive=payload;
+      if(state.archiveView&&!state.reader)changeEdition(state.edition,{archive:true,automatic:true});
+    }).catch(()=>{});
   }
 
   // A newer public JSON replaces the offline snapshot. It never contains personal profiles.

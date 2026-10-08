@@ -445,3 +445,5 @@ html.modal-open{overflow-y:hidden}
 @media(max-width:760px){.signal-ribbon .ribbon-label{display:none}.signal-ribbon .news-search{flex:1}.signal-ribbon .news-search span{display:none}.signal-ribbon .news-search input{width:100%}.signal-ribbon .ribbon-right{max-width:45%;font-size:8px}.app{grid-template-rows:none}}
 
 .reader-original-top{color:var(--accent);font-size:12px;font-weight:800;padding:10px}.source-timestamp,.archive-stamp{display:block;font-size:11px;line-height:1.7;margin:8px 0;color:#65625b}.archive-rights{display:inline-block;font-size:12px;color:#3d551a;margin:10px 0;text-decoration:underline}
+
+.archive-btn{background:var(--accent);color:#111;font:800 11px system-ui,sans-serif;padding:10px;white-space:nowrap;flex-shrink:0}

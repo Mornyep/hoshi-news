@@ -2,7 +2,7 @@
 
 公开、移动端优先的新闻阅读器。保留原有 lime 漫画式视觉，提供简体中文、繁體中文、日本語、English 界面与按语言优先的公共新闻。默认浏览器语言，设置可持久化。
 
-网站由 GitHub Pages 发布：`main` → `/(root)`，无需前端构建。公共数据使用 `news.json`、`ai-briefs.json`，离线快照使用 `seed.js`；私人 AI 必须另部署后端。
+网站由 GitHub Pages 发布：`main` → `/(root)`，无需前端构建。公共数据使用 `news.json`、`ai-briefs.json`，长篇档案独立存放在 `archive-stories.json`，离线快照使用 `seed.js`；私人 AI 必须另部署后端。
 
 ## 已实现的代码
 
@@ -33,6 +33,7 @@ node --test backend/tests/*.test.mjs     # Node >=22，含 node:sqlite
 
 ```sh
 python3 -m http.server 8877 --bind 127.0.0.1
+node tests/browser-archive.cjs http://127.0.0.1:8877
 node tests/browser-locales.cjs http://127.0.0.1:8877
 node tests/browser-private.cjs http://127.0.0.1:8877
 node tests/browser-startup.cjs http://127.0.0.1:8877
