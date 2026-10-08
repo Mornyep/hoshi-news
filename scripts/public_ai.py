@@ -379,6 +379,24 @@ def publish_edition(edition, output=OUT):
                 current = existing
         except (OSError, ValueError):
             raise ValueError("Existing AI data damaged; refusing to overwrite")
+    previous=next((e for e in current['editions'] if isinstance(e,dict) and e.get('id')==edition['id']),None)
+    if previous:
+        old_rows={x['id']:x for x in previous.get('items',[]) if isinstance(x,dict) and x.get('id')}
+        for item in edition.get('items',[]):
+            old=old_rows.get(item.get('id'),{});archive=item.get('archive') or {};prior=old.get('archive') or {}
+            fingerprint=archive.get('source_text_sha256')
+            if (not fingerprint or fingerprint!=prior.get('source_text_sha256')
+                    or (old.get('source') or {}).get('url')!=(item.get('source') or {}).get('url')):continue
+            locale=edition.get('locale')
+            if not archive.get('analysis') and (prior.get('analysis') or {}).get('language')==locale:
+                archive['analysis']=prior['analysis']
+                if item.get('localized',{}).get(locale):item['localized'][locale]['archive']['analysis']=prior['analysis']
+            if not item.get('highlight') and item.get('title')==old.get('title') and isinstance((old.get('highlight') or {}).get('text'),str) and old['highlight']['text'] in item.get('title',''):
+                item['highlight']=old['highlight']
+                if item.get('localized',{}).get(locale):item['localized'][locale]['highlight']=old['highlight']
+    if edition.get('coverage'):
+        edition['coverage']['analysis_items']=sum(bool((x.get('archive') or {}).get('analysis')) for x in edition.get('items',[]))
+        edition['coverage']['highlight_items']=sum(bool(x.get('highlight')) for x in edition.get('items',[]))
     all_editions = [e for e in current["editions"] if isinstance(e, dict) and e.get("id") != edition["id"]]
     all_editions.append(edition)
     all_editions.sort(key=lambda x: x.get("generated_at", ""), reverse=True)

@@ -200,7 +200,8 @@ def archive_for(ref,variant,locale,answer=None):
                 'notice':({'zh-CN':'已取得许可来源正文并机器整理；未独立核验。','zh-TW':'已取得許可來源正文並機器整理；未獨立查核。','ja':'利用可能な出典本文を取得し機械で再構成。独立検証は未実施。','en':'Acquired reusable source article text and machine retelling; no independent verification.'}[locale] if rewritten else {'zh-CN':'已取得 NASA 官方正文资料，按原语展示；未独立核验或确认与网页全文完全一致。','zh-TW':'已取得 NASA 官方正文资料，以原語顯示；未獨立核驗或確認與網頁全文完全一致。','ja':'NASA 公式配信の本文を取得し、原語で表示。独立した検証やウェブ全文との完全一致確認はしていません。','en':'NASA official article text acquired in its original language; not independently verified or checked for complete website equivalence.'}[locale]),
                 'sections':sections,'sources':[{'name':ref['publisher'],'url':ref['url'],'published_at':ref['published_at']}],
                 'rights':{k:article[k] for k in ('rights_basis','rights_url','acquired_via','extraction')},
-                'generated_at':ref.get('retrieved_at'),'independently_verified':False}
+                'generated_at':ref.get('retrieved_at'),'independently_verified':False,
+                'source_text_sha256':core.hashlib.sha256('\n\n'.join(paragraphs).encode()).hexdigest()}
     return {'scope':'rss_title_excerpt_only','full_text_acquired':False,'notice':c['scope'],
             'sections':sections,'sources':[{'name':ref['publisher'],'url':ref['url'],'published_at':ref['published_at']}],
             'generated_at':ref.get('retrieved_at'), 'independently_verified':False}
@@ -255,7 +256,7 @@ def call_model(rules,prompt,provider,key,caller,max_tokens=3600):
         if _LAST_MODEL_REQUEST:time.sleep(max(0,65-(time.monotonic()-_LAST_MODEL_REQUEST)))
         _LAST_MODEL_REQUEST=time.monotonic()
     if provider in ('groq','openrouter'):
-        model=core.os.getenv('GROQ_MODEL','openai/gpt-oss-20b') if provider=='groq' else core.os.getenv('OPENROUTER_MODEL','openrouter/free')
+        model=core.os.getenv('GROQ_MODEL','openai/gpt-oss-120b') if provider=='groq' else core.os.getenv('OPENROUTER_MODEL','openrouter/free')
         url='https://api.groq.com/openai/v1/chat/completions' if provider=='groq' else 'https://openrouter.ai/api/v1/chat/completions'
         response=caller(url,{'model':model,'messages':[{'role':'system','content':rules},{'role':'user','content':prompt}],
             'temperature':0.1,'max_tokens':max_tokens,'response_format':{'type':'json_object'},

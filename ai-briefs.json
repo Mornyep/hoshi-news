@@ -2216,7 +2216,31 @@
                 "generated_at": "2026-10-08T13:45:24.112374Z",
                 "independently_verified": false,
                 "editorial_at": "2026-10-08T08:27:54.578475Z",
-                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                "analysis": {
+                  "title": "AI 補充閱讀 · 待查核分析",
+                  "notice": "分析僅依據下列已取得資料，不代表獨立查核或各方完整立場。",
+                  "language": "zh-TW",
+                  "method": "evidence_anchored_machine_analysis",
+                  "independently_verified": false,
+                  "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+                  "sections": [
+                    {
+                      "kind": "background",
+                      "title": "背景線索",
+                      "text": "SpaceX 的第 35 次商業補給服務任務將交付國際太空站最後一批滾動式太陽能板，這對維持太空站能源供應至關重要。",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           },
@@ -2292,7 +2316,31 @@
             "generated_at": "2026-10-08T13:45:24.112374Z",
             "independently_verified": false,
             "editorial_at": "2026-10-08T08:27:54.578475Z",
-            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+            "analysis": {
+              "title": "AI 補充閱讀 · 待查核分析",
+              "notice": "分析僅依據下列已取得資料，不代表獨立查核或各方完整立場。",
+              "language": "zh-TW",
+              "method": "evidence_anchored_machine_analysis",
+              "independently_verified": false,
+              "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+              "sections": [
+                {
+                  "kind": "background",
+                  "title": "背景線索",
+                  "text": "SpaceX 的第 35 次商業補給服務任務將交付國際太空站最後一批滾動式太陽能板，這對維持太空站能源供應至關重要。",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                }
+              ]
+            }
           },
           "provenance": {
             "scope": "publisher_public_api_article_text",
@@ -4182,7 +4230,7 @@
         "translation_fallbacks": 3,
         "brief_items": 4,
         "main_items": 6,
-        "analysis_items": 0,
+        "analysis_items": 1,
         "highlight_items": 2,
         "brief_translation_fallbacks": 0
       }
@@ -9583,7 +9631,8 @@
       "editorial_policy": "historical_title_only_backfill_v1",
       "coverage": {
         "main_items": 0,
-        "brief_items": 6
+        "brief_items": 6,
+        "analysis_items": 0
       }
     },
     {
@@ -10591,7 +10640,8 @@
       "editorial_policy": "historical_title_only_backfill_v1",
       "coverage": {
         "main_items": 0,
-        "brief_items": 6
+        "brief_items": 6,
+        "analysis_items": 0
       }
     },
     {
@@ -11575,7 +11625,8 @@
       "editorial_policy": "historical_title_only_backfill_v1",
       "coverage": {
         "main_items": 0,
-        "brief_items": 6
+        "brief_items": 6,
+        "analysis_items": 0
       }
     },
     {
@@ -12559,7 +12610,8 @@
       "editorial_policy": "historical_title_only_backfill_v1",
       "coverage": {
         "main_items": 0,
-        "brief_items": 6
+        "brief_items": 6,
+        "analysis_items": 0
       }
     }
   ]

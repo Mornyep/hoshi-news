@@ -124,3 +124,17 @@ class ModelBudgetTests(unittest.TestCase):
         ml.call_model('rules','[]','groq','TEST',fake)
         self.assertEqual(captured[0]['reasoning_effort'],'low')
         self.assertEqual(captured[0]['max_tokens'],3600)
+
+class SupplementRetentionTests(unittest.TestCase):
+    def test_keep_only_exact_source_bound_prior_supplement(self):
+        import tempfile,copy
+        import public_ai as core
+        now=ml.dt.datetime(2026,10,8,13,tzinfo=ml.dt.timezone.utc)
+        archive={'source_text_sha256':'exact','analysis':{'language':'en','sections':[]}}
+        item={'id':'article','title':'NASA cargo','source':{'url':'https://www.nasa.gov/news-release/test/'},'archive':archive,'localized':{'en':{'archive':archive}}}
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'briefs.json';old=core.pack_edition([item],'m','p',now,'en');core.publish_edition(old,path)
+            fresh=copy.deepcopy(item);del fresh['archive']['analysis'];edition=core.pack_edition([fresh],'m','p',now,'en');core.publish_edition(edition,path)
+            self.assertIn('analysis',edition['items'][0]['archive'])
+            fresh=copy.deepcopy(item);del fresh['archive']['analysis'];fresh['archive']['source_text_sha256']='changed';edition=core.pack_edition([fresh],'m','p',now,'en');core.publish_edition(edition,path)
+            self.assertNotIn('analysis',edition['items'][0]['archive'])
