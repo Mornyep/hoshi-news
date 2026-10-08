@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "date": "2026-10-09",
+  "session": "morning",
+  "attempted_at": "2026-10-08T23:52:35.788359Z",
+  "finished_at": "2026-10-08T23:56:59.656254Z",
+  "status": "published",
+  "locales": {
+    "zh-CN": "published",
+    "zh-TW": "published",
+    "ja": "published",
+    "en": "published"
+  },
+  "error": null,
+  "last_success_at": "2026-10-08T23:52:35.860453Z",
+  "run_url": "https://github.com/Mornyep/hoshi-news/actions/runs/37861814604"
+}
