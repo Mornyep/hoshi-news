@@ -115,3 +115,12 @@ class SharedSupplementTests(unittest.TestCase):
     def test_failed_supplement_never_invents_analysis(self):
         def offline(*args):raise OSError()
         self.assertEqual(analysis.generate(story('en'),{'en':'NHK reports'},offline,ml.number_tokens,ml.protected_names,ml.quote_tokens),{})
+
+class ModelBudgetTests(unittest.TestCase):
+    def test_groq_reasoning_and_output_budget_are_bounded(self):
+        captured=[]
+        def fake(url,payload,headers):
+            captured.append(payload);return {'choices':[{'message':{'content':'{"items":[]}'}}]}
+        ml.call_model('rules','[]','groq','TEST',fake)
+        self.assertEqual(captured[0]['reasoning_effort'],'low')
+        self.assertEqual(captured[0]['max_tokens'],3600)

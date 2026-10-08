@@ -249,7 +249,7 @@ def make_item(ref,locale,answer=None):
     return item
 
 
-def call_model(rules,prompt,provider,key,caller,max_tokens=2600):
+def call_model(rules,prompt,provider,key,caller,max_tokens=3600):
     global _LAST_MODEL_REQUEST
     if provider=='groq' and caller is core.request_json:
         if _LAST_MODEL_REQUEST:time.sleep(max(0,65-(time.monotonic()-_LAST_MODEL_REQUEST)))
@@ -258,7 +258,8 @@ def call_model(rules,prompt,provider,key,caller,max_tokens=2600):
         model=core.os.getenv('GROQ_MODEL','openai/gpt-oss-20b') if provider=='groq' else core.os.getenv('OPENROUTER_MODEL','openrouter/free')
         url='https://api.groq.com/openai/v1/chat/completions' if provider=='groq' else 'https://openrouter.ai/api/v1/chat/completions'
         response=caller(url,{'model':model,'messages':[{'role':'system','content':rules},{'role':'user','content':prompt}],
-            'temperature':0.1,'max_tokens':max_tokens,'response_format':{'type':'json_object'}},headers={'Authorization':'Bearer '+key})
+            'temperature':0.1,'max_tokens':max_tokens,'response_format':{'type':'json_object'},
+            **({'reasoning_effort':'low'} if provider=='groq' and model.startswith('openai/gpt-oss') else {})},headers={'Authorization':'Bearer '+key})
         content=response['choices'][0]['message']['content']
     elif provider=='gemini':
         model=core.os.getenv('GEMINI_MODEL','gemini-2.5-flash-lite')
@@ -301,7 +302,13 @@ def translate_batch(refs,locale,provider,key,caller=core.request_json):
         for item_id in duplicate: by_id.pop(item_id,None)
         return [make_item(x,locale,by_id.get(x['id'])) for x in refs],model
     except (OSError,ValueError,KeyError,IndexError,TypeError) as error:
-        print(f'Locale {locale}: AI unavailable ({type(error).__name__}; HTTP {getattr(error, "code", "n/a")}).',file=core.sys.stderr)
+        code='n/a'
+        if isinstance(error,core.urllib.error.HTTPError):
+            try:
+                candidate=json.loads(error.read(20001)).get('error',{}).get('code','n/a')
+                if isinstance(candidate,str) and re.fullmatch(r'[a-z_]{1,60}',candidate):code=candidate
+            except (ValueError,TypeError,AttributeError):pass
+        print(f'Locale {locale}: AI unavailable ({type(error).__name__}; HTTP {getattr(error, "code", "n/a")}; code {code}).',file=core.sys.stderr)
         # Failure is visible per item; no raw response or key enters public logs.
         fallback=[make_item(x,locale) for x in refs]
         for item in fallback:item['provenance']['generation_status']='model_unavailable'
@@ -335,7 +342,7 @@ def build_editions(pool,coverage,now,provider=None,key=None,caller=core.request_
         article=next((ref for ref in pool if ref.get('article_text') and any(any(x['id']==ref['id'] for x in e['items']) for e in editions)),None)
         if article:
             titles={e['locale']:next(x['title'] for x in e['items'] if x['id']==article['id']) for e in editions if any(x['id']==article['id'] and x['localized'][e['locale']]['language']==e['locale'] for x in e['items'])}
-            extras=news_analysis.generate(article,titles,lambda rules,prompt:call_model(rules,prompt,provider,key,caller,2400)[0],number_tokens,protected_names,quote_tokens)
+            extras=news_analysis.generate(article,titles,lambda rules,prompt:call_model(rules,prompt,provider,key,caller,3600)[0],number_tokens,protected_names,quote_tokens)
             for edition in editions:
                 extra=extras.get(edition['locale'],{})
                 for item in edition['items']:
