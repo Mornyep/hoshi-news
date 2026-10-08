@@ -40,16 +40,21 @@ jobs:
       - name: Tests (no paid API calls)
         run: python -m unittest discover -s tests -v
       - name: Generate sourced public AI edition
-        run: python scripts/public_ai.py
+        id: generate
+        continue-on-error: true
+        run: python scripts/publication_status.py
       - name: Publish only changed PUBLIC data
         run: |
-          if git diff --quiet -- ai-briefs.json; then
+          git add ai-briefs.json public-status.json
+          if git diff --cached --quiet; then
             echo 'No new AI edition, public site unchanged.'
             exit 0
           fi
           git config user.name 'starnews-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add ai-briefs.json
           git commit -m 'content: publish sourced public AI digest [skip ci]'
           git pull --rebase origin main
           git push origin HEAD:main
+      - name: Report failed generation after publishing health
+        if: steps.generate.outcome == 'failure'
+        run: exit 1

@@ -89,6 +89,7 @@
   let editionItems=null;
   // Public AI publication is independent of individual preferences.
   let publicAI={schema:1,editions:[]};
+  let publicationStatus=null, publicLoadError=false, publicLoading=true;
   let publicArchive={schema:1,editions:[]};
   let aiSession='morning';
   let aiOpen=false;
@@ -111,6 +112,14 @@
     const matches=(Array.isArray(publicAI.editions)?publicAI.editions:[]).filter(e=>e&&e.date===jstDay()&&e.session===session&&Array.isArray(e.items)&&(e.items.length||e.briefs?.length));
     return matches.find(e=>e.locale===locale)||matches.find(e=>e.items.length&&e.items.every(s=>s.localized?.[locale]));
   }
+  function publicationNotice(session){
+    const stamp=publicAI.updated_at;
+    const last=stamp?'最近成功更新：'+new Intl.DateTimeFormat(locale,{timeZone:'Asia/Tokyo',dateStyle:'short',timeStyle:'short'}).format(new Date(stamp))+' JST':'暂无成功更新时间';
+    const status=publicLoadError?'公共数据加载失败，请联网后重试。':publicationFailed(session)?'本期生成失败（generation_unavailable），尝试时间：'+publicationStatus.attempted_at+'。':publicLoading?'正在检查公共新闻。':'本期尚未发布；GitHub 定时任务可能延迟。';
+    return jstDay()+' · '+status+' '+last+'。ChatGPT 早报任务与网站发布分别运行。';
+  }
+  function publicationFailed(session){return publicationStatus?.date===jstDay()&&publicationStatus?.session===session&&publicationStatus?.locales?.[locale]==='unavailable';}
+  function editionTime(edition){return edition?.generated_at?new Intl.DateTimeFormat(locale,{timeZone:'Asia/Tokyo',timeStyle:'short'}).format(new Date(edition.generated_at))+' JST':'';}
   function renderAI(){
     renderBriefs(aiEditionForSession(aiSession));
     $$('#aiDesk [data-ai-session]').forEach(b=>{
@@ -139,18 +148,18 @@
     }
     if(!edition){
       txt('#aiStatus',sessionName(aiSession)+' · '+t('简报尚未发布。'));
-      txt('#aiGenerated','没有完成新一期生成 · 不显示旧报道冒充实时新闻');
+      txt('#aiGenerated',publicationNotice(aiSession));
       txt('#aiIntro','后台按公开新闻源整理综合新闻，若当期未成功生成，保留透明的空状态。');
       txt('#aiEditNote','暂无本期数据，不能根据用户兴趣推测新闻');
       const blank=mk('div','ai-blank');
       blank.append(mk('strong','','NO NEW EDITION'),mk('p','','你可以切换到已发布的其他时段；上午静态存档会注明原始日期。'));
       const back=mk('button','ai-blank-back','↗ 查看历史新闻存档');back.type='button';back.dataset.action='archive';blank.append(back);
-      list.append(blank);txt('#aiTopState','✳ PUBLIC NEWS');return;
+      list.append(blank);txt('#aiTopState',publicLoadError?'✳ LOAD FAILED':'✳ AWAITING NEWS');return;
     }
-    txt('#aiTopState','✳ NEWS ONLINE');
+    txt('#aiTopState',publicLoadError?'✳ LOAD FAILED':publicationFailed(aiSession)?'✳ GENERATION FAILED':'✳ NEWS ONLINE');
     const categories=new Set(edition.items.map(s=>s.category));
     txt('#aiStatus',sessionName(aiSession)+' · '+t('综合新闻')+' · '+edition.items.length);
-    txt('#aiGenerated',edition.date+' · '+(edition.provider||'PUBLIC')+' / '+(edition.model||'AI'));
+    txt('#aiGenerated',edition.date+' · '+editionTime(edition)+' · '+(edition.provider||'PUBLIC')+' / '+(edition.model||'AI')+(publicationFailed(aiSession)?' · '+publicationNotice(aiSession):publicLoadError?' · 公共数据加载失败':' '));
     txt('#aiIntro',edition.editorial_policy?'优先展示资料充分的报道；短消息单列，正文获取状态以档案标注为准。':'先展示综合头条与有公共价值的重要领域，再考虑个人兴趣。AI 仅整理原报道标题与简讯，不代表已阅读全文。');
     txt('#aiEditNote',categories.size+' · '+t('综合头条优先 · 各类别适当兼顾 · 兴趣只影响次序'));
     const ordered=edition.items.map((raw,index)=>({s:localizeStory(raw),index})).sort((a,b)=>{
@@ -456,7 +465,7 @@
     const publicEdition=!archive?aiEditionForSession(edition):null;
     const mapped=publicItems(publicEdition);
     editionItems=archive?collectionItems():(mapped.length?mapped:null);
-    const consoleMode=!aiOpen&&(archive||mapped.length>0||(!publicEdition&&edition==='morning'&&!publicAI.editions.some(e=>e.date===jstDay()&&e.session===edition)));
+    const consoleMode=!aiOpen&&(archive||mapped.length>0);
     renderBriefs(archive||aiOpen?null:publicEdition);
     state.index=archive?Math.max(0,getItems().findIndex(s=>s.id===previousId)):firstAvailable();
     if(!indices().includes(state.index))state.index=firstAvailable();
@@ -475,20 +484,21 @@
       renderAI();txt('#bottomEdition',sessionName(aiSession)+' · '+t('综合新闻'));
       txt('#snapshotStatus',t('综合新闻')+' / AI · RSS');
     }else if(consoleMode){
-      txt('#snapshotStatus',state.archiveView&&!state.filterSaved?t('新闻档案')+' / '+t('原文可追溯'):state.filterSaved?t('收藏')+' / ARCHIVE':mapped.length?publicEdition.date+' / '+sessionName(edition)+' · AI / RSS':'2026.10.08 / ARCHIVE');
+      txt('#snapshotStatus',state.archiveView&&!state.filterSaved?t('新闻档案')+' / '+t('原文可追溯'):state.filterSaved?t('收藏')+' / ARCHIVE':publicEdition.date+' / '+sessionName(edition)+' · '+editionTime(publicEdition)+(publicLoadError?' · 公共数据加载失败':publicationFailed(edition)?' · 本期生成失败':' · AI / RSS'));
       renderMain();if(state.motion)bounce();
     }else{
       const e=edition==='breaking'?{...placeholders.breaking,title:t('紧急播报')+'\n'+t('未连接实时源。')}:{
-        num:edition==='noon'?'02':'03',eyebrow:'AWAITING / '+edition.toUpperCase(),
+        num:edition==='morning'?'01':edition==='noon'?'02':'03',eyebrow:'AWAITING / '+edition.toUpperCase(),
         title:sessionName(edition)+'\n'+t(publicEdition?.briefs?.length?'本期暂无充分资料':'简报尚未发布。'),
-        desc:'本期尚无已发布的公共新闻。你可以切换其他时段或查看综合新闻；这里不会用晨报代替本期内容。'
+        desc:publicationNotice(edition)
       };
       txt('#emptyArt',e.num);txt('#emptyEyebrow',e.eyebrow);txt('#emptyCopy',publicEdition?.briefs?.length?'本期只有短简讯，可在下方阅读；完整档案仍可从顶部进入。':e.desc);
       const heading=$('#emptyHeading');heading.replaceChildren();
       e.title.split('\n').forEach((line,i)=>{if(i)heading.append(document.createElement('br'));heading.append(document.createTextNode(line));});
       txt('#bottomEdition',edition==='breaking'?'不提供实时报警':sessionName(edition)+' · '+t(publicEdition?.briefs?.length?'简讯':'简报尚未发布。'));
-      txt('#snapshotStatus',edition==='breaking'?'NOT A LIVE ALERT':publicEdition?.briefs?.length?t('简讯'):'等待本期公开简报');
+      txt('#snapshotStatus',edition==='breaking'?'NOT A LIVE ALERT':jstDay()+' / '+(publicLoadError?'公共数据加载失败':publicationStatus?.date===jstDay()&&publicationStatus?.session===edition&&publicationStatus?.locales?.[locale]==='unavailable'?'本期生成失败':publicEdition?.briefs?.length?t('简讯'):'等待本期公开简报'));
     }
+    if(!aiOpen)txt('#aiTopState',publicLoadError?'✳ LOAD FAILED':publicationFailed(edition)?'✳ GENERATION FAILED':publicEdition?'✳ NEWS ONLINE':'✳ AWAITING NEWS');
     if(window.scrollY>0)window.scrollTo({top:0,behavior:'instant'});
   }
   function openReader(){
@@ -791,19 +801,37 @@
   },{passive:true});
   translateInterface();
   state.index=firstAvailable();
-  renderMain();
+  changeEdition(state.edition,{automatic:true});
   if(!state.onboarded)openOnboarding();
   // Always fetch only the public shared AI file; NEVER transmit interests or favorites.
-  if(location.protocol!=='file:'){
-    fetch('./ai-briefs.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('AI publication not found');return r.json()}).then(payload=>{
+  let publicFetchPending=false, lastPublicDay=jstDay();
+  async function refreshPublicNews(){
+    if(publicFetchPending)return;
+    publicFetchPending=true;
+    try{
+      const [payload,status]=await Promise.all([
+        fetch('./ai-briefs.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('AI publication not found');return r.json();}),
+        fetch('./public-status.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null)
+      ]);
       if(payload?.schema!==1||!Array.isArray(payload.editions))throw new Error('Invalid AI publication');
-      publicAI=payload;
+      const changed=publicLoading||publicLoadError||lastPublicDay!==jstDay()||payload.updated_at!==publicAI.updated_at||JSON.stringify(status)!==JSON.stringify(publicationStatus);
+      publicAI=payload;publicationStatus=status?.schema===1?status:null;publicLoadError=false;publicLoading=false;
+      lastPublicDay=jstDay();
+      if(!changed)return;
       const latest=latestAISession();
-      if(!state.editionChosen&&aiEditionForSession(latest))changeEdition(latest,{automatic:true});
+      if(!state.editionChosen&&!state.reader)changeEdition(latest,{automatic:true});
       else if(aiOpen){if(!state.sessionChosen)aiSession=latest;renderCurrentView();}
       else if(!state.reader)changeEdition(state.edition,{archive:state.archiveView,automatic:true});
-      if(aiEditionForSession(latest))txt('#aiTopState','✳ NEWS ONLINE');
-    }).catch(()=>{if(aiOpen)renderAI();});
+    }catch{
+      publicLoadError=true;publicLoading=false;
+      if(aiOpen)renderAI();else if(!state.reader)changeEdition(state.edition,{archive:state.archiveView,automatic:true});
+    }finally{publicFetchPending=false;}
+  }
+  if(location.protocol!=='file:'){
+    refreshPublicNews();
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refreshPublicNews();});
+    window.addEventListener('online',refreshPublicNews);
+    setInterval(()=>{if(document.visibilityState==='visible')refreshPublicNews();},300000);
   }
 
   // Durable public long reads are independent of scheduled edition replacement.
@@ -823,6 +851,8 @@
       }
     }).catch(()=>{});
     if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
+      const hadController=Boolean(navigator.serviceWorker.controller);let reloading=false;
+      navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadController&&!reloading){reloading=true;location.reload();}});
       window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}),{once:true});
     }
   }

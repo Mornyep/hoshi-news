@@ -34,7 +34,10 @@ const cases=[
       assert.equal(await page.locator('#app').getAttribute('data-edition'),scenario.expected);
       assert.equal(await page.locator('.edition-tabs .active').getAttribute('data-edition-choice'),scenario.expected);
       if(scenario.old||scenario.manual==='morning'){
-        assert(await page.locator('#hero').isVisible(),'Morning archive remains available');
+        assert(await page.locator('#emptyEdition').isVisible(),'Missing current morning never uses a historical snapshot');
+        assert(!(await page.locator('#hero').isVisible()),'Old morning stories are hidden');
+        await page.locator('[data-action=archive]').first().click();
+        assert(await page.locator('#hero').isVisible(),'Historical stories remain available through archive');
       }else if(!scenario.manual){
         assert(await page.locator('#hero').isVisible(),'Latest briefing uses console on homepage');
         assert(await page.locator('#queueList button').count()>0,'Latest published news available');
