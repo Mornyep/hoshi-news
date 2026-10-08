@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated_at": "2026-10-08T13:21:54.069229Z",
+  "updated_at": "2026-10-08T13:28:25.694602Z",
   "notice": "公共新闻按取得的材料充分程度、语言及类别多样性选材；正文与 RSS 摘录范围逐篇标注。非独立核验、采访或紧急灾害警报。",
   "editions": [
     {
@@ -8,7 +8,7 @@
       "id": "2026-10-08-evening-zh-CN",
       "date": "2026-10-08",
       "session": "evening",
-      "generated_at": "2026-10-08T13:21:54.069229Z",
+      "generated_at": "2026-10-08T13:28:25.694602Z",
       "provider": "groq",
       "model": "openai/gpt-oss-20b",
       "scope": "mixed_rss_and_publisher_feed_article_text",
@@ -29,7 +29,7 @@
             "language": "en",
             "published_at": "2026-10-07T21:16:42Z",
             "feed_url": "https://www.nasa.gov/feed/",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": "official_public_rest_api",
             "body_retrieval": {
               "method": "official_public_rest_api",
@@ -116,7 +116,7 @@
                   "acquired_via": "official_public_rest_api",
                   "extraction": "complete_supplied_paragraphs_no_images_or_logos"
                 },
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false,
                 "editorial_at": "2026-10-08T08:27:54.578475Z",
                 "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
@@ -192,7 +192,7 @@
               "acquired_via": "official_public_rest_api",
               "extraction": "complete_supplied_paragraphs_no_images_or_logos"
             },
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false,
             "editorial_at": "2026-10-08T08:27:54.578475Z",
             "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
@@ -201,6 +201,10 @@
             "scope": "publisher_public_api_article_text",
             "full_text_acquired": true,
             "translation_status": "editorial_retelling",
+            "translation_rejection": "unsupported_figures",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false,
             "method": "source_bound_editorial_retelling"
           },
           "evidence_depth": "article",
@@ -215,7 +219,7 @@
                 "title": "NASA Sets Coverage for SpaceX 35th Station Resupply Launch, Arrival",
                 "excerpt": "NASA and SpaceX are targeting 6:33 a.m. EDT, Tuesday, Oct. 13, for the next launch to deliver science investigations, supplies, and equipment, including the final set of International Space Station Roll-Out Solar Arrays, to the space station. This is the 35th SpaceX commercial resupply services mission to the orbital complex for NASA. NASA also will […]",
                 "published_at": "2026-10-07T21:16:42Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "publisher_feed_article_text"
               }
             ],
@@ -238,7 +242,7 @@
             "language": "zh-CN",
             "published_at": "2026-10-08T05:13:23Z",
             "feed_url": "https://www.chinanews.com.cn/rss/importnews.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -302,7 +306,7 @@
                     "published_at": "2026-10-08T05:13:23Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -356,13 +360,17 @@
                 "published_at": "2026-10-08T05:13:23Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
@@ -376,7 +384,7 @@
                 "title": "国庆假期高速公路新能源汽车日均充电量同比增长51.42%",
                 "excerpt": "中新网10月8日电 据国家能源局微信公众号消息，随着新能源汽车保有量持续增长，节假日群众绿色出行比例不断提升，国家能源局指导各地提前细化完善充电保障方案，组织有关方面利用信息化平台加强监测，做好应急调度，有效保障今年国庆期间新能源汽车大规模出行的充电需求。通过对纳入国家充电设施监测服务平台的6.27万个高速公路充电设施(枪)的统计分析，自10月1日0时至10月7日24时，我国高速公路新能源汽车充电次数共计671.10万次，充电量达到1.63亿千瓦时，日均充电量2325.66万千瓦时，日均充电量同比增长51.42%。",
                 "published_at": "2026-10-08T05:13:23Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -384,36 +392,36 @@
           }
         },
         {
-          "id": "710a6a2e54281b",
+          "id": "10e5d2add8547f",
           "category": "politics",
           "categoryLabel": "政治",
-          "published_at": "2026-10-08T09:38:20Z",
+          "published_at": "2026-10-08T13:24:26Z",
           "is_headline": false,
-          "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-          "summary": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+          "title": "外交部：再次敦促日方严惩持刀侵闯中国驻日使馆凶犯",
+          "summary": "新华社北京10月8日电(记者邵艺博、赵瀚泽)外交部发言人毛宁8日就村田晃大非法持刀侵闯中国驻日本使馆案首次开庭答记者问时表示，日本自卫队现役官员持刀侵闯中国驻日本使馆，向中方外交人员发出暴力威胁，是国际社会前所未闻的恶性事件，严重违反《维也纳外交关系公约》，严重威胁中方外交人员人身安全和外交馆舍安全，暴露出日本国内右翼势力猖獗、自卫队人员失管失教等诸多深层次问题。",
           "context": "据 RSS 标题与简讯整理；未获取或核验全文。",
           "uncertainty": "来源简讯未提供可靠资料，不能推断。",
           "source": {
             "name": "中国新闻网",
-            "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
+            "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
             "language": "zh-CN",
-            "published_at": "2026-10-08T09:38:20Z",
+            "published_at": "2026-10-08T13:24:26Z",
             "feed_url": "https://www.chinanews.com.cn/rss/china.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
           "localized": {
             "zh-CN": {
-              "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-              "summary": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+              "title": "外交部：再次敦促日方严惩持刀侵闯中国驻日使馆凶犯",
+              "summary": "新华社北京10月8日电(记者邵艺博、赵瀚泽)外交部发言人毛宁8日就村田晃大非法持刀侵闯中国驻日本使馆案首次开庭答记者问时表示，日本自卫队现役官员持刀侵闯中国驻日本使馆，向中方外交人员发出暴力威胁，是国际社会前所未闻的恶性事件，严重违反《维也纳外交关系公约》，严重威胁中方外交人员人身安全和外交馆舍安全，暴露出日本国内右翼势力猖獗、自卫队人员失管失教等诸多深层次问题。",
               "context": "据 RSS 标题与简讯整理；未获取或核验全文。",
               "uncertainty": "来源简讯未提供可靠资料，不能推断。",
               "language": "zh-CN",
               "status": "original",
               "translation_status": "original",
               "validation": "numeric_quote_and_structure_checks_only",
-              "original_title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
+              "original_title": "外交部：再次敦促日方严惩持刀侵闯中国驻日使馆凶犯",
               "archive": {
                 "scope": "rss_title_excerpt_only",
                 "full_text_acquired": false,
@@ -422,7 +430,7 @@
                   {
                     "id": "summary",
                     "title": "可靠摘要",
-                    "text": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+                    "text": "新华社北京10月8日电(记者邵艺博、赵瀚泽)外交部发言人毛宁8日就村田晃大非法持刀侵闯中国驻日本使馆案首次开庭答记者问时表示，日本自卫队现役官员持刀侵闯中国驻日本使馆，向中方外交人员发出暴力威胁，是国际社会前所未闻的恶性事件，严重违反《维也纳外交关系公约》，严重威胁中方外交人员人身安全和外交馆舍安全，暴露出日本国内右翼势力猖獗、自卫队人员失管失教等诸多深层次问题。",
                     "available": true
                   },
                   {
@@ -459,11 +467,11 @@
                 "sources": [
                   {
                     "name": "中国新闻网",
-                    "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
-                    "published_at": "2026-10-08T09:38:20Z"
+                    "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
+                    "published_at": "2026-10-08T13:24:26Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -476,7 +484,7 @@
               {
                 "id": "summary",
                 "title": "可靠摘要",
-                "text": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+                "text": "新华社北京10月8日电(记者邵艺博、赵瀚泽)外交部发言人毛宁8日就村田晃大非法持刀侵闯中国驻日本使馆案首次开庭答记者问时表示，日本自卫队现役官员持刀侵闯中国驻日本使馆，向中方外交人员发出暴力威胁，是国际社会前所未闻的恶性事件，严重违反《维也纳外交关系公约》，严重威胁中方外交人员人身安全和外交馆舍安全，暴露出日本国内右翼势力猖獗、自卫队人员失管失教等诸多深层次问题。",
                 "available": true
               },
               {
@@ -513,31 +521,35 @@
             "sources": [
               {
                 "name": "中国新闻网",
-                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
-                "published_at": "2026-10-08T09:38:20Z"
+                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
+                "published_at": "2026-10-08T13:24:26Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
-            "id": "710a6a2e54281b",
+            "id": "10e5d2add8547f",
             "association": "single_report",
             "sources": [
               {
                 "name": "中国新闻网",
-                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
+                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
                 "language": "zh-CN",
-                "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-                "excerpt": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
-                "published_at": "2026-10-08T09:38:20Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "title": "外交部：再次敦促日方严惩持刀侵闯中国驻日使馆凶犯",
+                "excerpt": "新华社北京10月8日电(记者邵艺博、赵瀚泽)外交部发言人毛宁8日就村田晃大非法持刀侵闯中国驻日本使馆案首次开庭答记者问时表示，日本自卫队现役官员持刀侵闯中国驻日本使馆，向中方外交人员发出暴力威胁，是国际社会前所未闻的恶性事件，严重违反《维也纳外交关系公约》，严重威胁中方外交人员人身安全和外交馆舍安全，暴露出日本国内右翼势力猖獗、自卫队人员失管失教等诸多深层次问题。",
+                "published_at": "2026-10-08T13:24:26Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -560,7 +572,7 @@
             "language": "zh-CN",
             "published_at": "2026-10-08T12:27:31Z",
             "feed_url": "https://www.chinanews.com.cn/rss/finance.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -624,7 +636,7 @@
                     "published_at": "2026-10-08T12:27:31Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -678,13 +690,17 @@
                 "published_at": "2026-10-08T12:27:31Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
@@ -698,168 +714,7 @@
                 "title": "中国一汽、丰田汽车、广汽集团签署战略合作协议",
                 "excerpt": "中新社广州10月8日电 (记者 王华)中国第一汽车股份有限公司、丰田汽车公司、广州汽车集团股份有限公司10月8日在广州签署全新战略合作框架协议。根据协议，广汽集团拟通过发行股份方式购买中国一汽持有的一汽丰田50%股权，交易完成后，中国一汽将成为广汽集团重要战略股东，广汽集团将成为“南北丰田”两家合资公司共同的中方股东，统筹协调两家合资企业研发、采购、生产、销售等相关工作。",
                 "published_at": "2026-10-08T12:27:31Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
-                "scope": "rss_title_excerpt_only"
-              }
-            ],
-            "independently_verified": false
-          }
-        },
-        {
-          "id": "a65d4925a9836f",
-          "category": "world",
-          "categoryLabel": "国际",
-          "published_at": "2026-10-08T12:47:49Z",
-          "is_headline": false,
-          "title": "Medium-term borrowing costs for UK government hit 19-year high",
-          "summary": "Investors offload global bonds amid fears of rising inflation, increasing pressure on John Healey ahead of first budget Business live – latest updates Medium-term borrowing costs for the UK government hit a fresh 19-year high on Thursday, as investors continued to offload global bonds amid fears of rising inflation. Recent dramatic moves in government bond markets have been driven by international factors, but will increase the pressure on John Healey ahea",
-          "context": "据 RSS 标题与简讯整理；未获取或核验全文。",
-          "uncertainty": "翻译未通过来源约束检查，显示原语。",
-          "source": {
-            "name": "The Guardian World",
-            "url": "https://www.theguardian.com/business/2026/oct/08/medium-term-borrowing-costs-uk-government-19-year-high",
-            "language": "en",
-            "published_at": "2026-10-08T12:47:49Z",
-            "feed_url": "https://www.theguardian.com/world/rss",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
-            "body_acquired_via": null,
-            "body_retrieval": null
-          },
-          "localized": {
-            "zh-CN": {
-              "title": "Medium-term borrowing costs for UK government hit 19-year high",
-              "summary": "Investors offload global bonds amid fears of rising inflation, increasing pressure on John Healey ahead of first budget Business live – latest updates Medium-term borrowing costs for the UK government hit a fresh 19-year high on Thursday, as investors continued to offload global bonds amid fears of rising inflation. Recent dramatic moves in government bond markets have been driven by international factors, but will increase the pressure on John Healey ahea",
-              "context": "据 RSS 标题与简讯整理；未获取或核验全文。",
-              "uncertainty": "翻译未通过来源约束检查，显示原语。",
-              "language": "en",
-              "status": "fallback",
-              "translation_status": "fallback",
-              "validation": "source_original",
-              "original_title": "Medium-term borrowing costs for UK government hit 19-year high",
-              "archive": {
-                "scope": "rss_title_excerpt_only",
-                "full_text_acquired": false,
-                "notice": "据 RSS 标题与简讯整理；未获取或核验全文。",
-                "sections": [
-                  {
-                    "id": "summary",
-                    "title": "可靠摘要",
-                    "text": "Investors offload global bonds amid fears of rising inflation, increasing pressure on John Healey ahead of first budget Business live – latest updates Medium-term borrowing costs for the UK government hit a fresh 19-year high on Thursday, as investors continued to offload global bonds amid fears of rising inflation. Recent dramatic moves in government bond markets have been driven by international factors, but will increase the pressure on John Healey ahea",
-                    "available": true
-                  },
-                  {
-                    "id": "background",
-                    "title": "事件背景",
-                    "text": "来源简讯未提供可靠资料，不能推断。",
-                    "available": false
-                  },
-                  {
-                    "id": "timeline",
-                    "title": "经过与时间线",
-                    "text": "来源简讯未提供可靠资料，不能推断。",
-                    "available": false
-                  },
-                  {
-                    "id": "data",
-                    "title": "重要数据",
-                    "text": "来源简讯未提供可靠资料，不能推断。",
-                    "available": false
-                  },
-                  {
-                    "id": "stakeholders",
-                    "title": "利益相关方",
-                    "text": "来源简讯未提供可靠资料，不能推断。",
-                    "available": false
-                  },
-                  {
-                    "id": "verification",
-                    "title": "事实核验",
-                    "text": "仅核对来源链接与 RSS 元数据，未独立交叉核验。",
-                    "available": false
-                  }
-                ],
-                "sources": [
-                  {
-                    "name": "The Guardian World",
-                    "url": "https://www.theguardian.com/business/2026/oct/08/medium-term-borrowing-costs-uk-government-19-year-high",
-                    "published_at": "2026-10-08T12:47:49Z"
-                  }
-                ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
-                "independently_verified": false
-              }
-            }
-          },
-          "archive": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "notice": "据 RSS 标题与简讯整理；未获取或核验全文。",
-            "sections": [
-              {
-                "id": "summary",
-                "title": "可靠摘要",
-                "text": "Investors offload global bonds amid fears of rising inflation, increasing pressure on John Healey ahead of first budget Business live – latest updates Medium-term borrowing costs for the UK government hit a fresh 19-year high on Thursday, as investors continued to offload global bonds amid fears of rising inflation. Recent dramatic moves in government bond markets have been driven by international factors, but will increase the pressure on John Healey ahea",
-                "available": true
-              },
-              {
-                "id": "background",
-                "title": "事件背景",
-                "text": "来源简讯未提供可靠资料，不能推断。",
-                "available": false
-              },
-              {
-                "id": "timeline",
-                "title": "经过与时间线",
-                "text": "来源简讯未提供可靠资料，不能推断。",
-                "available": false
-              },
-              {
-                "id": "data",
-                "title": "重要数据",
-                "text": "来源简讯未提供可靠资料，不能推断。",
-                "available": false
-              },
-              {
-                "id": "stakeholders",
-                "title": "利益相关方",
-                "text": "来源简讯未提供可靠资料，不能推断。",
-                "available": false
-              },
-              {
-                "id": "verification",
-                "title": "事实核验",
-                "text": "仅核对来源链接与 RSS 元数据，未独立交叉核验。",
-                "available": false
-              }
-            ],
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/business/2026/oct/08/medium-term-borrowing-costs-uk-government-19-year-high",
-                "published_at": "2026-10-08T12:47:49Z"
-              }
-            ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
-            "independently_verified": false
-          },
-          "provenance": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "translation_status": "fallback"
-          },
-          "evidence_depth": "substantial_excerpt",
-          "event": {
-            "id": "a65d4925a9836f",
-            "association": "single_report",
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/business/2026/oct/08/medium-term-borrowing-costs-uk-government-19-year-high",
-                "language": "en",
-                "title": "Medium-term borrowing costs for UK government hit 19-year high",
-                "excerpt": "Investors offload global bonds amid fears of rising inflation, increasing pressure on John Healey ahead of first budget Business live – latest updates Medium-term borrowing costs for the UK government hit a fresh 19-year high on Thursday, as investors continued to offload global bonds amid fears of rising inflation. Recent dramatic moves in government bond markets have been driven by international factors, but will increase the pressure on John Healey ahea",
-                "published_at": "2026-10-08T12:47:49Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -870,7 +725,7 @@
           "id": "9d7853c8b1f88a",
           "category": "world",
           "categoryLabel": "国际",
-          "published_at": "2026-10-08T12:20:54Z",
+          "published_at": "2026-10-08T13:11:01Z",
           "is_headline": false,
           "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
           "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
@@ -880,9 +735,9 @@
             "name": "The Guardian World",
             "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
             "language": "en",
-            "published_at": "2026-10-08T12:20:54Z",
+            "published_at": "2026-10-08T13:11:01Z",
             "feed_url": "https://www.theguardian.com/world/rss",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -943,10 +798,10 @@
                   {
                     "name": "The Guardian World",
                     "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-                    "published_at": "2026-10-08T12:20:54Z"
+                    "published_at": "2026-10-08T13:11:01Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -997,16 +852,20 @@
               {
                 "name": "The Guardian World",
                 "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-                "published_at": "2026-10-08T12:20:54Z"
+                "published_at": "2026-10-08T13:11:01Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "fallback"
+            "translation_status": "fallback",
+            "translation_rejection": "unsupported_figures",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
@@ -1019,8 +878,173 @@
                 "language": "en",
                 "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
                 "excerpt": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-                "published_at": "2026-10-08T12:20:54Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "published_at": "2026-10-08T13:11:01Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
+                "scope": "rss_title_excerpt_only"
+              }
+            ],
+            "independently_verified": false
+          }
+        },
+        {
+          "id": "79047a9f7513ca",
+          "category": "world",
+          "categoryLabel": "国际",
+          "published_at": "2026-10-08T13:10:57Z",
+          "is_headline": false,
+          "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+          "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+          "context": "据 RSS 标题与简讯整理；未获取或核验全文。",
+          "uncertainty": "翻译未通过来源约束检查，显示原语。",
+          "source": {
+            "name": "The Guardian World",
+            "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+            "language": "en",
+            "published_at": "2026-10-08T13:10:57Z",
+            "feed_url": "https://www.theguardian.com/world/rss",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
+            "body_acquired_via": null,
+            "body_retrieval": null
+          },
+          "localized": {
+            "zh-CN": {
+              "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+              "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+              "context": "据 RSS 标题与简讯整理；未获取或核验全文。",
+              "uncertainty": "翻译未通过来源约束检查，显示原语。",
+              "language": "en",
+              "status": "fallback",
+              "translation_status": "fallback",
+              "validation": "source_original",
+              "original_title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+              "archive": {
+                "scope": "rss_title_excerpt_only",
+                "full_text_acquired": false,
+                "notice": "据 RSS 标题与简讯整理；未获取或核验全文。",
+                "sections": [
+                  {
+                    "id": "summary",
+                    "title": "可靠摘要",
+                    "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                    "available": true
+                  },
+                  {
+                    "id": "background",
+                    "title": "事件背景",
+                    "text": "来源简讯未提供可靠资料，不能推断。",
+                    "available": false
+                  },
+                  {
+                    "id": "timeline",
+                    "title": "经过与时间线",
+                    "text": "来源简讯未提供可靠资料，不能推断。",
+                    "available": false
+                  },
+                  {
+                    "id": "data",
+                    "title": "重要数据",
+                    "text": "来源简讯未提供可靠资料，不能推断。",
+                    "available": false
+                  },
+                  {
+                    "id": "stakeholders",
+                    "title": "利益相关方",
+                    "text": "来源简讯未提供可靠资料，不能推断。",
+                    "available": false
+                  },
+                  {
+                    "id": "verification",
+                    "title": "事实核验",
+                    "text": "仅核对来源链接与 RSS 元数据，未独立交叉核验。",
+                    "available": false
+                  }
+                ],
+                "sources": [
+                  {
+                    "name": "The Guardian World",
+                    "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                    "published_at": "2026-10-08T13:10:57Z"
+                  }
+                ],
+                "generated_at": "2026-10-08T13:28:25.694602Z",
+                "independently_verified": false
+              }
+            }
+          },
+          "archive": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "notice": "据 RSS 标题与简讯整理；未获取或核验全文。",
+            "sections": [
+              {
+                "id": "summary",
+                "title": "可靠摘要",
+                "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                "available": true
+              },
+              {
+                "id": "background",
+                "title": "事件背景",
+                "text": "来源简讯未提供可靠资料，不能推断。",
+                "available": false
+              },
+              {
+                "id": "timeline",
+                "title": "经过与时间线",
+                "text": "来源简讯未提供可靠资料，不能推断。",
+                "available": false
+              },
+              {
+                "id": "data",
+                "title": "重要数据",
+                "text": "来源简讯未提供可靠资料，不能推断。",
+                "available": false
+              },
+              {
+                "id": "stakeholders",
+                "title": "利益相关方",
+                "text": "来源简讯未提供可靠资料，不能推断。",
+                "available": false
+              },
+              {
+                "id": "verification",
+                "title": "事实核验",
+                "text": "仅核对来源链接与 RSS 元数据，未独立交叉核验。",
+                "available": false
+              }
+            ],
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                "published_at": "2026-10-08T13:10:57Z"
+              }
+            ],
+            "generated_at": "2026-10-08T13:28:25.694602Z",
+            "independently_verified": false
+          },
+          "provenance": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "translation_status": "fallback",
+            "translation_rejection": "source_names_missing",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
+          },
+          "evidence_depth": "substantial_excerpt",
+          "event": {
+            "id": "79047a9f7513ca",
+            "association": "single_report",
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                "language": "en",
+                "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+                "excerpt": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                "published_at": "2026-10-08T13:10:57Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -1046,7 +1070,7 @@
             "language": "zh-CN",
             "published_at": "2026-10-08T12:38:21Z",
             "feed_url": "https://www.chinanews.com.cn/rss/importnews.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -1110,7 +1134,7 @@
                     "published_at": "2026-10-08T12:38:21Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -1164,13 +1188,17 @@
                 "published_at": "2026-10-08T12:38:21Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -1184,7 +1212,7 @@
                 "title": "集装箱铁水联运装载和安全检查国家标准发布",
                 "excerpt": "中新网10月8日电 据国家市场监督管理总局网站消息，近日，市场监管总局批准发布《集装箱铁水联运装载和安全检查技术规范》国家标准(GB/T 48309—2026)，统筹铁路、水路两种运输方式的作业要求，对通用集装箱铁水联运的货物装载、安全检查作出统一规范，为实现集装箱铁水联运“全程不开箱”奠定基础。",
                 "published_at": "2026-10-08T12:38:21Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -1207,7 +1235,7 @@
             "language": "zh-CN",
             "published_at": "2026-10-08T08:28:42Z",
             "feed_url": "https://www.chinanews.com.cn/rss/importnews.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -1271,7 +1299,7 @@
                     "published_at": "2026-10-08T08:28:42Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -1325,13 +1353,17 @@
                 "published_at": "2026-10-08T08:28:42Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -1345,7 +1377,7 @@
                 "title": "云南镇雄大营煤矿“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
                 "excerpt": "日前，国家矿山安全监察局云南局公布《昭通镇雄大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告》。经调查认定，该事故是一起因企业主体责任落实不到位、地方煤矿安全监管不力导致的生产安全责任事故。",
                 "published_at": "2026-10-08T08:28:42Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -1368,7 +1400,7 @@
             "language": "zh-CN",
             "published_at": "2026-10-08T08:01:58Z",
             "feed_url": "https://www.chinanews.com.cn/rss/importnews.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -1432,7 +1464,7 @@
                     "published_at": "2026-10-08T08:01:58Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -1486,13 +1518,17 @@
                 "published_at": "2026-10-08T08:01:58Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -1506,7 +1542,7 @@
                 "title": "广东省人大常委会党组成员、副主任张硕辅被查",
                 "excerpt": "中新网10月8日电 据中央纪委国家监委网站消息，广东省人大常委会党组成员、副主任张硕辅涉嫌严重违纪违法，目前正接受中央纪委国家监委纪律审查和监察调查。",
                 "published_at": "2026-10-08T08:01:58Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -1529,7 +1565,7 @@
             "language": "zh-CN",
             "published_at": "2026-10-08T07:38:15Z",
             "feed_url": "https://www.chinanews.com.cn/rss/importnews.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -1593,7 +1629,7 @@
                     "published_at": "2026-10-08T07:38:15Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -1647,13 +1683,17 @@
                 "published_at": "2026-10-08T07:38:15Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -1667,7 +1707,7 @@
                 "title": "中方提名宋莉博士参与竞选世卫组织总干事",
                 "excerpt": "中新网北京10月8日电 (记者 黄钰钦)中国外交部发言人毛宁8日主持例行记者会。",
                 "published_at": "2026-10-08T07:38:15Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -2009,7 +2049,7 @@
       "id": "2026-10-08-evening-zh-TW",
       "date": "2026-10-08",
       "session": "evening",
-      "generated_at": "2026-10-08T13:21:54.069229Z",
+      "generated_at": "2026-10-08T13:28:25.694602Z",
       "provider": "groq",
       "model": "openai/gpt-oss-20b",
       "scope": "mixed_rss_and_publisher_feed_article_text",
@@ -2030,7 +2070,7 @@
             "language": "en",
             "published_at": "2026-10-07T21:16:42Z",
             "feed_url": "https://www.nasa.gov/feed/",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": "official_public_rest_api",
             "body_retrieval": {
               "method": "official_public_rest_api",
@@ -2117,10 +2157,34 @@
                   "acquired_via": "official_public_rest_api",
                   "extraction": "complete_supplied_paragraphs_no_images_or_logos"
                 },
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false,
                 "editorial_at": "2026-10-08T08:27:54.578475Z",
-                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+                "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+                "analysis": {
+                  "title": "AI 補充閱讀 · 待查核分析",
+                  "notice": "分析僅依據下列已取得資料，不代表獨立查核或各方完整立場。",
+                  "language": "zh-TW",
+                  "method": "evidence_anchored_machine_analysis",
+                  "independently_verified": false,
+                  "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+                  "sections": [
+                    {
+                      "kind": "background",
+                      "title": "背景線索",
+                      "text": "SpaceX 的第 35 次商業補給服務任務將交付國際太空站最後一批滾動式太陽能板，這對維持太空站能源供應至關重要。",
+                      "sources": [
+                        {
+                          "id": "s1",
+                          "name": "NASA",
+                          "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                          "scope": "acquired_article_text",
+                          "published_at": "2026-10-07T21:16:42Z"
+                        }
+                      ]
+                    }
+                  ]
+                }
               }
             }
           },
@@ -2193,15 +2257,43 @@
               "acquired_via": "official_public_rest_api",
               "extraction": "complete_supplied_paragraphs_no_images_or_logos"
             },
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false,
             "editorial_at": "2026-10-08T08:27:54.578475Z",
-            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
+            "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b",
+            "analysis": {
+              "title": "AI 補充閱讀 · 待查核分析",
+              "notice": "分析僅依據下列已取得資料，不代表獨立查核或各方完整立場。",
+              "language": "zh-TW",
+              "method": "evidence_anchored_machine_analysis",
+              "independently_verified": false,
+              "validation": "exact_anchor_and_token_guards_not_semantic_verification",
+              "sections": [
+                {
+                  "kind": "background",
+                  "title": "背景線索",
+                  "text": "SpaceX 的第 35 次商業補給服務任務將交付國際太空站最後一批滾動式太陽能板，這對維持太空站能源供應至關重要。",
+                  "sources": [
+                    {
+                      "id": "s1",
+                      "name": "NASA",
+                      "url": "https://www.nasa.gov/news-release/nasa-sets-coverage-for-spacex-35th-station-resupply-launch-arrival/",
+                      "scope": "acquired_article_text",
+                      "published_at": "2026-10-07T21:16:42Z"
+                    }
+                  ]
+                }
+              ]
+            }
           },
           "provenance": {
             "scope": "publisher_public_api_article_text",
             "full_text_acquired": true,
             "translation_status": "editorial_retelling",
+            "translation_rejection": "unsupported_figures",
+            "model_item_present": true,
+            "model_analysis_present": true,
+            "model_highlight_present": true,
             "method": "source_bound_editorial_retelling"
           },
           "evidence_depth": "article",
@@ -2216,7 +2308,7 @@
                 "title": "NASA Sets Coverage for SpaceX 35th Station Resupply Launch, Arrival",
                 "excerpt": "NASA and SpaceX are targeting 6:33 a.m. EDT, Tuesday, Oct. 13, for the next launch to deliver science investigations, supplies, and equipment, including the final set of International Space Station Roll-Out Solar Arrays, to the space station. This is the 35th SpaceX commercial resupply services mission to the orbital complex for NASA. NASA also will […]",
                 "published_at": "2026-10-07T21:16:42Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "publisher_feed_article_text"
               }
             ],
@@ -2229,8 +2321,8 @@
           "categoryLabel": "综合头条",
           "published_at": "2026-10-08T05:13:23Z",
           "is_headline": true,
-          "title": "國慶假期高速公路新能源車日均充電量同比增長 51.42%",
-          "summary": "國家能源局統計顯示，10 月 1 日至 7 日，高速公路 6.27 萬個充電設施共計 671.10 萬次充電，充電量 1.63 億千瓦時，日均 2325.66 萬千瓦時，較去年同期增長 51.42%。",
+          "title": "國慶假期高速公路新能源車日均充電量同比增長51.42%",
+          "summary": "自 10 月 1 日至 10 月 7 日，6.27 萬高速公路充電設施共計 671.10 萬次充電，充電量 1.63 億千瓦時，日均 2325.66 萬千瓦時，日均增長 51.42%。",
           "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
           "uncertainty": "來源簡訊未提供可靠資料，不能推斷。",
           "source": {
@@ -2239,14 +2331,14 @@
             "language": "zh-CN",
             "published_at": "2026-10-08T05:13:23Z",
             "feed_url": "https://www.chinanews.com.cn/rss/importnews.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
           "localized": {
             "zh-TW": {
-              "title": "國慶假期高速公路新能源車日均充電量同比增長 51.42%",
-              "summary": "國家能源局統計顯示，10 月 1 日至 7 日，高速公路 6.27 萬個充電設施共計 671.10 萬次充電，充電量 1.63 億千瓦時，日均 2325.66 萬千瓦時，較去年同期增長 51.42%。",
+              "title": "國慶假期高速公路新能源車日均充電量同比增長51.42%",
+              "summary": "自 10 月 1 日至 10 月 7 日，6.27 萬高速公路充電設施共計 671.10 萬次充電，充電量 1.63 億千瓦時，日均 2325.66 萬千瓦時，日均增長 51.42%。",
               "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
               "uncertainty": "來源簡訊未提供可靠資料，不能推斷。",
               "language": "zh-TW",
@@ -2262,7 +2354,7 @@
                   {
                     "id": "summary",
                     "title": "可靠摘要",
-                    "text": "國家能源局統計顯示，10 月 1 日至 7 日，高速公路 6.27 萬個充電設施共計 671.10 萬次充電，充電量 1.63 億千瓦時，日均 2325.66 萬千瓦時，較去年同期增長 51.42%。",
+                    "text": "自 10 月 1 日至 10 月 7 日，6.27 萬高速公路充電設施共計 671.10 萬次充電，充電量 1.63 億千瓦時，日均 2325.66 萬千瓦時，日均增長 51.42%。",
                     "available": true
                   },
                   {
@@ -2303,12 +2395,8 @@
                     "published_at": "2026-10-08T05:13:23Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
-              },
-              "highlight": {
-                "text": "日均充電量同比增長 51.42%",
-                "method": "machine_selected_exact_headline_span"
               }
             }
           },
@@ -2320,7 +2408,7 @@
               {
                 "id": "summary",
                 "title": "可靠摘要",
-                "text": "國家能源局統計顯示，10 月 1 日至 7 日，高速公路 6.27 萬個充電設施共計 671.10 萬次充電，充電量 1.63 億千瓦時，日均 2325.66 萬千瓦時，較去年同期增長 51.42%。",
+                "text": "自 10 月 1 日至 10 月 7 日，6.27 萬高速公路充電設施共計 671.10 萬次充電，充電量 1.63 億千瓦時，日均 2325.66 萬千瓦時，日均增長 51.42%。",
                 "available": true
               },
               {
@@ -2361,17 +2449,17 @@
                 "published_at": "2026-10-08T05:13:23Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "translated"
-          },
-          "highlight": {
-            "text": "日均充電量同比增長 51.42%",
-            "method": "machine_selected_exact_headline_span"
+            "translation_status": "translated",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
@@ -2385,7 +2473,337 @@
                 "title": "国庆假期高速公路新能源汽车日均充电量同比增长51.42%",
                 "excerpt": "中新网10月8日电 据国家能源局微信公众号消息，随着新能源汽车保有量持续增长，节假日群众绿色出行比例不断提升，国家能源局指导各地提前细化完善充电保障方案，组织有关方面利用信息化平台加强监测，做好应急调度，有效保障今年国庆期间新能源汽车大规模出行的充电需求。通过对纳入国家充电设施监测服务平台的6.27万个高速公路充电设施(枪)的统计分析，自10月1日0时至10月7日24时，我国高速公路新能源汽车充电次数共计671.10万次，充电量达到1.63亿千瓦时，日均充电量2325.66万千瓦时，日均充电量同比增长51.42%。",
                 "published_at": "2026-10-08T05:13:23Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
+                "scope": "rss_title_excerpt_only"
+              }
+            ],
+            "independently_verified": false
+          }
+        },
+        {
+          "id": "9d7853c8b1f88a",
+          "category": "world",
+          "categoryLabel": "国际",
+          "published_at": "2026-10-08T13:11:01Z",
+          "is_headline": false,
+          "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
+          "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+          "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
+          "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
+          "source": {
+            "name": "The Guardian World",
+            "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
+            "language": "en",
+            "published_at": "2026-10-08T13:11:01Z",
+            "feed_url": "https://www.theguardian.com/world/rss",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
+            "body_acquired_via": null,
+            "body_retrieval": null
+          },
+          "localized": {
+            "zh-TW": {
+              "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
+              "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+              "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
+              "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
+              "language": "en",
+              "status": "fallback",
+              "translation_status": "fallback",
+              "validation": "source_original",
+              "original_title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
+              "archive": {
+                "scope": "rss_title_excerpt_only",
+                "full_text_acquired": false,
+                "notice": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
+                "sections": [
+                  {
+                    "id": "summary",
+                    "title": "可靠摘要",
+                    "text": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+                    "available": true
+                  },
+                  {
+                    "id": "background",
+                    "title": "事件背景",
+                    "text": "來源簡訊未提供可靠資料，不能推斷。",
+                    "available": false
+                  },
+                  {
+                    "id": "timeline",
+                    "title": "經過與時間線",
+                    "text": "來源簡訊未提供可靠資料，不能推斷。",
+                    "available": false
+                  },
+                  {
+                    "id": "data",
+                    "title": "重要數據",
+                    "text": "來源簡訊未提供可靠資料，不能推斷。",
+                    "available": false
+                  },
+                  {
+                    "id": "stakeholders",
+                    "title": "利害關係人",
+                    "text": "來源簡訊未提供可靠資料，不能推斷。",
+                    "available": false
+                  },
+                  {
+                    "id": "verification",
+                    "title": "事實核驗",
+                    "text": "僅核對來源連結與 RSS 中繼資料，未獨立交叉核驗。",
+                    "available": false
+                  }
+                ],
+                "sources": [
+                  {
+                    "name": "The Guardian World",
+                    "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
+                    "published_at": "2026-10-08T13:11:01Z"
+                  }
+                ],
+                "generated_at": "2026-10-08T13:28:25.694602Z",
+                "independently_verified": false
+              }
+            }
+          },
+          "archive": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "notice": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
+            "sections": [
+              {
+                "id": "summary",
+                "title": "可靠摘要",
+                "text": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+                "available": true
+              },
+              {
+                "id": "background",
+                "title": "事件背景",
+                "text": "來源簡訊未提供可靠資料，不能推斷。",
+                "available": false
+              },
+              {
+                "id": "timeline",
+                "title": "經過與時間線",
+                "text": "來源簡訊未提供可靠資料，不能推斷。",
+                "available": false
+              },
+              {
+                "id": "data",
+                "title": "重要數據",
+                "text": "來源簡訊未提供可靠資料，不能推斷。",
+                "available": false
+              },
+              {
+                "id": "stakeholders",
+                "title": "利害關係人",
+                "text": "來源簡訊未提供可靠資料，不能推斷。",
+                "available": false
+              },
+              {
+                "id": "verification",
+                "title": "事實核驗",
+                "text": "僅核對來源連結與 RSS 中繼資料，未獨立交叉核驗。",
+                "available": false
+              }
+            ],
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
+                "published_at": "2026-10-08T13:11:01Z"
+              }
+            ],
+            "generated_at": "2026-10-08T13:28:25.694602Z",
+            "independently_verified": false
+          },
+          "provenance": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "translation_status": "fallback",
+            "translation_rejection": "unsupported_figures",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
+          },
+          "evidence_depth": "substantial_excerpt",
+          "event": {
+            "id": "9d7853c8b1f88a",
+            "association": "single_report",
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
+                "language": "en",
+                "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
+                "excerpt": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+                "published_at": "2026-10-08T13:11:01Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
+                "scope": "rss_title_excerpt_only"
+              }
+            ],
+            "independently_verified": false
+          }
+        },
+        {
+          "id": "79047a9f7513ca",
+          "category": "world",
+          "categoryLabel": "国际",
+          "published_at": "2026-10-08T13:10:57Z",
+          "is_headline": false,
+          "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+          "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+          "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
+          "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
+          "source": {
+            "name": "The Guardian World",
+            "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+            "language": "en",
+            "published_at": "2026-10-08T13:10:57Z",
+            "feed_url": "https://www.theguardian.com/world/rss",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
+            "body_acquired_via": null,
+            "body_retrieval": null
+          },
+          "localized": {
+            "zh-TW": {
+              "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+              "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+              "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
+              "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
+              "language": "en",
+              "status": "fallback",
+              "translation_status": "fallback",
+              "validation": "source_original",
+              "original_title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+              "archive": {
+                "scope": "rss_title_excerpt_only",
+                "full_text_acquired": false,
+                "notice": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
+                "sections": [
+                  {
+                    "id": "summary",
+                    "title": "可靠摘要",
+                    "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                    "available": true
+                  },
+                  {
+                    "id": "background",
+                    "title": "事件背景",
+                    "text": "來源簡訊未提供可靠資料，不能推斷。",
+                    "available": false
+                  },
+                  {
+                    "id": "timeline",
+                    "title": "經過與時間線",
+                    "text": "來源簡訊未提供可靠資料，不能推斷。",
+                    "available": false
+                  },
+                  {
+                    "id": "data",
+                    "title": "重要數據",
+                    "text": "來源簡訊未提供可靠資料，不能推斷。",
+                    "available": false
+                  },
+                  {
+                    "id": "stakeholders",
+                    "title": "利害關係人",
+                    "text": "來源簡訊未提供可靠資料，不能推斷。",
+                    "available": false
+                  },
+                  {
+                    "id": "verification",
+                    "title": "事實核驗",
+                    "text": "僅核對來源連結與 RSS 中繼資料，未獨立交叉核驗。",
+                    "available": false
+                  }
+                ],
+                "sources": [
+                  {
+                    "name": "The Guardian World",
+                    "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                    "published_at": "2026-10-08T13:10:57Z"
+                  }
+                ],
+                "generated_at": "2026-10-08T13:28:25.694602Z",
+                "independently_verified": false
+              }
+            }
+          },
+          "archive": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "notice": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
+            "sections": [
+              {
+                "id": "summary",
+                "title": "可靠摘要",
+                "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                "available": true
+              },
+              {
+                "id": "background",
+                "title": "事件背景",
+                "text": "來源簡訊未提供可靠資料，不能推斷。",
+                "available": false
+              },
+              {
+                "id": "timeline",
+                "title": "經過與時間線",
+                "text": "來源簡訊未提供可靠資料，不能推斷。",
+                "available": false
+              },
+              {
+                "id": "data",
+                "title": "重要數據",
+                "text": "來源簡訊未提供可靠資料，不能推斷。",
+                "available": false
+              },
+              {
+                "id": "stakeholders",
+                "title": "利害關係人",
+                "text": "來源簡訊未提供可靠資料，不能推斷。",
+                "available": false
+              },
+              {
+                "id": "verification",
+                "title": "事實核驗",
+                "text": "僅核對來源連結與 RSS 中繼資料，未獨立交叉核驗。",
+                "available": false
+              }
+            ],
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                "published_at": "2026-10-08T13:10:57Z"
+              }
+            ],
+            "generated_at": "2026-10-08T13:28:25.694602Z",
+            "independently_verified": false
+          },
+          "provenance": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "translation_status": "fallback",
+            "translation_rejection": "source_names_missing",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
+          },
+          "evidence_depth": "substantial_excerpt",
+          "event": {
+            "id": "79047a9f7513ca",
+            "association": "single_report",
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                "language": "en",
+                "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+                "excerpt": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                "published_at": "2026-10-08T13:10:57Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -2408,7 +2826,7 @@
             "language": "en",
             "published_at": "2026-10-08T12:47:49Z",
             "feed_url": "https://www.theguardian.com/world/rss",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -2472,7 +2890,7 @@
                     "published_at": "2026-10-08T12:47:49Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -2526,13 +2944,17 @@
                 "published_at": "2026-10-08T12:47:49Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "fallback"
+            "translation_status": "fallback",
+            "translation_rejection": "source_names_missing",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
@@ -2546,7 +2968,7 @@
                 "title": "Medium-term borrowing costs for UK government hit 19-year high",
                 "excerpt": "Investors offload global bonds amid fears of rising inflation, increasing pressure on John Healey ahead of first budget Business live – latest updates Medium-term borrowing costs for the UK government hit a fresh 19-year high on Thursday, as investors continued to offload global bonds amid fears of rising inflation. Recent dramatic moves in government bond markets have been driven by international factors, but will increase the pressure on John Healey ahea",
                 "published_at": "2026-10-08T12:47:49Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -2554,358 +2976,36 @@
           }
         },
         {
-          "id": "9d7853c8b1f88a",
-          "category": "world",
-          "categoryLabel": "国际",
-          "published_at": "2026-10-08T12:20:54Z",
-          "is_headline": false,
-          "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
-          "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-          "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-          "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
-          "source": {
-            "name": "The Guardian World",
-            "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-            "language": "en",
-            "published_at": "2026-10-08T12:20:54Z",
-            "feed_url": "https://www.theguardian.com/world/rss",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
-            "body_acquired_via": null,
-            "body_retrieval": null
-          },
-          "localized": {
-            "zh-TW": {
-              "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
-              "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-              "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-              "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
-              "language": "en",
-              "status": "fallback",
-              "translation_status": "fallback",
-              "validation": "source_original",
-              "original_title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
-              "archive": {
-                "scope": "rss_title_excerpt_only",
-                "full_text_acquired": false,
-                "notice": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-                "sections": [
-                  {
-                    "id": "summary",
-                    "title": "可靠摘要",
-                    "text": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-                    "available": true
-                  },
-                  {
-                    "id": "background",
-                    "title": "事件背景",
-                    "text": "來源簡訊未提供可靠資料，不能推斷。",
-                    "available": false
-                  },
-                  {
-                    "id": "timeline",
-                    "title": "經過與時間線",
-                    "text": "來源簡訊未提供可靠資料，不能推斷。",
-                    "available": false
-                  },
-                  {
-                    "id": "data",
-                    "title": "重要數據",
-                    "text": "來源簡訊未提供可靠資料，不能推斷。",
-                    "available": false
-                  },
-                  {
-                    "id": "stakeholders",
-                    "title": "利害關係人",
-                    "text": "來源簡訊未提供可靠資料，不能推斷。",
-                    "available": false
-                  },
-                  {
-                    "id": "verification",
-                    "title": "事實核驗",
-                    "text": "僅核對來源連結與 RSS 中繼資料，未獨立交叉核驗。",
-                    "available": false
-                  }
-                ],
-                "sources": [
-                  {
-                    "name": "The Guardian World",
-                    "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-                    "published_at": "2026-10-08T12:20:54Z"
-                  }
-                ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
-                "independently_verified": false
-              }
-            }
-          },
-          "archive": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "notice": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-            "sections": [
-              {
-                "id": "summary",
-                "title": "可靠摘要",
-                "text": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-                "available": true
-              },
-              {
-                "id": "background",
-                "title": "事件背景",
-                "text": "來源簡訊未提供可靠資料，不能推斷。",
-                "available": false
-              },
-              {
-                "id": "timeline",
-                "title": "經過與時間線",
-                "text": "來源簡訊未提供可靠資料，不能推斷。",
-                "available": false
-              },
-              {
-                "id": "data",
-                "title": "重要數據",
-                "text": "來源簡訊未提供可靠資料，不能推斷。",
-                "available": false
-              },
-              {
-                "id": "stakeholders",
-                "title": "利害關係人",
-                "text": "來源簡訊未提供可靠資料，不能推斷。",
-                "available": false
-              },
-              {
-                "id": "verification",
-                "title": "事實核驗",
-                "text": "僅核對來源連結與 RSS 中繼資料，未獨立交叉核驗。",
-                "available": false
-              }
-            ],
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-                "published_at": "2026-10-08T12:20:54Z"
-              }
-            ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
-            "independently_verified": false
-          },
-          "provenance": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "translation_status": "fallback"
-          },
-          "evidence_depth": "substantial_excerpt",
-          "event": {
-            "id": "9d7853c8b1f88a",
-            "association": "single_report",
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-                "language": "en",
-                "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
-                "excerpt": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-                "published_at": "2026-10-08T12:20:54Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
-                "scope": "rss_title_excerpt_only"
-              }
-            ],
-            "independently_verified": false
-          }
-        },
-        {
-          "id": "79047a9f7513ca",
-          "category": "world",
-          "categoryLabel": "国际",
-          "published_at": "2026-10-08T12:20:24Z",
-          "is_headline": false,
-          "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
-          "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-          "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-          "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
-          "source": {
-            "name": "The Guardian World",
-            "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
-            "language": "en",
-            "published_at": "2026-10-08T12:20:24Z",
-            "feed_url": "https://www.theguardian.com/world/rss",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
-            "body_acquired_via": null,
-            "body_retrieval": null
-          },
-          "localized": {
-            "zh-TW": {
-              "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
-              "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-              "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-              "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
-              "language": "en",
-              "status": "fallback",
-              "translation_status": "fallback",
-              "validation": "source_original",
-              "original_title": "Polls open in Holborn and St Pancras byelection – UK politics live",
-              "archive": {
-                "scope": "rss_title_excerpt_only",
-                "full_text_acquired": false,
-                "notice": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-                "sections": [
-                  {
-                    "id": "summary",
-                    "title": "可靠摘要",
-                    "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-                    "available": true
-                  },
-                  {
-                    "id": "background",
-                    "title": "事件背景",
-                    "text": "來源簡訊未提供可靠資料，不能推斷。",
-                    "available": false
-                  },
-                  {
-                    "id": "timeline",
-                    "title": "經過與時間線",
-                    "text": "來源簡訊未提供可靠資料，不能推斷。",
-                    "available": false
-                  },
-                  {
-                    "id": "data",
-                    "title": "重要數據",
-                    "text": "來源簡訊未提供可靠資料，不能推斷。",
-                    "available": false
-                  },
-                  {
-                    "id": "stakeholders",
-                    "title": "利害關係人",
-                    "text": "來源簡訊未提供可靠資料，不能推斷。",
-                    "available": false
-                  },
-                  {
-                    "id": "verification",
-                    "title": "事實核驗",
-                    "text": "僅核對來源連結與 RSS 中繼資料，未獨立交叉核驗。",
-                    "available": false
-                  }
-                ],
-                "sources": [
-                  {
-                    "name": "The Guardian World",
-                    "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
-                    "published_at": "2026-10-08T12:20:24Z"
-                  }
-                ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
-                "independently_verified": false
-              }
-            }
-          },
-          "archive": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "notice": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-            "sections": [
-              {
-                "id": "summary",
-                "title": "可靠摘要",
-                "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-                "available": true
-              },
-              {
-                "id": "background",
-                "title": "事件背景",
-                "text": "來源簡訊未提供可靠資料，不能推斷。",
-                "available": false
-              },
-              {
-                "id": "timeline",
-                "title": "經過與時間線",
-                "text": "來源簡訊未提供可靠資料，不能推斷。",
-                "available": false
-              },
-              {
-                "id": "data",
-                "title": "重要數據",
-                "text": "來源簡訊未提供可靠資料，不能推斷。",
-                "available": false
-              },
-              {
-                "id": "stakeholders",
-                "title": "利害關係人",
-                "text": "來源簡訊未提供可靠資料，不能推斷。",
-                "available": false
-              },
-              {
-                "id": "verification",
-                "title": "事實核驗",
-                "text": "僅核對來源連結與 RSS 中繼資料，未獨立交叉核驗。",
-                "available": false
-              }
-            ],
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
-                "published_at": "2026-10-08T12:20:24Z"
-              }
-            ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
-            "independently_verified": false
-          },
-          "provenance": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "translation_status": "fallback"
-          },
-          "evidence_depth": "substantial_excerpt",
-          "event": {
-            "id": "79047a9f7513ca",
-            "association": "single_report",
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
-                "language": "en",
-                "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
-                "excerpt": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-                "published_at": "2026-10-08T12:20:24Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
-                "scope": "rss_title_excerpt_only"
-              }
-            ],
-            "independently_verified": false
-          }
-        },
-        {
-          "id": "710a6a2e54281b",
+          "id": "10e5d2add8547f",
           "category": "politics",
           "categoryLabel": "政治",
-          "published_at": "2026-10-08T09:38:20Z",
+          "published_at": "2026-10-08T13:24:26Z",
           "is_headline": false,
-          "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-          "summary": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+          "title": "外交部：再次敦促日方嚴懲持刀侵闖中國駐日使館凶犯",
+          "summary": "外交部發言人毛寧於 10 月 8 日表示，日本自衛隊官員持刀闖入中國駐日本使館，對外交人員發出暴力威脅，違反《維也納外交關係公約》，呼籲日本嚴懲此案。",
           "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-          "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
+          "uncertainty": "來源簡訊未提供可靠資料，不能推斷。",
           "source": {
             "name": "中国新闻网",
-            "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
+            "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
             "language": "zh-CN",
-            "published_at": "2026-10-08T09:38:20Z",
+            "published_at": "2026-10-08T13:24:26Z",
             "feed_url": "https://www.chinanews.com.cn/rss/china.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
           "localized": {
             "zh-TW": {
-              "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-              "summary": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+              "title": "外交部：再次敦促日方嚴懲持刀侵闖中國駐日使館凶犯",
+              "summary": "外交部發言人毛寧於 10 月 8 日表示，日本自衛隊官員持刀闖入中國駐日本使館，對外交人員發出暴力威脅，違反《維也納外交關係公約》，呼籲日本嚴懲此案。",
               "context": "據 RSS 標題與簡訊整理；未取得或核驗全文。",
-              "uncertainty": "翻譯未通過來源約束檢查，顯示原語。",
-              "language": "zh-CN",
-              "status": "fallback",
-              "translation_status": "fallback",
-              "validation": "source_original",
-              "original_title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
+              "uncertainty": "來源簡訊未提供可靠資料，不能推斷。",
+              "language": "zh-TW",
+              "status": "translated",
+              "translation_status": "translated",
+              "validation": "numeric_quote_and_structure_checks_only",
+              "original_title": "外交部：再次敦促日方严惩持刀侵闯中国驻日使馆凶犯",
               "archive": {
                 "scope": "rss_title_excerpt_only",
                 "full_text_acquired": false,
@@ -2914,7 +3014,7 @@
                   {
                     "id": "summary",
                     "title": "可靠摘要",
-                    "text": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+                    "text": "外交部發言人毛寧於 10 月 8 日表示，日本自衛隊官員持刀闖入中國駐日本使館，對外交人員發出暴力威脅，違反《維也納外交關係公約》，呼籲日本嚴懲此案。",
                     "available": true
                   },
                   {
@@ -2951,11 +3051,11 @@
                 "sources": [
                   {
                     "name": "中国新闻网",
-                    "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
-                    "published_at": "2026-10-08T09:38:20Z"
+                    "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
+                    "published_at": "2026-10-08T13:24:26Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -2968,7 +3068,7 @@
               {
                 "id": "summary",
                 "title": "可靠摘要",
-                "text": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+                "text": "外交部發言人毛寧於 10 月 8 日表示，日本自衛隊官員持刀闖入中國駐日本使館，對外交人員發出暴力威脅，違反《維也納外交關係公約》，呼籲日本嚴懲此案。",
                 "available": true
               },
               {
@@ -3005,31 +3105,35 @@
             "sources": [
               {
                 "name": "中国新闻网",
-                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
-                "published_at": "2026-10-08T09:38:20Z"
+                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
+                "published_at": "2026-10-08T13:24:26Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "fallback"
+            "translation_status": "translated",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
-            "id": "710a6a2e54281b",
+            "id": "10e5d2add8547f",
             "association": "single_report",
             "sources": [
               {
                 "name": "中国新闻网",
-                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
+                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
                 "language": "zh-CN",
-                "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-                "excerpt": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
-                "published_at": "2026-10-08T09:38:20Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "title": "外交部：再次敦促日方严惩持刀侵闯中国驻日使馆凶犯",
+                "excerpt": "新华社北京10月8日电(记者邵艺博、赵瀚泽)外交部发言人毛宁8日就村田晃大非法持刀侵闯中国驻日本使馆案首次开庭答记者问时表示，日本自卫队现役官员持刀侵闯中国驻日本使馆，向中方外交人员发出暴力威胁，是国际社会前所未闻的恶性事件，严重违反《维也纳外交关系公约》，严重威胁中方外交人员人身安全和外交馆舍安全，暴露出日本国内右翼势力猖獗、自卫队人员失管失教等诸多深层次问题。",
+                "published_at": "2026-10-08T13:24:26Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -3055,7 +3159,7 @@
             "language": "zh-TW",
             "published_at": "2026-10-08T13:02:00Z",
             "feed_url": "https://rss.dw.com/rdf/rss-chi-all",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -3068,7 +3172,7 @@
               "language": "zh-TW",
               "status": "original",
               "translation_status": "original",
-              "validation": "source_original",
+              "validation": "numeric_quote_and_structure_checks_only",
               "original_title": "乌克兰政坛出现停战谈判呼声：民意转向还是政治试探？",
               "archive": {
                 "scope": "rss_title_excerpt_only",
@@ -3119,7 +3223,7 @@
                     "published_at": "2026-10-08T13:02:00Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -3173,13 +3277,17 @@
                 "published_at": "2026-10-08T13:02:00Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -3193,7 +3301,7 @@
                 "title": "乌克兰政坛出现停战谈判呼声：民意转向还是政治试探？",
                 "excerpt": "近日，几名在乌克兰政坛具有影响力的政治人物几乎同时呼吁通过与俄罗斯谈判结束战争。这些表态在乌克兰国内引发关注和争议，也让外界重新审视乌克兰社会对战争、妥协与和平前景的态度。",
                 "published_at": "2026-10-08T13:02:00Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -3216,7 +3324,7 @@
             "language": "zh-TW",
             "published_at": "2026-10-08T12:40:18Z",
             "feed_url": "https://feeds.feedburner.com/rsscna/social",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null,
             "terms_url": "https://www.cna.com.tw/about/rss.aspx",
@@ -3231,7 +3339,7 @@
               "language": "zh-TW",
               "status": "original",
               "translation_status": "original",
-              "validation": "source_original",
+              "validation": "numeric_quote_and_structure_checks_only",
               "original_title": "北市南港分局自檢自清 員警涉線上博弈賺服務費遭北檢聲押",
               "archive": {
                 "scope": "rss_title_excerpt_only",
@@ -3282,7 +3390,7 @@
                     "published_at": "2026-10-08T12:40:18Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -3336,13 +3444,17 @@
                 "published_at": "2026-10-08T12:40:18Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -3356,7 +3468,7 @@
                 "title": "北市南港分局自檢自清 員警涉線上博弈賺服務費遭北檢聲押",
                 "excerpt": "（中央社記者蕭博文台北8日電）台北市警局南港分局葉姓員警涉嫌參與線上博弈並賺取服務費，台北地檢署今天複訊後，以葉姓員警、林姓男子涉嫌賭博等罪，有羈押原因與必要，向台北地方法院聲請羈押禁見。",
                 "published_at": "2026-10-08T12:40:18Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -3379,7 +3491,7 @@
             "language": "zh-TW",
             "published_at": "2026-10-08T11:27:47Z",
             "feed_url": "https://feeds.feedburner.com/rsscna/politics",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null,
             "terms_url": "https://www.cna.com.tw/about/rss.aspx",
@@ -3445,7 +3557,7 @@
                     "published_at": "2026-10-08T11:27:47Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -3499,13 +3611,17 @@
                 "published_at": "2026-10-08T11:27:47Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -3519,7 +3635,7 @@
                 "title": "蘇巧慧推中藥產業升級 助納無形文化資產、老店數位轉型",
                 "excerpt": "（中央社記者曹亞沿新北8日電）民進黨新北市長參選人蘇巧慧今天成立中藥商後援會，她表示，未來將力推產業升級，助傳統中藥技藝登錄「無形文化資產」，並導入AI協助老店轉型等，為中藥文化注入新活力。",
                 "published_at": "2026-10-08T11:27:47Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -3542,7 +3658,7 @@
             "language": "zh-TW",
             "published_at": "2026-10-08T11:21:38Z",
             "feed_url": "https://feeds.feedburner.com/rsscna/finance",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null,
             "terms_url": "https://www.cna.com.tw/about/rss.aspx",
@@ -3608,7 +3724,7 @@
                     "published_at": "2026-10-08T11:21:38Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -3662,13 +3778,17 @@
                 "published_at": "2026-10-08T11:21:38Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -3682,7 +3802,7 @@
                 "title": "台電檢舉富崴風機 金管會發函母公司森崴公司說明",
                 "excerpt": "（中央社記者高華謙台北8日電）台電與富崴能源公司因離岸風電二期工程發生糾紛，金管會今天說，6日收到台電檢舉，已發函要求森崴公司說明，將釐清森崴公司是否在第1季財報淨值為負的情況下借款給富崴公司；若有違規借款，可依違反證交法處新台幣24萬元至480萬元罰鍰。",
                 "published_at": "2026-10-08T11:21:38Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -4011,11 +4131,11 @@
         ],
         "preferred_language": "zh-TW",
         "preferred_items": 0,
-        "translation_fallbacks": 4,
+        "translation_fallbacks": 3,
         "brief_items": 4,
         "main_items": 6,
-        "analysis_items": 0,
-        "highlight_items": 1,
+        "analysis_items": 1,
+        "highlight_items": 0,
         "brief_translation_fallbacks": 0
       }
     },
@@ -4024,7 +4144,7 @@
       "id": "2026-10-08-evening-ja",
       "date": "2026-10-08",
       "session": "evening",
-      "generated_at": "2026-10-08T13:21:54.069229Z",
+      "generated_at": "2026-10-08T13:28:25.694602Z",
       "provider": "groq",
       "model": "openai/gpt-oss-20b",
       "scope": "mixed_rss_and_publisher_feed_article_text",
@@ -4045,7 +4165,7 @@
             "language": "en",
             "published_at": "2026-10-07T21:16:42Z",
             "feed_url": "https://www.nasa.gov/feed/",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": "official_public_rest_api",
             "body_retrieval": {
               "method": "official_public_rest_api",
@@ -4132,7 +4252,7 @@
                   "acquired_via": "official_public_rest_api",
                   "extraction": "complete_supplied_paragraphs_no_images_or_logos"
                 },
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false,
                 "editorial_at": "2026-10-08T08:27:54.578475Z",
                 "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
@@ -4208,7 +4328,7 @@
               "acquired_via": "official_public_rest_api",
               "extraction": "complete_supplied_paragraphs_no_images_or_logos"
             },
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false,
             "editorial_at": "2026-10-08T08:27:54.578475Z",
             "source_text_sha256": "af0a66c2588006986cfddbf0e018301d3a78c7edebddfaaeb8e2a5c3771f853b"
@@ -4217,6 +4337,10 @@
             "scope": "publisher_public_api_article_text",
             "full_text_acquired": true,
             "translation_status": "editorial_retelling",
+            "translation_rejection": "unsupported_figures",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true,
             "method": "source_bound_editorial_retelling"
           },
           "evidence_depth": "article",
@@ -4231,7 +4355,7 @@
                 "title": "NASA Sets Coverage for SpaceX 35th Station Resupply Launch, Arrival",
                 "excerpt": "NASA and SpaceX are targeting 6:33 a.m. EDT, Tuesday, Oct. 13, for the next launch to deliver science investigations, supplies, and equipment, including the final set of International Space Station Roll-Out Solar Arrays, to the space station. This is the 35th SpaceX commercial resupply services mission to the orbital complex for NASA. NASA also will […]",
                 "published_at": "2026-10-07T21:16:42Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "publisher_feed_article_text"
               }
             ],
@@ -4254,7 +4378,7 @@
             "language": "zh-CN",
             "published_at": "2026-10-08T05:13:23Z",
             "feed_url": "https://www.chinanews.com.cn/rss/importnews.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -4318,7 +4442,7 @@
                     "published_at": "2026-10-08T05:13:23Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -4372,13 +4496,17 @@
                 "published_at": "2026-10-08T05:13:23Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "fallback"
+            "translation_status": "fallback",
+            "translation_rejection": "unsupported_figures",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
@@ -4392,7 +4520,337 @@
                 "title": "国庆假期高速公路新能源汽车日均充电量同比增长51.42%",
                 "excerpt": "中新网10月8日电 据国家能源局微信公众号消息，随着新能源汽车保有量持续增长，节假日群众绿色出行比例不断提升，国家能源局指导各地提前细化完善充电保障方案，组织有关方面利用信息化平台加强监测，做好应急调度，有效保障今年国庆期间新能源汽车大规模出行的充电需求。通过对纳入国家充电设施监测服务平台的6.27万个高速公路充电设施(枪)的统计分析，自10月1日0时至10月7日24时，我国高速公路新能源汽车充电次数共计671.10万次，充电量达到1.63亿千瓦时，日均充电量2325.66万千瓦时，日均充电量同比增长51.42%。",
                 "published_at": "2026-10-08T05:13:23Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
+                "scope": "rss_title_excerpt_only"
+              }
+            ],
+            "independently_verified": false
+          }
+        },
+        {
+          "id": "9d7853c8b1f88a",
+          "category": "world",
+          "categoryLabel": "国际",
+          "published_at": "2026-10-08T13:11:01Z",
+          "is_headline": false,
+          "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
+          "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+          "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
+          "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
+          "source": {
+            "name": "The Guardian World",
+            "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
+            "language": "en",
+            "published_at": "2026-10-08T13:11:01Z",
+            "feed_url": "https://www.theguardian.com/world/rss",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
+            "body_acquired_via": null,
+            "body_retrieval": null
+          },
+          "localized": {
+            "ja": {
+              "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
+              "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+              "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
+              "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
+              "language": "en",
+              "status": "fallback",
+              "translation_status": "fallback",
+              "validation": "source_original",
+              "original_title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
+              "archive": {
+                "scope": "rss_title_excerpt_only",
+                "full_text_acquired": false,
+                "notice": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
+                "sections": [
+                  {
+                    "id": "summary",
+                    "title": "出典に基づく要約",
+                    "text": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+                    "available": true
+                  },
+                  {
+                    "id": "background",
+                    "title": "背景",
+                    "text": "短報に信頼できる情報がなく、推測できません。",
+                    "available": false
+                  },
+                  {
+                    "id": "timeline",
+                    "title": "経過と時系列",
+                    "text": "短報に信頼できる情報がなく、推測できません。",
+                    "available": false
+                  },
+                  {
+                    "id": "data",
+                    "title": "重要な数値",
+                    "text": "短報に信頼できる情報がなく、推測できません。",
+                    "available": false
+                  },
+                  {
+                    "id": "stakeholders",
+                    "title": "関係者",
+                    "text": "短報に信頼できる情報がなく、推測できません。",
+                    "available": false
+                  },
+                  {
+                    "id": "verification",
+                    "title": "事実確認",
+                    "text": "出典リンクと RSS メタデータのみ確認。独立した裏付け確認はしていません。",
+                    "available": false
+                  }
+                ],
+                "sources": [
+                  {
+                    "name": "The Guardian World",
+                    "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
+                    "published_at": "2026-10-08T13:11:01Z"
+                  }
+                ],
+                "generated_at": "2026-10-08T13:28:25.694602Z",
+                "independently_verified": false
+              }
+            }
+          },
+          "archive": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "notice": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
+            "sections": [
+              {
+                "id": "summary",
+                "title": "出典に基づく要約",
+                "text": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+                "available": true
+              },
+              {
+                "id": "background",
+                "title": "背景",
+                "text": "短報に信頼できる情報がなく、推測できません。",
+                "available": false
+              },
+              {
+                "id": "timeline",
+                "title": "経過と時系列",
+                "text": "短報に信頼できる情報がなく、推測できません。",
+                "available": false
+              },
+              {
+                "id": "data",
+                "title": "重要な数値",
+                "text": "短報に信頼できる情報がなく、推測できません。",
+                "available": false
+              },
+              {
+                "id": "stakeholders",
+                "title": "関係者",
+                "text": "短報に信頼できる情報がなく、推測できません。",
+                "available": false
+              },
+              {
+                "id": "verification",
+                "title": "事実確認",
+                "text": "出典リンクと RSS メタデータのみ確認。独立した裏付け確認はしていません。",
+                "available": false
+              }
+            ],
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
+                "published_at": "2026-10-08T13:11:01Z"
+              }
+            ],
+            "generated_at": "2026-10-08T13:28:25.694602Z",
+            "independently_verified": false
+          },
+          "provenance": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "translation_status": "fallback",
+            "translation_rejection": "unsupported_figures",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true
+          },
+          "evidence_depth": "substantial_excerpt",
+          "event": {
+            "id": "9d7853c8b1f88a",
+            "association": "single_report",
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
+                "language": "en",
+                "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
+                "excerpt": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
+                "published_at": "2026-10-08T13:11:01Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
+                "scope": "rss_title_excerpt_only"
+              }
+            ],
+            "independently_verified": false
+          }
+        },
+        {
+          "id": "79047a9f7513ca",
+          "category": "world",
+          "categoryLabel": "国际",
+          "published_at": "2026-10-08T13:10:57Z",
+          "is_headline": false,
+          "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+          "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+          "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
+          "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
+          "source": {
+            "name": "The Guardian World",
+            "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+            "language": "en",
+            "published_at": "2026-10-08T13:10:57Z",
+            "feed_url": "https://www.theguardian.com/world/rss",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
+            "body_acquired_via": null,
+            "body_retrieval": null
+          },
+          "localized": {
+            "ja": {
+              "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+              "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+              "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
+              "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
+              "language": "en",
+              "status": "fallback",
+              "translation_status": "fallback",
+              "validation": "source_original",
+              "original_title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+              "archive": {
+                "scope": "rss_title_excerpt_only",
+                "full_text_acquired": false,
+                "notice": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
+                "sections": [
+                  {
+                    "id": "summary",
+                    "title": "出典に基づく要約",
+                    "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                    "available": true
+                  },
+                  {
+                    "id": "background",
+                    "title": "背景",
+                    "text": "短報に信頼できる情報がなく、推測できません。",
+                    "available": false
+                  },
+                  {
+                    "id": "timeline",
+                    "title": "経過と時系列",
+                    "text": "短報に信頼できる情報がなく、推測できません。",
+                    "available": false
+                  },
+                  {
+                    "id": "data",
+                    "title": "重要な数値",
+                    "text": "短報に信頼できる情報がなく、推測できません。",
+                    "available": false
+                  },
+                  {
+                    "id": "stakeholders",
+                    "title": "関係者",
+                    "text": "短報に信頼できる情報がなく、推測できません。",
+                    "available": false
+                  },
+                  {
+                    "id": "verification",
+                    "title": "事実確認",
+                    "text": "出典リンクと RSS メタデータのみ確認。独立した裏付け確認はしていません。",
+                    "available": false
+                  }
+                ],
+                "sources": [
+                  {
+                    "name": "The Guardian World",
+                    "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                    "published_at": "2026-10-08T13:10:57Z"
+                  }
+                ],
+                "generated_at": "2026-10-08T13:28:25.694602Z",
+                "independently_verified": false
+              }
+            }
+          },
+          "archive": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "notice": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
+            "sections": [
+              {
+                "id": "summary",
+                "title": "出典に基づく要約",
+                "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                "available": true
+              },
+              {
+                "id": "background",
+                "title": "背景",
+                "text": "短報に信頼できる情報がなく、推測できません。",
+                "available": false
+              },
+              {
+                "id": "timeline",
+                "title": "経過と時系列",
+                "text": "短報に信頼できる情報がなく、推測できません。",
+                "available": false
+              },
+              {
+                "id": "data",
+                "title": "重要な数値",
+                "text": "短報に信頼できる情報がなく、推測できません。",
+                "available": false
+              },
+              {
+                "id": "stakeholders",
+                "title": "関係者",
+                "text": "短報に信頼できる情報がなく、推測できません。",
+                "available": false
+              },
+              {
+                "id": "verification",
+                "title": "事実確認",
+                "text": "出典リンクと RSS メタデータのみ確認。独立した裏付け確認はしていません。",
+                "available": false
+              }
+            ],
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                "published_at": "2026-10-08T13:10:57Z"
+              }
+            ],
+            "generated_at": "2026-10-08T13:28:25.694602Z",
+            "independently_verified": false
+          },
+          "provenance": {
+            "scope": "rss_title_excerpt_only",
+            "full_text_acquired": false,
+            "translation_status": "fallback",
+            "translation_rejection": "source_names_missing",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true
+          },
+          "evidence_depth": "substantial_excerpt",
+          "event": {
+            "id": "79047a9f7513ca",
+            "association": "single_report",
+            "sources": [
+              {
+                "name": "The Guardian World",
+                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
+                "language": "en",
+                "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
+                "excerpt": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
+                "published_at": "2026-10-08T13:10:57Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -4415,7 +4873,7 @@
             "language": "en",
             "published_at": "2026-10-08T12:47:49Z",
             "feed_url": "https://www.theguardian.com/world/rss",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -4479,7 +4937,7 @@
                     "published_at": "2026-10-08T12:47:49Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -4533,13 +4991,17 @@
                 "published_at": "2026-10-08T12:47:49Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "fallback"
+            "translation_status": "fallback",
+            "translation_rejection": "source_names_missing",
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
@@ -4553,7 +5015,7 @@
                 "title": "Medium-term borrowing costs for UK government hit 19-year high",
                 "excerpt": "Investors offload global bonds amid fears of rising inflation, increasing pressure on John Healey ahead of first budget Business live – latest updates Medium-term borrowing costs for the UK government hit a fresh 19-year high on Thursday, as investors continued to offload global bonds amid fears of rising inflation. Recent dramatic moves in government bond markets have been driven by international factors, but will increase the pressure on John Healey ahea",
                 "published_at": "2026-10-08T12:47:49Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -4561,358 +5023,36 @@
           }
         },
         {
-          "id": "9d7853c8b1f88a",
-          "category": "world",
-          "categoryLabel": "国际",
-          "published_at": "2026-10-08T12:20:54Z",
-          "is_headline": false,
-          "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
-          "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-          "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-          "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
-          "source": {
-            "name": "The Guardian World",
-            "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-            "language": "en",
-            "published_at": "2026-10-08T12:20:54Z",
-            "feed_url": "https://www.theguardian.com/world/rss",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
-            "body_acquired_via": null,
-            "body_retrieval": null
-          },
-          "localized": {
-            "ja": {
-              "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
-              "summary": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-              "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-              "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
-              "language": "en",
-              "status": "fallback",
-              "translation_status": "fallback",
-              "validation": "source_original",
-              "original_title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
-              "archive": {
-                "scope": "rss_title_excerpt_only",
-                "full_text_acquired": false,
-                "notice": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-                "sections": [
-                  {
-                    "id": "summary",
-                    "title": "出典に基づく要約",
-                    "text": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-                    "available": true
-                  },
-                  {
-                    "id": "background",
-                    "title": "背景",
-                    "text": "短報に信頼できる情報がなく、推測できません。",
-                    "available": false
-                  },
-                  {
-                    "id": "timeline",
-                    "title": "経過と時系列",
-                    "text": "短報に信頼できる情報がなく、推測できません。",
-                    "available": false
-                  },
-                  {
-                    "id": "data",
-                    "title": "重要な数値",
-                    "text": "短報に信頼できる情報がなく、推測できません。",
-                    "available": false
-                  },
-                  {
-                    "id": "stakeholders",
-                    "title": "関係者",
-                    "text": "短報に信頼できる情報がなく、推測できません。",
-                    "available": false
-                  },
-                  {
-                    "id": "verification",
-                    "title": "事実確認",
-                    "text": "出典リンクと RSS メタデータのみ確認。独立した裏付け確認はしていません。",
-                    "available": false
-                  }
-                ],
-                "sources": [
-                  {
-                    "name": "The Guardian World",
-                    "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-                    "published_at": "2026-10-08T12:20:54Z"
-                  }
-                ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
-                "independently_verified": false
-              }
-            }
-          },
-          "archive": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "notice": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-            "sections": [
-              {
-                "id": "summary",
-                "title": "出典に基づく要約",
-                "text": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-                "available": true
-              },
-              {
-                "id": "background",
-                "title": "背景",
-                "text": "短報に信頼できる情報がなく、推測できません。",
-                "available": false
-              },
-              {
-                "id": "timeline",
-                "title": "経過と時系列",
-                "text": "短報に信頼できる情報がなく、推測できません。",
-                "available": false
-              },
-              {
-                "id": "data",
-                "title": "重要な数値",
-                "text": "短報に信頼できる情報がなく、推測できません。",
-                "available": false
-              },
-              {
-                "id": "stakeholders",
-                "title": "関係者",
-                "text": "短報に信頼できる情報がなく、推測できません。",
-                "available": false
-              },
-              {
-                "id": "verification",
-                "title": "事実確認",
-                "text": "出典リンクと RSS メタデータのみ確認。独立した裏付け確認はしていません。",
-                "available": false
-              }
-            ],
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-                "published_at": "2026-10-08T12:20:54Z"
-              }
-            ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
-            "independently_verified": false
-          },
-          "provenance": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "translation_status": "fallback"
-          },
-          "evidence_depth": "substantial_excerpt",
-          "event": {
-            "id": "9d7853c8b1f88a",
-            "association": "single_report",
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/uk-news/2026/oct/08/three-sisters-drowned-sea-brighton-inquest",
-                "language": "en",
-                "title": "Three sisters who drowned in Brighton took their own lives, inquest finds",
-                "excerpt": "Jane Adetoro, Christina Walters and Rebecca Walters from London visited late mother’s former home shortly before their deaths in May Three sisters who drowned in the sea in Brighton collectively decided to end their own lives, a coroner has ruled. The bodies of Jane Adetoro, 36, Christina Walters, 32, and Rebecca Walters, 31, all from London, were recovered from the sea off Brighton in the early hours of 13 May. In the UK and Ireland, Samaritans can be con",
-                "published_at": "2026-10-08T12:20:54Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
-                "scope": "rss_title_excerpt_only"
-              }
-            ],
-            "independently_verified": false
-          }
-        },
-        {
-          "id": "79047a9f7513ca",
-          "category": "world",
-          "categoryLabel": "国际",
-          "published_at": "2026-10-08T12:20:24Z",
-          "is_headline": false,
-          "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
-          "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-          "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-          "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
-          "source": {
-            "name": "The Guardian World",
-            "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
-            "language": "en",
-            "published_at": "2026-10-08T12:20:24Z",
-            "feed_url": "https://www.theguardian.com/world/rss",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
-            "body_acquired_via": null,
-            "body_retrieval": null
-          },
-          "localized": {
-            "ja": {
-              "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
-              "summary": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-              "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-              "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
-              "language": "en",
-              "status": "fallback",
-              "translation_status": "fallback",
-              "validation": "source_original",
-              "original_title": "Polls open in Holborn and St Pancras byelection – UK politics live",
-              "archive": {
-                "scope": "rss_title_excerpt_only",
-                "full_text_acquired": false,
-                "notice": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-                "sections": [
-                  {
-                    "id": "summary",
-                    "title": "出典に基づく要約",
-                    "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-                    "available": true
-                  },
-                  {
-                    "id": "background",
-                    "title": "背景",
-                    "text": "短報に信頼できる情報がなく、推測できません。",
-                    "available": false
-                  },
-                  {
-                    "id": "timeline",
-                    "title": "経過と時系列",
-                    "text": "短報に信頼できる情報がなく、推測できません。",
-                    "available": false
-                  },
-                  {
-                    "id": "data",
-                    "title": "重要な数値",
-                    "text": "短報に信頼できる情報がなく、推測できません。",
-                    "available": false
-                  },
-                  {
-                    "id": "stakeholders",
-                    "title": "関係者",
-                    "text": "短報に信頼できる情報がなく、推測できません。",
-                    "available": false
-                  },
-                  {
-                    "id": "verification",
-                    "title": "事実確認",
-                    "text": "出典リンクと RSS メタデータのみ確認。独立した裏付け確認はしていません。",
-                    "available": false
-                  }
-                ],
-                "sources": [
-                  {
-                    "name": "The Guardian World",
-                    "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
-                    "published_at": "2026-10-08T12:20:24Z"
-                  }
-                ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
-                "independently_verified": false
-              }
-            }
-          },
-          "archive": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "notice": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-            "sections": [
-              {
-                "id": "summary",
-                "title": "出典に基づく要約",
-                "text": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-                "available": true
-              },
-              {
-                "id": "background",
-                "title": "背景",
-                "text": "短報に信頼できる情報がなく、推測できません。",
-                "available": false
-              },
-              {
-                "id": "timeline",
-                "title": "経過と時系列",
-                "text": "短報に信頼できる情報がなく、推測できません。",
-                "available": false
-              },
-              {
-                "id": "data",
-                "title": "重要な数値",
-                "text": "短報に信頼できる情報がなく、推測できません。",
-                "available": false
-              },
-              {
-                "id": "stakeholders",
-                "title": "関係者",
-                "text": "短報に信頼できる情報がなく、推測できません。",
-                "available": false
-              },
-              {
-                "id": "verification",
-                "title": "事実確認",
-                "text": "出典リンクと RSS メタデータのみ確認。独立した裏付け確認はしていません。",
-                "available": false
-              }
-            ],
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
-                "published_at": "2026-10-08T12:20:24Z"
-              }
-            ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
-            "independently_verified": false
-          },
-          "provenance": {
-            "scope": "rss_title_excerpt_only",
-            "full_text_acquired": false,
-            "translation_status": "fallback"
-          },
-          "evidence_depth": "substantial_excerpt",
-          "event": {
-            "id": "79047a9f7513ca",
-            "association": "single_report",
-            "sources": [
-              {
-                "name": "The Guardian World",
-                "url": "https://www.theguardian.com/politics/live/2026/oct/08/holborn-st-pancras-byelection-labour-greens-zack-polanski-uk-politics-live-news-updates",
-                "language": "en",
-                "title": "Polls open in Holborn and St Pancras byelection – UK politics live",
-                "excerpt": "Voters choosing replacement for Keir Starmer, who announced he was standing down last month The UK’s military is too focused on global commitments at the expense of domestic defence, meaning the government’s planned increase in defence spending is likely to result in even greater waste, a thinktank report has warned. According to an analysis by researchers at the Transition Security Project , Britain has the most overseas-oriented military among European n",
-                "published_at": "2026-10-08T12:20:24Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
-                "scope": "rss_title_excerpt_only"
-              }
-            ],
-            "independently_verified": false
-          }
-        },
-        {
-          "id": "710a6a2e54281b",
+          "id": "10e5d2add8547f",
           "category": "politics",
           "categoryLabel": "政治",
-          "published_at": "2026-10-08T09:38:20Z",
+          "published_at": "2026-10-08T13:24:26Z",
           "is_headline": false,
-          "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-          "summary": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+          "title": "外務省：再度日本側に刀を持った侵入犯を厳罰化するよう要請",
+          "summary": "外務省は、村田晃大が中国駐日大使館に刀を持って侵入し、外交官に暴力的脅威をかけた事件を受け、日本側に厳罰化を要請。",
           "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-          "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
+          "uncertainty": "短報に信頼できる情報がなく、推測できません。",
           "source": {
             "name": "中国新闻网",
-            "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
+            "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
             "language": "zh-CN",
-            "published_at": "2026-10-08T09:38:20Z",
+            "published_at": "2026-10-08T13:24:26Z",
             "feed_url": "https://www.chinanews.com.cn/rss/china.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
           "localized": {
             "ja": {
-              "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-              "summary": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+              "title": "外務省：再度日本側に刀を持った侵入犯を厳罰化するよう要請",
+              "summary": "外務省は、村田晃大が中国駐日大使館に刀を持って侵入し、外交官に暴力的脅威をかけた事件を受け、日本側に厳罰化を要請。",
               "context": "RSS の見出しと短報に基づく整理。全文は取得・検証していません。",
-              "uncertainty": "翻訳が出典制約の検査を通過しなかったため、原語を表示します。",
-              "language": "zh-CN",
-              "status": "fallback",
-              "translation_status": "fallback",
-              "validation": "source_original",
-              "original_title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
+              "uncertainty": "短報に信頼できる情報がなく、推測できません。",
+              "language": "ja",
+              "status": "translated",
+              "translation_status": "translated",
+              "validation": "numeric_quote_and_structure_checks_only",
+              "original_title": "外交部：再次敦促日方严惩持刀侵闯中国驻日使馆凶犯",
               "archive": {
                 "scope": "rss_title_excerpt_only",
                 "full_text_acquired": false,
@@ -4921,7 +5061,7 @@
                   {
                     "id": "summary",
                     "title": "出典に基づく要約",
-                    "text": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+                    "text": "外務省は、村田晃大が中国駐日大使館に刀を持って侵入し、外交官に暴力的脅威をかけた事件を受け、日本側に厳罰化を要請。",
                     "available": true
                   },
                   {
@@ -4958,12 +5098,16 @@
                 "sources": [
                   {
                     "name": "中国新闻网",
-                    "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
-                    "published_at": "2026-10-08T09:38:20Z"
+                    "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
+                    "published_at": "2026-10-08T13:24:26Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
+              },
+              "highlight": {
+                "text": "刀を持った侵入犯",
+                "method": "machine_selected_exact_headline_span"
               }
             }
           },
@@ -4975,7 +5119,7 @@
               {
                 "id": "summary",
                 "title": "出典に基づく要約",
-                "text": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
+                "text": "外務省は、村田晃大が中国駐日大使館に刀を持って侵入し、外交官に暴力的脅威をかけた事件を受け、日本側に厳罰化を要請。",
                 "available": true
               },
               {
@@ -5012,31 +5156,39 @@
             "sources": [
               {
                 "name": "中国新闻网",
-                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
-                "published_at": "2026-10-08T09:38:20Z"
+                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
+                "published_at": "2026-10-08T13:24:26Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "fallback"
+            "translation_status": "translated",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true
+          },
+          "highlight": {
+            "text": "刀を持った侵入犯",
+            "method": "machine_selected_exact_headline_span"
           },
           "evidence_depth": "substantial_excerpt",
           "event": {
-            "id": "710a6a2e54281b",
+            "id": "10e5d2add8547f",
             "association": "single_report",
             "sources": [
               {
                 "name": "中国新闻网",
-                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709227.shtml",
+                "url": "https://www.chinanews.com.cn/gn/2026/10-08/10709367.shtml",
                 "language": "zh-CN",
-                "title": "云南镇雄“12·24”较大煤与瓦斯突出事故调查报告公布 40名责任人被追责问责",
-                "excerpt": "中新网昆明10月8日电 (时文枝)日前，国家矿山安全监察局云南局公布云南省昭通市镇雄县大营煤矿有限公司“12·24”较大煤与瓦斯突出事故调查报告(以下简称报告)。报告认定，该事故是一起因企业主体责任落实不到位，地方煤矿安全监管不力，煤矿出现瓦斯动力现象后未按照突出煤层管理，在未消除突出危险的情况下，掘进作业造成的生产安全责任事故。",
-                "published_at": "2026-10-08T09:38:20Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "title": "外交部：再次敦促日方严惩持刀侵闯中国驻日使馆凶犯",
+                "excerpt": "新华社北京10月8日电(记者邵艺博、赵瀚泽)外交部发言人毛宁8日就村田晃大非法持刀侵闯中国驻日本使馆案首次开庭答记者问时表示，日本自卫队现役官员持刀侵闯中国驻日本使馆，向中方外交人员发出暴力威胁，是国际社会前所未闻的恶性事件，严重违反《维也纳外交关系公约》，严重威胁中方外交人员人身安全和外交馆舍安全，暴露出日本国内右翼势力猖獗、自卫队人员失管失教等诸多深层次问题。",
+                "published_at": "2026-10-08T13:24:26Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -5062,7 +5214,7 @@
             "language": "ja",
             "published_at": "2026-10-08T13:14:47Z",
             "feed_url": "https://news.web.nhk/n-data/conf/na/rss/cat7.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -5075,7 +5227,7 @@
               "language": "ja",
               "status": "original",
               "translation_status": "original",
-              "validation": "source_original",
+              "validation": "numeric_quote_and_structure_checks_only",
               "original_title": "プロ野球結果 セ・リーグ1試合 レギュラーシーズンが終了",
               "archive": {
                 "scope": "rss_title_excerpt_only",
@@ -5126,7 +5278,7 @@
                     "published_at": "2026-10-08T13:14:47Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -5180,13 +5332,17 @@
                 "published_at": "2026-10-08T13:14:47Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true
           },
           "evidence_depth": "brief",
           "event": {
@@ -5200,7 +5356,7 @@
                 "title": "プロ野球結果 セ・リーグ1試合 レギュラーシーズンが終了",
                 "excerpt": "プロ野球は8日、セ・リーグの1試合が行われレギュラーシーズンが終了しました。 阪神の佐藤輝明選手が打率、ホームラン、打点でいずれもタイトルを獲得し三冠王に輝きました。 【NHK ONEで配信】 ニ…",
                 "published_at": "2026-10-08T13:14:47Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -5223,7 +5379,7 @@
             "language": "ja",
             "published_at": "2026-10-08T13:13:13Z",
             "feed_url": "https://news.web.nhk/n-data/conf/na/rss/cat4.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -5287,7 +5443,7 @@
                     "published_at": "2026-10-08T13:13:13Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
               }
             }
@@ -5341,13 +5497,17 @@
                 "published_at": "2026-10-08T13:13:13Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": false,
+            "model_analysis_present": false,
+            "model_highlight_present": false
           },
           "evidence_depth": "brief",
           "event": {
@@ -5361,7 +5521,7 @@
                 "title": "簗農相への追及続く国会 高市首相 “厳しく注意” 続投の考え",
                 "excerpt": "8日も簗農林水産大臣の発言をめぐって、国会で追及が相次ぎました。 高市総理大臣は本人を厳しく注意したと明らかにした上で続投させる考えを示しました。",
                 "published_at": "2026-10-08T13:13:13Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -5384,7 +5544,7 @@
             "language": "ja",
             "published_at": "2026-10-08T13:08:30Z",
             "feed_url": "https://news.web.nhk/n-data/conf/na/rss/cat0.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -5397,7 +5557,7 @@
               "language": "ja",
               "status": "original",
               "translation_status": "original",
-              "validation": "source_original",
+              "validation": "numeric_quote_and_structure_checks_only",
               "original_title": "ノーベル文学賞にアン・カーソン氏 カナダの詩人",
               "archive": {
                 "scope": "rss_title_excerpt_only",
@@ -5448,8 +5608,12 @@
                     "published_at": "2026-10-08T13:08:30Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
+              },
+              "highlight": {
+                "text": "アン・カーソン氏",
+                "method": "machine_selected_exact_headline_span"
               }
             }
           },
@@ -5502,13 +5666,21 @@
                 "published_at": "2026-10-08T13:08:30Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true
+          },
+          "highlight": {
+            "text": "アン・カーソン氏",
+            "method": "machine_selected_exact_headline_span"
           },
           "evidence_depth": "brief",
           "event": {
@@ -5522,7 +5694,7 @@
                 "title": "ノーベル文学賞にアン・カーソン氏 カナダの詩人",
                 "excerpt": "ことしのノーベル文学賞に、カナダの詩人、アン・カーソン氏が選ばれました。",
                 "published_at": "2026-10-08T13:08:30Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -5545,7 +5717,7 @@
             "language": "ja",
             "published_at": "2026-10-08T12:37:00Z",
             "feed_url": "https://news.web.nhk/n-data/conf/na/rss/cat6.xml",
-            "retrieved_at": "2026-10-08T13:21:54.069229Z",
+            "retrieved_at": "2026-10-08T13:28:25.694602Z",
             "body_acquired_via": null,
             "body_retrieval": null
           },
@@ -5558,7 +5730,7 @@
               "language": "ja",
               "status": "original",
               "translation_status": "original",
-              "validation": "source_original",
+              "validation": "numeric_quote_and_structure_checks_only",
               "original_title": "米大統領が習主席に“高市首相との対話”呼びかけか 香港紙",
               "archive": {
                 "scope": "rss_title_excerpt_only",
@@ -5609,8 +5781,12 @@
                     "published_at": "2026-10-08T12:37:00Z"
                   }
                 ],
-                "generated_at": "2026-10-08T13:21:54.069229Z",
+                "generated_at": "2026-10-08T13:28:25.694602Z",
                 "independently_verified": false
+              },
+              "highlight": {
+                "text": "高市首相との対話",
+                "method": "machine_selected_exact_headline_span"
               }
             }
           },
@@ -5663,13 +5839,21 @@
                 "published_at": "2026-10-08T12:37:00Z"
               }
             ],
-            "generated_at": "2026-10-08T13:21:54.069229Z",
+            "generated_at": "2026-10-08T13:28:25.694602Z",
             "independently_verified": false
           },
           "provenance": {
             "scope": "rss_title_excerpt_only",
             "full_text_acquired": false,
-            "translation_status": "original"
+            "translation_status": "original",
+            "translation_rejection": null,
+            "model_item_present": true,
+            "model_analysis_present": false,
+            "model_highlight_present": true
+          },
+          "highlight": {
+            "text": "高市首相との対話",
+            "method": "machine_selected_exact_headline_span"
           },
           "evidence_depth": "brief",
           "event": {
@@ -5683,7 +5867,7 @@
                 "title": "米大統領が習主席に“高市首相との対話”呼びかけか 香港紙",
                 "excerpt": "9月行われた米中首脳会談で、アメリカのトランプ大統領が中国の習近平国家主席に対して、高市総理大臣と対話し日本との関係を修復するよう求めていたと香港のメディアが伝えました。",
                 "published_at": "2026-10-08T12:37:00Z",
-                "retrieved_at": "2026-10-08T13:21:54.069229Z",
+                "retrieved_at": "2026-10-08T13:28:25.694602Z",
                 "scope": "rss_title_excerpt_only"
               }
             ],
@@ -6012,11 +6196,11 @@
         ],
         "preferred_language": "ja",
         "preferred_items": 0,
-        "translation_fallbacks": 5,
+        "translation_fallbacks": 4,
         "brief_items": 4,
         "main_items": 6,
         "analysis_items": 0,
-        "highlight_items": 0,
+        "highlight_items": 1,
         "brief_translation_fallbacks": 0
       }
     },
