@@ -143,17 +143,19 @@ def parse_feed(xml_bytes, publisher, category, allowed_hosts, now=None):
     nodes = root.findall("./channel/item")
     if not nodes:
         nodes = root.findall("{http://www.w3.org/2005/Atom}entry")
+    if not nodes:
+        nodes = root.findall("{http://purl.org/rss/1.0/}item")
     found = []
     for node in nodes[:40]:
-        title = clean(xml_text(node, ["title", "{http://www.w3.org/2005/Atom}title"]), 170)
-        url = validated_source_url(xml_text(node, ["link", "{http://www.w3.org/2005/Atom}link"]), allowed_hosts)
+        title = clean(xml_text(node, ["title", "{http://www.w3.org/2005/Atom}title", "{http://purl.org/rss/1.0/}title"]), 170)
+        url = validated_source_url(xml_text(node, ["link", "{http://www.w3.org/2005/Atom}link", "{http://purl.org/rss/1.0/}link"]), allowed_hosts)
         published = parse_date(xml_text(node, ["pubDate", "{http://www.w3.org/2005/Atom}published", "{http://www.w3.org/2005/Atom}updated", "{http://purl.org/dc/elements/1.1/}date"]))
         if not title or not url or not published:
             continue
         age = (now - published).total_seconds()
         if not (-3600 <= age <= 36 * 3600):
             continue
-        description = clean(xml_text(node, ["description", "{http://www.w3.org/2005/Atom}summary", "{http://www.w3.org/2005/Atom}content"]), 460)
+        description = clean(xml_text(node, ["description", "{http://www.w3.org/2005/Atom}summary", "{http://www.w3.org/2005/Atom}content", "{http://purl.org/rss/1.0/}description"]), 460)
         story_id = hashlib.sha256(url.encode()).hexdigest()[:14]
         found.append({"id": story_id, "category": category, "publisher": publisher,
                       "title": title, "excerpt": description, "url": url,
@@ -337,7 +339,7 @@ def generate_summaries_batched(candidates, provider, key, caller=request_json, b
     return final, model_name
 
 
-def recent_edition_ids(now, output=OUT):
+def recent_edition_ids(now, output=OUT, locale=None):
     """Avoid repeating a story in morning, noon, evening on the same JST date."""
     if not output.exists():
         return set()
@@ -345,7 +347,7 @@ def recent_edition_ids(now, output=OUT):
         current = json.loads(output.read_text(encoding="utf-8"))
         today = now.astimezone(JST).strftime("%Y-%m-%d")
         return {story["id"] for edition in current.get("editions", [])
-                if edition.get("date") == today
+                if edition.get("date") == today and (locale is None or edition.get("locale", "zh-CN") == locale)
                 for story in edition.get("items", [])
                 if isinstance(story, dict) and isinstance(story.get("id"), str)}
     except (OSError, ValueError, TypeError, KeyError):
@@ -361,9 +363,9 @@ def jst_session(now):
     return "evening"
 
 
-def pack_edition(items, model, provider, now):
+def pack_edition(items, model, provider, now, locale=None):
     local = now.astimezone(JST)
-    return {"id": f"{local:%Y-%m-%d}-{jst_session(now)}", "date": local.strftime("%Y-%m-%d"),
+    return {**({"locale": locale} if locale else {}), "id": f"{local:%Y-%m-%d}-{jst_session(now)}" + (f"-{locale}" if locale else ""), "date": local.strftime("%Y-%m-%d"),
             "session": jst_session(now), "generated_at": now.isoformat().replace("+00:00", "Z"),
             "provider": provider, "model": model, "scope": "rss_title_excerpt_only", "items": items}
 
@@ -383,7 +385,7 @@ def publish_edition(edition, output=OUT):
     # Keep a bounded public cache only, not any browsing history or profile.
     current = {"schema": 1, "updated_at": edition["generated_at"],
                "notice": "综合新闻 AI 摘录，按公共新闻重要性与类别多样性选材，仅依据 RSS 标题与简讯；非全文核验、独立采访或紧急灾害警报。",
-               "editions": all_editions[:9]}
+               "editions": all_editions[:36]}
     output.write_text(json.dumps(current, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return len(current["editions"])
 
@@ -391,25 +393,30 @@ def publish_edition(edition, output=OUT):
 def main():
     parser = argparse.ArgumentParser(description="Generate public AI news digest from vetted RSS snippets")
     parser.add_argument("--dry-run", action="store_true", help="fetch feeds and validate only; never call API")
+    parser.add_argument("--rss-only", action="store_true", help="publish source-language RSS editions with explicit translation fallback; no API calls")
     parser.add_argument("--now", help="ISO 8601 timestamp (for deterministic integration tests)")
     args = parser.parse_args()
     provider, key = select_provider()
-    if not key and not args.dry_run:
+    if not key and not args.dry_run and not args.rss_only:
         print("AI CORE NOT ACTIVATED: no AI provider secret configured. Existing public snapshot stays unchanged.")
         return 0
     now = dt.datetime.fromisoformat(args.now.replace("Z", "+00:00")) if args.now else dt.datetime.now(dt.timezone.utc)
-    items = retrieve_feeds(now, excluded_ids=recent_edition_ids(now))
-    if len(items) < 2:
-        print("Insufficient recent independent public RSS stories; no AI edition created.", file=sys.stderr)
+    import multilingual
+    pool, coverage = multilingual.retrieve_pool(now)
+    if not pool:
+        print("No recent trusted RSS stories; public snapshot unchanged.", file=sys.stderr)
         return 1
     if args.dry_run:
-        print(f"DRY RUN {len(items)} public RSS items, no API call, no write")
+        for locale in multilingual.LOCALES:
+            chosen = multilingual.select_locale_items(pool, locale)
+            print(f"DRY RUN {locale}: {len(chosen)} items, {sum(x['language']==locale for x in chosen)} preferred-language sources; no API call, no write")
         return 0
     try:
-        summarized, model = generate_summaries_batched(items, provider, key)
-        edition = pack_edition(summarized, model, provider, now)
-        count = publish_edition(edition)
-        print(f"Published public AI edition {edition['id']}: {len(summarized)} source-linked items, {count} stored editions")
+        excluded = {locale: recent_edition_ids(now, locale=locale) for locale in multilingual.LOCALES}
+        editions = multilingual.build_editions(pool, coverage, now, None if args.rss_only else provider, None if args.rss_only else key, excluded_ids=excluded)
+        for edition in editions:
+            publish_edition(edition)
+            print(f"Published {edition['id']}: {len(edition['items'])} RSS-grounded items, {edition['coverage']['translation_fallbacks']} explicit translation fallbacks")
         return 0
     except (ValueError, OSError, KeyError, IndexError, urllib.error.HTTPError) as exc:
         # No keys, response content or prompts in the log.

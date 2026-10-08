@@ -403,3 +403,45 @@ html.modal-open{overflow-y:hidden}
 @media(max-width:620px){
  .app[data-story-kind=public] .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,transparent 20%,#101115dd 65%)}
 }
+
+/* One continuous reading surface keeps long headlines from trapping the body. */
+#readerOverlay{background:#08090ee6;backdrop-filter:blur(8px);padding:24px}
+.reader{height:min(920px,calc(100dvh - 48px));max-width:880px;border:1px solid #ffffff24;border-radius:4px}
+.reader-scroll{padding:0 32px 32px;scrollbar-gutter:stable;touch-action:pan-y}
+.reader-cover{margin:0 -32px 24px;padding:24px 32px;min-height:0;max-height:none!important;overflow:visible!important;border-bottom:5px solid #111}
+.reader-cover:before,.reader-cover-art{display:none}
+.reader-cover h2{max-width:100%;font-size:clamp(23px,3.4vw,36px)!important;line-height:1.45;overflow-wrap:anywhere;letter-spacing:-.3px}
+.reader-cover-code{font-size:11px;letter-spacing:.4px;color:#34382a}
+.reader-lenses{top:0;padding:12px 0;background:#f3f0e8;border-bottom:1px solid #cbc7be}
+.reader-lenses button,.lens-tabs button{white-space:normal;line-height:1.4}
+.reader-copy{max-width:710px;margin:24px auto;border-left:0;padding:0}
+.reader-copy p{font-size:16px;line-height:1.95;color:#34332f;white-space:pre-line;overflow-wrap:anywhere}
+.reader-copy h3{font-size:21px;line-height:1.5;margin:25px 0 10px}
+.archive-scope{padding:13px 16px;background:#e4e7d9;border-left:4px solid #617426;font-size:13px!important;line-height:1.7!important}
+.archive-section.unavailable{color:#777;border-top:1px dashed #bbb;padding-top:4px}
+.archive-section.unavailable p{font-size:13px;color:#6b675d}
+.language-fallback{display:block;padding:10px 12px;margin:12px 0;background:#fff2cd;color:#68501c;font-size:11px;line-height:1.7;border:1px solid #d8c98a}
+.language-setting{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:2px solid #111}
+.language-setting select{font:inherit;max-width:100%;padding:10px;background:#fff;border:1px solid #aaa;color:#111}
+.news-search{padding:12px;display:flex;flex-direction:column;gap:7px;font-size:11px;font-weight:800;background:#e6e1d7}
+.news-search input{min-width:0;width:100%;border:1px solid #ada89f;padding:10px;font:inherit;background:#fff;color:#111}
+.hero h1 span{white-space:normal;overflow-wrap:anywhere;max-width:100%}
+.hero-top{white-space:normal}
+.ai-desk .ai-story-expanded .archive-section h3{font-size:15px;margin-top:18px}
+.ai-desk .ai-story-expanded .archive-scope{font-size:12px!important}
+@media(max-width:760px){
+ #readerOverlay{padding:0}.reader{height:100dvh;border-radius:0;border:0}
+ .reader-scroll{padding:0 20px calc(25px + var(--safe-bottom))}
+ .reader-cover{margin:0 -20px 10px;padding:20px;min-height:0!important}
+ .reader-top{padding-left:12px;padding-right:12px}.reader-top>span{font-size:9px}
+ .reader-copy p{font-size:15px;line-height:1.9}.reader-copy{margin:19px 0}
+ .edition-tabs button b{font-size:11px;overflow-wrap:anywhere}.edition-tabs button{min-width:0}
+}
+.signal-ribbon{min-height:48px;gap:12px;flex-wrap:wrap;height:auto;padding-top:7px;padding-bottom:7px}
+.app{grid-template-rows:calc(62px + var(--safe-top)) 58px auto minmax(550px,1fr) auto calc(48px + var(--safe-bottom))}
+.signal-ribbon .news-search{display:flex;flex-direction:row;align-items:center;background:none;padding:0;color:#fff;font-size:10px;gap:8px;flex:0 1 320px;max-width:100%}
+.signal-ribbon .news-search input{padding:7px;width:220px;max-width:100%;font-size:11px}
+.reader-analysis{display:block;width:100%;padding:15px;background:#101116;color:var(--accent);font:inherit;font-weight:800;text-align:left;border-left:4px solid var(--accent);margin:20px 0}
+@media(max-width:760px){.signal-ribbon .ribbon-label{display:none}.signal-ribbon .news-search{flex:1}.signal-ribbon .news-search span{display:none}.signal-ribbon .news-search input{width:100%}.signal-ribbon .ribbon-right{max-width:45%;font-size:8px}.app{grid-template-rows:none}}
+
+.reader-original-top{color:var(--accent);font-size:12px;font-weight:800;padding:10px}.source-timestamp,.archive-stamp{display:block;font-size:11px;line-height:1.7;margin:8px 0;color:#65625b}.archive-rights{display:inline-block;font-size:12px;color:#3d551a;margin:10px 0;text-decoration:underline}

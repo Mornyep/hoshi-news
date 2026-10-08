@@ -13,7 +13,7 @@ const cases=[
 (async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});try{
   for(const [width,height]of [[1527,1024],[390,844]]){
     for(const scenario of cases){
-      const context=await browser.newContext({viewport:{width,height},serviceWorkers:'block'});
+      const context=await browser.newContext({locale:'zh-CN',viewport:{width,height},serviceWorkers:'block'});
       const page=await context.newPage();let release;
       const gate=new Promise(r=>{release=r});
       await page.route('**/ai-briefs.json',async route=>{

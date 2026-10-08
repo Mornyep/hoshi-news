@@ -3,7 +3,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'scripts/public_ai.py'
+      - 'scripts/**'
+      - 'tests/test_multilingual.py'
       - '.github/workflows/public-ai.yml'
   workflow_dispatch:
   schedule:
@@ -19,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
+      # At most four requests per edition, six stories per locale; no retries.
+      # Free/low-cost availability is provider-dependent, not guaranteed.
+      # Set true to disable CNA feeds if the site becomes commercial/monetized.
+      PUBLIC_SITE_COMMERCIAL: ${{ vars.PUBLIC_SITE_COMMERCIAL || 'false' }}
       AI_PROVIDER: auto
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

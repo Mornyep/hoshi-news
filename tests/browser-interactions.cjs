@@ -17,7 +17,7 @@ async function trap(page,overlay,count=38){
   const browser=await chromium.launch({channel:'chrome',headless:true});
   try{
     for(const [width,height] of [[1527,1024],[768,1024],[390,844],[320,568]]){
-      const context=await browser.newContext({viewport:{width,height},serviceWorkers:'block',reducedMotion:width===320?'reduce':'no-preference'});
+      const context=await browser.newContext({locale:'zh-CN',viewport:{width,height},serviceWorkers:'block',reducedMotion:width===320?'reduce':'no-preference'});
       const page=await context.newPage(),errors=[];
       page.on('pageerror',e=>errors.push(e.message));
       let delay=0;

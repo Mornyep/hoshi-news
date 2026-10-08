@@ -1,0 +1,20 @@
+name = "hoshi-private-ai"
+main = "worker.mjs"
+compatibility_date = "2026-09-01"
+# Keep disabled until schema, auth, secrets and exact origin are configured.
+[vars]
+ENABLED = "false"
+ALLOWED_ORIGIN = "https://mornyep.github.io"
+SUPABASE_URL = ""
+SUPABASE_ANON_KEY = ""
+PUBLIC_POOL_ENABLED = "false"
+PUBLIC_POOL_PROVIDER = "groq"
+# Supply DB binding with your own D1 database ID before deploy.
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "hoshi-private-ai"
+# database_id = "YOUR_DATABASE_ID"
+# migrations_dir = "migrations"
+
+[triggers]
+crons = ["17 * * * *"]

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS preferences (user_id TEXT PRIMARY KEY, value TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS keys (user_id TEXT NOT NULL, provider TEXT NOT NULL, cipher TEXT NOT NULL, PRIMARY KEY(user_id, provider));
+CREATE TABLE IF NOT EXISTS history (id TEXT PRIMARY KEY, user_id TEXT NOT NULL, role TEXT NOT NULL, content TEXT NOT NULL, created_at INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS history_owner ON history(user_id, created_at);
+CREATE TABLE IF NOT EXISTS quotas (subject TEXT NOT NULL, window TEXT NOT NULL, count INTEGER NOT NULL, PRIMARY KEY(subject,window));
+CREATE TABLE IF NOT EXISTS locks (user_id TEXT PRIMARY KEY, token TEXT NOT NULL, expires INTEGER NOT NULL);

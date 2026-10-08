@@ -4,10 +4,10 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
 const base=process.argv[2]||'http://127.0.0.1:8765',fixture=process.argv.includes('--fixture');
 (async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});try{
   for(const [width,height]of [[1527,1024],[1280,720],[851,650],[850,1024],[768,1024],[621,800],[620,800],[390,844],[320,568]]){
-    const context=await browser.newContext({viewport:{width,height},hasTouch:width<=850,isMobile:width<=620,serviceWorkers:'block'});
+    const context=await browser.newContext({locale:'zh-CN',viewport:{width,height},hasTouch:width<=850,isMobile:width<=620,serviceWorkers:'block'});
     const p=await context.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
     if(fixture)await p.route('**/ai-briefs.json',async route=>{
-      const response=await route.fetch(),data=await response.json(),source=data.editions.find(e=>e.items?.length);
+      const response=await route.fetch(),data=await response.json(),source=data.editions.reduce((a,e)=>(e.items?.length||0)>(a?.items?.length||0)?e:a,null);
       const date=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
       data.editions=['morning','noon','evening'].map(session=>({...source,date,session,items:source.items.map((s,i)=>i===source.items.length-1?{...s,title:'長いタイトルの折り返しを検証する公開ニュース。'.repeat(7)}:s)}));
       await route.fulfill({response,json:data});

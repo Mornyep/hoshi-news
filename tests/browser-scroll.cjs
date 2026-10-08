@@ -10,7 +10,7 @@ const sizes = [[1527,1024],[1280,720],[851,650],[850,1024],[768,1024],[621,800],
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
     for (const [width,height] of sizes) {
-      const context = await browser.newContext({ viewport:{width,height}, hasTouch:width<=850, isMobile:width<=620, serviceWorkers:'block' });
+      const context = await browser.newContext({locale:'zh-CN', viewport:{width,height}, hasTouch:width<=850, isMobile:width<=620, serviceWorkers:'block' });
       const page = await context.newPage();
       const errors = [];
       page.on('pageerror', e => errors.push(e.message));
