@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "星闻 SIGNAL//BREAK",
+  "short_name": "星闻 BREAK",
+  "description": "有来源、可交互、一屏阅读的个人新闻情报台",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "fullscreen",
+    "standalone"
+  ],
+  "orientation": "any",
+  "background_color": "#101015",
+  "theme_color": "#101015",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
