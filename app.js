@@ -16,11 +16,18 @@
   const storageKey = 'starnews:guest:v4.3';
   const oldStorageKey = 'hoshi-news-console-v2';
   const interests=[
-    {id:'tech',label:'AI / 数码',symbol:'◈'},
-    {id:'game',label:'游戏动漫',symbol:'✦'},
-    {id:'japan',label:'日本生活',symbol:'〒'},
-    {id:'science',label:'科学发现',symbol:'◎'},
-    {id:'world',label:'世界观察',symbol:'⌁'}
+    {id:'world',label:'国际',symbol:'◎'},
+    {id:'japan',label:'日本',symbol:'〒'},
+    {id:'politics',label:'政治政策',symbol:'⚑'},
+    {id:'economy',label:'经济金融',symbol:'↗'},
+    {id:'society',label:'社会民生',symbol:'◇'},
+    {id:'health',label:'医疗健康',symbol:'✚'},
+    {id:'science',label:'科学',symbol:'◉'},
+    {id:'environment',label:'环境气候',symbol:'♧'},
+    {id:'culture',label:'文化教育',symbol:'✳'},
+    {id:'sports',label:'体育',symbol:'◩'},
+    {id:'tech',label:'科技数码',symbol:'◈'},
+    {id:'game',label:'游戏动漫',symbol:'✦'}
   ];
   const themes=[
     {id:'auto',label:'自动',color:'#dcff42'},
@@ -44,54 +51,93 @@
   let aiSession='morning';
   let aiOpen=false;
   let aiLastFocus=null;
+  let aiFilter='all';
   const aiSessionNames={morning:'早间',noon:'午间',evening:'晚间'};
   function jstDay(){
     const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
     const get=k=>parts.find(x=>x.type===k)?.value||'00';
     return get('year')+'-'+get('month')+'-'+get('day');
   }
-  function renderAI(){
-    const session=aiSession;
-    $$('#aiOverlay [data-ai-session]').forEach(b=>{const active=b.dataset.aiSession===session;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+  function latestAISession(){
     const day=jstDay();
-    const entries=Array.isArray(publicAI.editions)?publicAI.editions:[];
-    const edition=entries.find(e=>e&&e.date===day&&e.session===session&&Array.isArray(e.items)&&e.items.length);
+    const matches=(Array.isArray(publicAI.editions)?publicAI.editions:[])
+      .filter(e=>e&&e.date===day&&['morning','noon','evening'].includes(e.session)&&Array.isArray(e.items)&&e.items.length)
+      .sort((a,b)=>String(b.generated_at||'').localeCompare(String(a.generated_at||'')));
+    return matches[0]?.session||'morning';
+  }
+  function aiEditionForSession(session){
+    return (Array.isArray(publicAI.editions)?publicAI.editions:[])
+      .find(e=>e&&e.date===jstDay()&&e.session===session&&Array.isArray(e.items)&&e.items.length);
+  }
+  function renderAI(){
+    $$('#aiDesk [data-ai-session]').forEach(b=>{
+      const active=b.dataset.aiSession===aiSession;
+      b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
+    });
+    const edition=aiEditionForSession(aiSession);
     const list=$('#aiStoryList');list.replaceChildren();
-    if(!edition){
-      txt('#aiStatus','今日'+aiSessionNames[session]+' AI 简报尚未生成');
-      txt('#aiGenerated','当前没有可核实的新一期 AI 生成结果');
-      txt('#aiIntro','本功能已接入公共 AI 数据读取。站长配置免费的服务端 API Key 并通过自动任务成功生成后，所有读者将看到同一份公开简报。');
-      const blank=mk('div','ai-blank');blank.append(mk('strong','','NO PUBLIC AI REPORT YET'),mk('p','','不会把旧新闻、个人偏好或示例回答伪装成今日实时 AI 内容。'));
-      list.append(blank);$('#aiStatusLight').classList.remove('ready');return;
+    const status=$('#aiStatusLight');status.classList.toggle('ready',Boolean(edition));
+    const filterRow=$('#aiFilterRow');filterRow.replaceChildren();
+    const filters=[{id:'all',label:'全部'}];
+    const catLabels={headlines:'综合头条',world:'国际',japan:'日本',politics:'政治',economy:'经济',
+      society:'社会',health:'健康',science:'科学',environment:'环境',culture:'文化',sports:'体育',tech:'科技',game:'动漫游戏'};
+    if(edition){
+      const present = new Set(edition.items.map(s=>s.category));
+      for(const [id,label] of Object.entries(catLabels)){
+        if(present.has(id)) filters.push({id,label});
+      }
     }
-    $('#aiStatusLight').classList.add('ready');
-    txt('#aiStatus',aiSessionNames[session]+'公共 AI 简报 · '+edition.items.length+' 条');
-    txt('#aiGenerated',edition.date+'（日本） · '+(edition.provider||'后台')+' / '+(edition.model||'模型'));
-    txt('#aiIntro','公共 AI 仅根据 RSS 标题与简讯生成内容，不等于全文核验。每一条都保留原始发布者与链接。');
-    const ordered=[...edition.items].sort((a,b)=>Number(state.interests.has(b.category))-Number(state.interests.has(a.category)));
-    ordered.slice(0,7).forEach((s,i)=>{
+    if(!filters.some(f=>f.id===aiFilter))aiFilter='all';
+    for(const filter of filters){
+      const btn=mk('button',filter.id===aiFilter?'active':'',filter.label);
+      btn.type='button';btn.dataset.aiFilter=filter.id;
+      btn.setAttribute('aria-pressed',String(filter.id===aiFilter));
+      filterRow.append(btn);
+    }
+    if(!edition){
+      txt('#aiStatus','今日'+aiSessionNames[aiSession]+'综合简报尚未生成');
+      txt('#aiGenerated','没有完成新一期生成 · 不显示旧报道冒充实时新闻');
+      txt('#aiIntro','后台按公开新闻源整理综合新闻，若当期未成功生成，保留透明的空状态。');
+      txt('#aiEditNote','暂无本期数据，不能根据用户兴趣推测新闻');
+      const blank=mk('div','ai-blank');
+      blank.append(mk('strong','','NO NEW EDITION'),mk('p','','你可以切换到已发布的其他时段；上午静态存档会注明原始日期。'));
+      const back=mk('button','ai-blank-back','↗ 查看历史新闻存档');back.type='button';back.dataset.action='morning';blank.append(back);
+      list.append(blank);txt('#aiTopState','✳ PUBLIC NEWS');return;
+    }
+    txt('#aiTopState','✳ NEWS ONLINE');
+    const categories=new Set(edition.items.map(s=>s.category));
+    txt('#aiStatus',aiSessionNames[aiSession]+'综合新闻 · '+edition.items.length+' 条');
+    txt('#aiGenerated',edition.date+' · '+(edition.provider||'后台')+' / '+(edition.model||'AI'));
+    txt('#aiIntro','先展示综合头条与有公共价值的重要领域，再考虑个人兴趣。AI 仅整理原报道标题与简讯，不代表已阅读全文。');
+    txt('#aiEditNote',`覆盖 ${categories.size} 类 · 综合头条优先 · 内容数量取决于消息与来源质量`);
+    const ordered=edition.items.map((s,index)=>({s,index})).sort((a,b)=>{
+      const rank=x=>x.s.is_headline||x.s.category==='headlines'?2:(state.interests.has(x.s.category)?1:0);
+      return rank(b)-rank(a)||a.index-b.index;
+    });
+    ordered.filter(x=>aiFilter==='all'||x.s.category===aiFilter).forEach(({s},i)=>{
       if(typeof s.title!=='string'||typeof s.summary!=='string'||!s.source||typeof s.source.url!=='string')return;
       const safe=validUrl(s.source.url);if(!safe)return;
-      const card=mk('article','ai-story-card');
-      const top=mk('div','ai-story-top');top.append(mk('span','',String(i+1).padStart(2,'0')+' / '+(s.categoryLabel||'新闻')),
-        mk('span','',state.interests.has(s.category)?'◆ 本机兴趣优先':'◇ 公开探索'));card.append(top);
-      card.append(mk('h3','',s.title.slice(0,220)),mk('p','',s.summary.slice(0,360)));
-      const detail=mk('details','ai-more');detail.append(mk('summary','','理解与核查范围 ↗'));
-      detail.append(mk('p','',s.context||'没有足够背景信息，建议阅读原文。'),mk('p','',s.uncertainty||'需要进一步阅读原文确认。'));card.append(detail);
-      const source=mk('a','ai-source','↗ '+(s.source.name||'新闻原始来源')+' · 查看原文');source.href=safe;source.target='_blank';source.rel='noopener noreferrer';card.append(source);
-      list.append(card);
+      const card=mk('details','ai-story-card'+((s.is_headline||s.category==='headlines')?' ai-headline-card':''));
+      const summary=mk('summary','ai-story-summary');
+      const meta=mk('div','ai-story-top');
+      const isHeadline=s.is_headline||s.category==='headlines';
+      meta.append(mk('span','ai-story-number',String(i+1).padStart(2,'0')),
+        mk('span','ai-story-category',s.categoryLabel||catLabels[s.category]||'新闻'),
+        mk('span','ai-story-personal',isHeadline?'▣ 编辑头条':(state.interests.has(s.category)?'◆ 你的兴趣':'◇ 综合新闻')));
+      const title=mk('h3','',s.title.slice(0,220));title.lang='auto';
+      summary.append(meta,title,mk('p','ai-story-preview',s.summary.slice(0,320)),mk('span','ai-story-toggle','展开解读 ↗'));
+      card.append(summary);
+      const more=mk('div','ai-story-expanded');
+      more.append(mk('div','ai-story-section-label','CONTEXT / 摘要背景'),mk('p','',s.context||'建议阅读原始报道进一步了解。'),
+        mk('div','ai-story-section-label','UNCERTAINTY / 待核实'),mk('p','',s.uncertainty||'仅基于 RSS 简讯，尚需核实更多细节。'));
+      const source=mk('a','ai-source','↗ '+(s.source.name||'公开新闻来源')+' · 阅读原文');
+      source.href=safe;source.target='_blank';source.rel='noopener noreferrer';more.append(source);
+      card.append(more);list.append(card);
     });
-    if(!list.childElementCount)list.append(mk('p','','本期数据格式有误，暂不展示。'));
+    if(!list.childElementCount)list.append(mk('p','ai-no-category','这一类别本期尚无可用报道。换个栏目看看。'));
   }
-  function openAI(){
-    aiLastFocus=document.activeElement;aiOpen=true;
-    $('#aiOverlay').hidden=false;renderAI();
-    $('#aiOverlay [data-action="close-ai"]').focus({preventScroll:true});
-  }
-  function closeAI(){
-    aiOpen=false;$('#aiOverlay').hidden=true;
-    if(aiLastFocus?.isConnected)aiLastFocus.focus({preventScroll:true});
-  }
+  function openAI(){changeEdition('ai');}
+  function closeAI(){changeEdition('morning');}
 
   const state={
     index:0,
@@ -283,30 +329,45 @@
     breaking:{num:'!!',eyebrow:'BREAKING / NO LIVE FEED',title:'紧急播报\n未连接实时源。',desc:'此网页不具备实时地震、天气、交通或新闻报警能力。紧急情况请查看日本气象厅及所在地政府的官方警报。'}
   };
   function changeEdition(edition){
-    if(!['morning','noon','evening','breaking'].includes(edition))return;
+    if(!['morning','noon','evening','breaking','ai'].includes(edition))return;
+    const morning=edition==='morning'&&!aiEditionForSession('morning');
+    const aiMode=edition==='ai'||edition==='noon'||edition==='evening'||(edition==='morning'&&!morning);
     state.edition=edition;
-    if(['morning','noon','evening'].includes(edition))aiSession=edition;
-    const morning=edition==='morning';
-    $$('.edition-tabs [data-edition-choice]').forEach(b=>{const active=b.dataset.editionChoice===edition;b.classList.toggle('active',active);b.setAttribute('aria-current',String(active))});
-    $('#emptyEdition').hidden=morning;
+    aiOpen=aiMode;
+    if(edition==='ai') aiSession=latestAISession();
+    else if(['morning','noon','evening'].includes(edition)) { aiSession=edition;aiFilter='all'; }
+    $$('.edition-tabs [data-edition-choice]').forEach(b=>{
+      const active=b.dataset.editionChoice===edition;
+      b.classList.toggle('active',active);
+      b.setAttribute('aria-current',active?'page':'false');
+    });
+    $('#aiDesk').hidden=!aiMode;
+    $('#emptyEdition').hidden=edition!=='breaking';
     $('#queueList').hidden=!morning;
-    $('.queue').style.visibility=morning?'visible':'hidden';
-    $('.hero').style.visibility=morning?'visible':'hidden';
-    $('.decode').style.visibility=morning?'visible':'hidden';
-    $('#mobileStoryStrip').style.visibility=morning?'visible':'hidden';
+    $('.queue').hidden=!morning;
+    $('.hero').hidden=!morning;
+    $('.decode').hidden=!morning;
+    $('#mobileStoryStrip').hidden=!morning;
     $('#moreSignals').hidden=!morning;
     $('.scroll-nudge').hidden=!morning;
-    if(!morning){
-      const e=placeholders[edition];txt('#emptyArt',e.num);txt('#emptyEyebrow',e.eyebrow);txt('#emptyCopy',e.desc);
+    if(aiMode){
+      renderAI();
+      txt('#bottomEdition',aiSessionNames[aiSession]+' · 公共 AI');
+      txt('#snapshotStatus','综合新闻 / AI 整理 · RSS 来源');
+      if(state.reader)closeReader();
+    }else if(edition==='breaking'){
+      const e=placeholders.breaking;
+      txt('#emptyArt',e.num);txt('#emptyEyebrow',e.eyebrow);txt('#emptyCopy',e.desc);
       const heading=$('#emptyHeading');heading.replaceChildren();
       e.title.split('\n').forEach((line,i)=>{if(i)heading.append(document.createElement('br'));heading.append(document.createTextNode(line));});
-      txt('#bottomEdition',edition==='breaking'?'不提供实时报警':edition==='noon'?'午间 · 待同步':'晚间 · 待同步');
-      txt('#snapshotStatus',edition==='breaking'?'NOT A LIVE ALERT':'EDITION NOT SYNCED');
+      txt('#bottomEdition','不提供实时报警');txt('#snapshotStatus','NOT A LIVE ALERT');
       if(state.reader)closeReader();
-    }else{txt('#snapshotStatus','2026.10.08 / 早间快照');renderMain();}
+    }else{
+      txt('#snapshotStatus',jstDay()==='2026-10-08'?'2026.10.08 / 早间编辑快照':'2026.10.08 / 历史新闻存档');renderMain();
+    }
     app.dataset.edition=edition;
-    if(aiOpen)renderAI();
-    if(state.motion)bounce();
+    if(state.motion && morning)bounce();
+    if(window.scrollY>0) window.scrollTo({top:0,behavior:'instant'});
   }
   function openReader(){
     if(state.edition!=='morning')return;
@@ -407,7 +468,8 @@
   }
   app.addEventListener('click', event=>{
     const b=event.target.closest('button');if(!b||!app.contains(b))return;
-    if(b.dataset.aiSession){aiSession=b.dataset.aiSession;renderAI();return;}
+    if(b.dataset.aiFilter){aiFilter=b.dataset.aiFilter;renderAI();return;}
+    if(b.dataset.aiSession){aiSession=b.dataset.aiSession;aiFilter='all';if(state.edition==='noon'||state.edition==='evening'){state.edition='ai';app.dataset.edition='ai';$$('.edition-tabs [data-edition-choice]').forEach(tab=>{const active=tab.dataset.editionChoice==='ai';tab.classList.toggle('active',active);tab.setAttribute('aria-current',active?'page':'false');});}renderAI();txt('#bottomEdition',aiSessionNames[aiSession]+' · 公共 AI');return;}
     if(b.dataset.editionChoice){changeEdition(b.dataset.editionChoice);return;}
     if(b.dataset.interest){toggleInterest(b.dataset.interest);return;}
     if(b.dataset.themeChoice){applyTheme(b.dataset.themeChoice);return;}
@@ -433,7 +495,6 @@
   $$('.backdrop').forEach(backdrop=>backdrop.addEventListener('click',()=>{
     if(!$('#readerOverlay').hidden)closeReader();
     else if(!$('#settingsOverlay').hidden)closeSettings();
-    else if(!$('#aiOverlay').hidden)closeAI();
   }));
   $('#motionToggle').addEventListener('change',e=>{state.motion=e.target.checked;updateTheme();app.classList.remove('switching');persist();});
   $('#spoilerToggle').addEventListener('change',e=>{state.spoiler=e.target.checked;persist();toast(state.spoiler?'防剧透已开启':'防剧透已关闭（当前数据本身无剧情）');});
@@ -445,7 +506,7 @@
   });
   document.addEventListener('keydown',e=>{
     if(e.key==='Escape'){
-      if(aiOpen)closeAI();else if(state.onboarding)closeOnboarding();else if(state.settings)closeSettings();else if(state.reader)closeReader();return;
+      if(aiOpen)changeEdition('morning');else if(state.onboarding)closeOnboarding();else if(state.settings)closeSettings();else if(state.reader)closeReader();return;
     }
     if(state.settings||state.onboarding||state.edition!=='morning')return;
     const tag=document.activeElement?.tagName||'';
@@ -476,7 +537,7 @@
     fetch('./ai-briefs.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('AI publication not found');return r.json()}).then(payload=>{
       if(payload?.schema!==1||!Array.isArray(payload.editions))throw new Error('Invalid AI publication');
       publicAI=payload;
-      if(aiOpen)renderAI();
+      if(aiOpen){if(state.edition==='ai')aiSession=latestAISession();renderAI();}else if(state.edition==='morning'&&aiEditionForSession('morning')){changeEdition('morning');}else{const today=publicAI.editions.some(e=>e?.date===jstDay()&&Array.isArray(e.items)&&e.items.length);if(today)txt('#aiTopState','✳ NEWS ONLINE');}
     }).catch(()=>{if(aiOpen)renderAI();});
   }
 

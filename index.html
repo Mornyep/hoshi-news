@@ -18,14 +18,15 @@
 <body>
 <div id="app" class="app" data-tone="lime" data-motion="on" data-edition="morning">
   <header class="topbar">
-    <div class="identity"><span class="brand-star" aria-hidden="true">✳</span><div class="identity-word"><strong>星闻<span>//</span>BREAK</strong><small>YOUR WORLD. YOUR STYLE.</small></div></div>
-    <div class="top-actions"><span class="snapshot-tag"><i></i><b>公开测试</b> · 本机访客</span><button type="button" class="ai-top-btn" data-action="open-ai" aria-label="打开公共 AI 新闻简报">✳ AI CORE</button><button type="button" class="settings-btn" data-action="settings" aria-label="设置显示和动效">☷</button></div>
+    <div class="identity"><span class="brand-star" aria-hidden="true">✳</span><div class="identity-word"><strong>星闻<span>//</span>BREAK</strong><small>YOUR NEWS. YOUR PERSPECTIVE.</small></div></div>
+    <div class="top-actions"><span class="snapshot-tag"><i></i><b>公开测试</b> · 本机访客</span><span class="ai-runtime-pill" id="aiTopState" aria-label="公共 AI 引擎状态">✳ PUBLIC AI</span><button type="button" class="settings-btn" data-action="settings" aria-label="设置显示和动效">☷</button></div>
   </header>
   <nav class="edition-tabs" aria-label="简报时段">
     <button type="button" data-edition-choice="morning" class="active" aria-current="true"><span>01 / MORNING</span><b>晨报</b></button>
     <button type="button" data-edition-choice="noon"><span>02 / MIDDAY</span><b>午报</b></button>
     <button type="button" data-edition-choice="evening"><span>03 / EVENING</span><b>晚报</b></button>
     <button type="button" data-edition-choice="breaking" class="edition-breaking"><span>!! / ALERT</span><b>突发</b></button>
+    <button type="button" data-edition-choice="ai" class="edition-ai"><span>✳ / TODAY</span><b>综合新闻</b></button>
   </nav>
   <div class="signal-ribbon"><span class="ribbon-label">◈ SHARED FACTS / LOCAL PREFERENCES</span><span class="ribbon-center">每个人的排序与外观互不影响</span><span class="ribbon-right" id="snapshotStatus">2026.10.08 / 早间快照</span></div>
 
@@ -64,7 +65,29 @@
       <div class="decode-actions"><a id="sourceQuick" href="#" target="_blank" rel="noopener noreferrer">↗ 查原始来源</a><button type="button" data-action="open-reader">展开档案 <span>⤢</span></button></div>
     </section>
 
-    <section class="empty-edition" id="emptyEdition" hidden aria-live="polite"><div class="empty-art" id="emptyArt">02</div><span class="empty-eyebrow" id="emptyEyebrow">NO NEW DATA</span><h2 id="emptyHeading">午间快报<br>尚未同步。</h2><p id="emptyCopy">网页目前只有今早的静态新闻快照。ChatGPT 定时推送不会自动出现在这里。</p><button type="button" data-action="morning">← 返回今早的新闻</button><div class="empty-footnote">不制造虚假的更新，不把演示伪装成实时播报。</div></section>
+    <section class="empty-edition" id="emptyEdition" hidden aria-live="polite"><div class="empty-art" id="emptyArt">02</div><span class="empty-eyebrow" id="emptyEyebrow">NO NEW DATA</span><h2 id="emptyHeading">午间快报<br>尚未同步。</h2><p id="emptyCopy">网页目前只有今早的静态新闻快照。ChatGPT 定时推送不会自动出现在这里。</p><button type="button" data-action="morning">← 返回今早的新闻</button><button type="button" data-action="open-ai">✳ 查看公共 AI 简报</button><div class="empty-footnote">不制造虚假的更新，不把演示伪装成实时播报。</div></section>
+  <section class="ai-desk" id="aiDesk" aria-label="公共综合新闻频道" hidden>
+    <header class="ai-desk-hero">
+      <div class="ai-desk-eyebrow"><span class="ai-desk-pulse" aria-hidden="true"></span><span>PUBLIC NEWSROOM / EDITION 4.6</span></div>
+      <div class="ai-desk-titleline"><div><h2 id="aiTitle">今日新闻，<span>不止一种视角。</span></h2><p>从国际大事到社会、经济与生活。新闻价值在前，个人兴趣在后。</p></div><span class="ai-desk-art" aria-hidden="true">✳</span></div>
+      <div class="ai-desk-rule"><span>BROAD NEWS / AI ASSISTED</span><span>FACTS BEFORE FLASH</span></div>
+    </header>
+    <div class="ai-desk-body">
+      <div class="ai-desk-aside">
+        <div class="ai-panel-status" role="status"><span class="ai-status-light" id="aiStatusLight" aria-hidden="true"></span><strong id="aiStatus">正在加载公共简报…</strong><small id="aiGenerated">仅供新闻阅读，不是实时灾害警报</small></div>
+        <nav class="ai-sessions" aria-label="选择公共 AI 简报时间"><button type="button" data-ai-session="morning" aria-pressed="false">☀ 晨间</button><button type="button" data-ai-session="noon" aria-pressed="false">◉ 午间</button><button type="button" data-ai-session="evening" aria-pressed="false">☾ 晚间</button></nav>
+        <div class="ai-intro"><span>OPEN SOURCES / NO PRIVATE PROFILES</span><p id="aiIntro">新闻依据公开 RSS 标题与简讯，不代表已独立核验全文。</p></div>
+        <div class="ai-aside-footer"><span>✓ 公共简报共享</span><span>✓ 兴趣仅在本机</span><span>✳ 不是个人 AI 对话</span></div>
+      </div>
+      <div class="ai-desk-feed">
+        <div class="ai-desk-feedhead"><div><span>◈ SIGNAL QUEUE</span><h3>先看世界，再看兴趣。</h3></div><span>点击标题查看解读 ↗</span></div>
+        <div class="ai-filter-row" id="aiFilterRow" aria-label="按新闻类别查看"><button type="button" class="active" data-ai-filter="all" aria-pressed="true">全部</button></div>
+        <div class="ai-edit-note" id="aiEditNote" aria-live="polite">综合头条优先 · 各类别适当兼顾 · 兴趣只影响次序</div>
+        <div class="ai-story-list" id="aiStoryList" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="ai-footnote">覆盖综合新闻的重要领域，但具体类别取决于当期消息和新闻源是否可用。AI 只根据 RSS 标题与简讯生成摘要，未经独立全文核验，也不是紧急灾害预警。每位访客的兴趣、收藏和主题都留在本机，不会发送给公共 AI。没有登录或跨设备同步。</p>
+  </section>
   </div>
   <div class="scroll-nudge"><span>↓ 轻轻往下，继续读</span><span>更多情报 / PERSONALIZED</span></div>
   <div class="mobile-story-strip" id="mobileStoryStrip" aria-label="快速选择新闻"></div>
@@ -73,15 +96,11 @@
     <div class="more-list" id="moreList"></div>
     <div class="more-privacy">✳ 共用事实，不共用个人数据。这里没有登录、服务器收藏或个人 AI 密钥。</div>
   </section>
-  <section class="ai-teaser" aria-label="公共 AI 情报入口">
-    <div><span>✳ AI CORE / PUBLIC ENGINE</span><strong>一份 AI 简报，供所有人共享。</strong><small>只读取公开新闻源；你的兴趣与收藏不会上传。</small></div>
-    <button type="button" data-action="open-ai">打开 AI 简报 ↗</button>
-  </section>
   <footer class="bottom-bar"><span class="bottom-title"><span>✳</span> STARNEWS / PUBLIC BETA</span><div class="bottom-center"><span class="bottom-dot"></span> <span id="bottomEdition">早间情报 · 5 条</span></div><button type="button" data-action="saved-only" id="favoritesButton" aria-pressed="false"><span>☆</span> 收藏</button></footer>
 
   <div class="overlay" id="readerOverlay" hidden><div class="backdrop" data-action="close-reader"></div><section class="reader" role="dialog" aria-modal="true" aria-labelledby="readerTitle"><header class="reader-top"><button type="button" data-action="close-reader" aria-label="返回情报台">← 返回</button><span>◈ INTELLIGENCE FILE</span><button type="button" data-action="save" id="readerSave" aria-label="收藏新闻">☆</button></header><div class="reader-cover"><span class="reader-cover-code" id="readerCode">FILE_01</span><span class="reader-cover-art" id="readerArt">01</span><h2 id="readerTitle">标题</h2><span class="reader-cover-time" id="readerDate">2026.10.08</span></div><div class="reader-scroll"><div class="reader-lenses"><button type="button" data-lens="brief" class="active">01 / 速览</button><button type="button" data-lens="personal">02 / 与你有关</button><button type="button" data-lens="verify">03 / 核查证据</button></div><div class="reader-copy" id="readerCopy"></div><div class="sources"><div class="sources-heading">SOURCE LOG <span>↗ 原文可追溯</span></div><div id="readerSources"></div></div><div class="reader-footer-actions"><button type="button" data-action="prev">← 上一条</button><button type="button" data-action="next">下一条 →</button></div><p class="source-disclaimer">2026 年 10 月 8 日上午的新闻快照。并非实时新闻、官方紧急警报或自动更新服务。</p></div></section></div>
 
-  <div class="overlay" id="settingsOverlay" hidden><div class="backdrop" data-action="close-settings"></div><section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><div class="settings-heading"><div><span>PERSONAL OPTIONS / ON THIS DEVICE</span><h2 id="settingsTitle">我的星闻 ✳</h2></div><button type="button" data-action="close-settings" aria-label="关闭设置">✕</button></div><div class="settings-section-title">01 / 选择关注领域 <small>多选 · 仅改变排列，不会隐藏重大消息</small></div>
+  <div class="overlay" id="settingsOverlay" hidden><div class="backdrop" data-action="close-settings"></div><section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><div class="settings-heading"><div><span>PERSONAL OPTIONS / ON THIS DEVICE</span><h2 id="settingsTitle">我的星闻 ✳</h2></div><button type="button" data-action="close-settings" aria-label="关闭设置">✕</button></div><div class="settings-section-title">01 / 选择关注领域 <small>多选 · 综合头条始终优先，不屏蔽公共重大事件</small></div>
 <div class="interest-options" id="interestOptions" aria-label="兴趣频道选择"></div>
 <div class="settings-section-title">02 / 外观主题 <small>颜色与阅读布局</small></div>
 <div class="theme-options" id="themeOptions" aria-label="选择外观配色"></div>
@@ -90,20 +109,7 @@
 <label class="settings-row"><span><strong>动态转场</strong><small>漫画扫屏与标题冲击</small></span><input type="checkbox" id="motionToggle" checked></label><label class="settings-row"><span><strong>防剧透模式</strong><small>不展示游戏剧情内容</small></span><input type="checkbox" id="spoilerToggle" checked></label><label class="settings-row"><span><strong>舒适阅读</strong><small>略微放大正文字号</small></span><input type="checkbox" id="largeTextToggle"></label><label class="settings-row"><span><strong>临时访客模式</strong><small>不保存新的偏好，清除此前保存在本机的星闻设置</small></span><input type="checkbox" id="privateModeToggle"></label>
 <div class="settings-explain"><b>独立数据边界 · 当前公开版本</b><p>新闻是所有人共享的公开数据；兴趣、收藏与主题只保存在当前浏览器，不上传到网站。不同设备互不相见；同一浏览器的使用者仍可能看到本机设置，公用设备建议开启临时模式。尚未实现账号或跨设备同步。</p></div>
 <div class="settings-extras"><button type="button" data-action="share-theme">↗ 分享外观（不包含收藏与兴趣）</button><button type="button" data-action="reset-guest" class="danger-button">清空本机的星闻数据</button></div><button type="button" class="settings-done" data-action="close-settings">保存并返回 ✓</button></section></div>
-  <div class="overlay onboarding" id="onboardingOverlay" hidden><div class="onboarding-backdrop"></div><section class="onboarding-panel" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle"><span class="onboarding-eyebrow">WELCOME TO SIGNAL//BREAK</span><div class="onboarding-graphic" aria-hidden="true"><span>✳</span><b>YOU ARE<br>THE SIGNAL.</b></div><h2 id="onboardingTitle">欢迎来到<br>你的星闻世界。</h2><p>所有人读取同一组可信新闻事实，而关注顺序、外观和收藏由你的设备独立决定。不需要注册，也不会上传个人设置。</p><div class="onboarding-picks" id="onboardingPicks"></div><div class="onboarding-actions"><button type="button" data-action="onboarding-skip">先随便看看</button><button type="button" data-action="onboarding-done">开始我的星闻 ↗</button></div><small>稍后也可以在右上角 ☷ 随时调整 · 本版没有云端账号</small></section></div>
-  <div class="overlay" id="aiOverlay" hidden>
-    <div class="backdrop" data-action="close-ai"></div>
-    <section class="ai-panel" role="dialog" aria-modal="true" aria-labelledby="aiTitle">
-      <header class="ai-panel-header"><div><span>✳ THE PUBLIC INTELLIGENCE</span><h2 id="aiTitle">AI CORE <em>//</em> 4.4</h2></div><button type="button" data-action="close-ai" aria-label="关闭 AI 简报">✕</button></header>
-      <div class="ai-panel-scroll">
-        <div class="ai-panel-status"><span class="ai-status-light" id="aiStatusLight"></span><strong id="aiStatus">公共 AI 等待激活</strong><small id="aiGenerated">当前仅显示已人工整理的 10 月 8 日静态早报</small></div>
-        <nav class="ai-sessions" aria-label="切换 AI 简报时段"><button type="button" data-ai-session="morning" class="active">☀ 早间</button><button type="button" data-ai-session="noon">◉ 午间</button><button type="button" data-ai-session="evening">☾ 晚间</button></nav>
-        <div class="ai-intro"><span>PUBLIC SOURCES / NO PRIVATE INPUT</span><p id="aiIntro">启用后，后台每天依据指定新闻源的 RSS 标题与简讯，生成可以核对原文的公共 AI 摘录。</p></div>
-        <div class="ai-story-list" id="aiStoryList" aria-live="polite"></div>
-        <p class="ai-footnote">AI 摘录不是事实核验，也不是紧急灾害通知。原始 RSS 来源、文章时间与公开编辑新闻保持独立。每人的兴趣仅在浏览器本地影响排列，没有个人模型调用，也不会共用站长私人 AI 账户。</p>
-      </div>
-    </section>
-  </div>
+  <div class="overlay onboarding" id="onboardingOverlay" hidden><div class="onboarding-backdrop"></div><section class="onboarding-panel" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle"><span class="onboarding-eyebrow">WELCOME TO SIGNAL//BREAK</span><div class="onboarding-graphic" aria-hidden="true"><span>✳</span><b>YOU ARE<br>THE SIGNAL.</b></div><h2 id="onboardingTitle">欢迎来到<br>你的新闻世界。</h2><p>所有人共享同一组可追溯的综合新闻。世界要闻先出现，你的兴趣只改变其他内容的排列；外观与收藏仅属于当前设备。不需要注册，也不会上传个人设置。</p><div class="onboarding-picks" id="onboardingPicks"></div><div class="onboarding-actions"><button type="button" data-action="onboarding-skip">先随便看看</button><button type="button" data-action="onboarding-done">开始我的星闻 ↗</button></div><small>稍后也可以在右上角 ☷ 随时调整 · 本版没有云端账号</small></section></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <div class="switch-fx" aria-hidden="true"><strong>SWITCH!</strong></div>
 </div>
