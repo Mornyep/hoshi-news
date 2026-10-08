@@ -420,6 +420,9 @@ def main():
                 print(f"Retained existing {edition['locale']} edition: public AI unavailable.")
                 continue
             publish_edition(edition)
+            from collections import Counter
+            reasons=Counter(x['provenance'].get('translation_rejection') or 'accepted_or_original' for x in edition['items']+edition.get('briefs',[]))
+            print(f"Validation {edition['locale']}: {dict(reasons)}; model items {sum(x['provenance'].get('model_item_present',False) for x in edition['items'])}, analysis candidates {sum(x['provenance'].get('model_analysis_present',False) for x in edition['items'])}, highlight candidates {sum(x['provenance'].get('model_highlight_present',False) for x in edition['items'])}.")
             print(f"Published {edition['id']}: {len(edition['items'])} RSS-grounded items, {edition['coverage']['translation_fallbacks']} explicit translation fallbacks")
         return 0
     except (ValueError, OSError, KeyError, IndexError, urllib.error.HTTPError) as exc:
