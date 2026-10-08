@@ -100,3 +100,18 @@ class ProviderFailureTests(unittest.TestCase):
             path=Path(d)/'briefs.json';core.publish_edition(core.pack_edition([{'id':'same'}],'m','p',now,'en'),path)
             self.assertEqual(core.recent_edition_ids(now,path,locale='en'),{'same'})
             self.assertEqual(core.recent_edition_ids(now,path,locale='en',exclude_current_session=True),set())
+
+class SharedSupplementTests(unittest.TestCase):
+    def test_single_bounded_call_with_attributed_validated_result(self):
+        ref=story('en');titles={'en':'NHK reports 12 people'};calls=[]
+        def call(rules,prompt):
+            packet=json.loads(prompt);calls.append(packet)
+            self.assertTrue(all(len(s['text'])<=6000 for s in packet['evidence_packet']))
+            answer={**EvidenceAnalysisTests().answer(ref),'highlight':'12 people'}
+            return json.dumps({'locales':{'en':answer}})
+        result=analysis.generate(ref,titles,call,ml.number_tokens,ml.protected_names,ml.quote_tokens)
+        self.assertEqual(len(calls),1);self.assertEqual(result['en']['highlight']['text'],'12 people')
+        self.assertFalse(result['en']['analysis']['independently_verified'])
+    def test_failed_supplement_never_invents_analysis(self):
+        def offline(*args):raise OSError()
+        self.assertEqual(analysis.generate(story('en'),{'en':'NHK reports'},offline,ml.number_tokens,ml.protected_names,ml.quote_tokens),{})

@@ -20,7 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      # Four requests per edition: six main stories + four briefs per locale.
+      # Four translation requests: six main stories + four briefs per locale.
+      # At most one shared multilingual acquired-article supplement request.
       # Once-only legacy title backfill can add four requests; no retries.
       # Free/low-cost availability is provider-dependent, not guaranteed.
       # Set true to disable CNA feeds if the site becomes commercial/monetized.
