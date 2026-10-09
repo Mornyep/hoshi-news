@@ -1,13 +1,13 @@
 // Optional private-service UI; all identities, credentials and network are fixtures.
 const {JSDOM,VirtualConsole}=require('jsdom'),fs=require('node:fs'),assert=require('node:assert/strict');
 const tick=()=>new Promise(r=>setTimeout(r,0));
-async function fixture({foreignTab=false}={}){
+async function fixture({foreignTab=false,malformedPending=false}={}){
  const errors=[],calls=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
  const dom=new JSDOM(fs.readFileSync('index.html','utf8'),{url:'https://example.test/?login_state=fixture-state#access_token=fixture-token&expires_in=3600',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc}),w=dom.window;
  w.crypto.randomUUID=()=>require('node:crypto').randomUUID();w.AbortSignal=AbortSignal;w.AbortController=AbortController;
  w.eval(fs.readFileSync('personal-profile.js','utf8'));const a=w.StarnewsProfiles.create('Fixture A'),b=w.StarnewsProfiles.create('Fixture B');w.StarnewsProfiles.select(a.id);
  const endpoint='https://fixture.workers.dev',prefix=w.StarnewsProfiles.prefix();w.localStorage.setItem(prefix+':private:endpoint',endpoint);w.localStorage.setItem(prefix+':private:login',JSON.stringify({state:'fixture-state',email:'fixture@example.test',endpoint,profile:a.id,tab:'fixture-tab',expires:Date.now()+60000}));
- w.sessionStorage.setItem('starnews:private-tab:v1',foreignTab?'foreign-tab':'fixture-tab');let language='en',release;
+ if(malformedPending)w.localStorage.setItem(prefix+':private:login','{invalid');w.sessionStorage.setItem('starnews:private-tab:v1',foreignTab?'foreign-tab':'fixture-tab');let language='en',release;
  w.StarnewsBridge={getLocale:()=>language,getArticle:()=>({title:'Fixture report',summary:'Supplied excerpt',url:'https://example.org/report'}),getEvidenceArticle:()=>({title:'Fixture report'}),getTopics:()=>[],getArticles:()=>[]};
  w.fetch=async(url,init={})=>{calls.push({url,init});let data={ok:true};
   if(url.endsWith('/health'))data={enabled:true,auth:{url:'https://fixture.supabase.co',anonKey:'fixture-public-anon'},publicPool:false};
@@ -17,7 +17,7 @@ async function fixture({foreignTab=false}={}){
   return {ok:true,status:200,json:async()=>data};
  };
  w.eval(fs.readFileSync('personal-evidence.js','utf8'));w.eval(fs.readFileSync('personal-ai.js','utf8'));for(let i=0;i<5;i++)await tick();
- if(!foreignTab)assert.equal(w.document.querySelector('#personalAISigned').hidden,false);
+ if(!foreignTab&&!malformedPending)assert.equal(w.document.querySelector('#personalAISigned').hidden,false);
  function ask(){w.document.querySelector('#personalAIConsent').checked=true;w.document.querySelector('#personalAIQuestion').value='fixture question';w.document.querySelector('#personalAIConsent').closest('form').querySelector('button').click();}
  return {w,a,b,calls,errors,ask,release:()=>release(),language:l=>language=l,close:()=>w.close()};
 }
@@ -42,5 +42,5 @@ async function fixture({foreignTab=false}={}){
   f.release();await tick();await tick();assert.equal(f.w.document.querySelector('#personalAIAnswer').textContent,scenario==='delete-cancel'?'A-fixture-late-answer':'','Late response cannot cross personal context');
   assert.deepEqual(f.errors.filter(e=>!e.startsWith('Not implemented: navigation')),[]);f.close();console.log(scenario+' late-response isolation passed');
  }
- const wrong=await fixture({foreignTab:true});assert.equal(wrong.calls.length,0);assert.equal(wrong.w.document.querySelector('#personalAISigned').hidden,true);assert(wrong.w.localStorage.getItem(wrong.w.StarnewsProfiles.prefix()+':private:login'));assert(!wrong.w.location.href.includes('access_token'));wrong.close();console.log('foreign callback rejected without consuming owner challenge');
+ const wrong=await fixture({foreignTab:true});assert.equal(wrong.calls.length,0);assert.equal(wrong.w.document.querySelector('#personalAISigned').hidden,true);assert(wrong.w.localStorage.getItem(wrong.w.StarnewsProfiles.prefix()+':private:login'));assert(!wrong.w.location.href.includes('access_token'));wrong.close();console.log('foreign callback rejected without consuming owner challenge');const broken=await fixture({malformedPending:true});assert.equal(broken.calls.length,0);assert(!broken.w.location.href.includes('access_token'));broken.close();console.log('malformed pending state cannot retain callback token in URL');
 })().catch(e=>{console.error(e);process.exitCode=1});
