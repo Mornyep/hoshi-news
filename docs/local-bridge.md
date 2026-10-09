@@ -20,6 +20,19 @@ Stop the foreground component with Ctrl+C. No login window or model request is o
 
 Other-provider code in `bridge/adapters.mjs` contains disabled, no-credential contracts. Claude uses only an unmodified official native client route candidate, never a third-party Claude.ai OAuth token export. Grok uses the official native ACP route candidate; all filesystem/terminal/permission requests must be denied before enabling a runtime. Neither candidate is installed or authenticated by this change. Mainland providers use standard API guidance with separate key, region and billing consent; no Coding Plan or consumer-subscription token is substituted. DeepSeek/Qwen fixed-endpoint request contracts are mocked only. Yuanbao stays an official-client handoff. No other provider is advertised as connected.
 
+Other-provider implementation checked 2026-10-09:
+
+| Provider | Code available | Current blocker / next authorization |
+| --- | --- | --- |
+| Claude | Fixed unmodified native CLI contract, tools disabled, empty MCP configuration; mock only | `claude` was not found on the current PATH, so no version/help or authentication was inspected. Authorize a specific official CLI installation and native invocation first, then personally sign in through Anthropic. No third-party Claude subscription token handling. |
+| Grok | ACP initialize/authenticate/prompt contract and capability denial mocks | `grok` was not found on the current PATH. Authorize a specific official CLI installation/native invocation, then native login and verify real filesystem/terminal denial before activation. |
+| DeepSeek | Executable standard Chat Completions response adapter with injected host transport; fixed endpoint, one request, bounded output, cancellation, timeout, 401/403/429 and incomplete-response states | Not wired into the running bridge or website. Before adding a real transport, authorize this provider's standard API billing, chosen model/request budget, and a dedicated local API-key input/storage/deletion design. No key was requested or saved. |
+| Qwen | Same standard adapter and contract, requiring explicit Beijing/Singapore region | Same separate standard API authorization plus matching key region; no Coding Plan endpoints. |
+| Doubao / Kimi / Zhipu | Official API guides only | No executable adapter yet; provider-specific standard API authorization and schema validation required. |
+| Yuanbao | Official webpage/manual handoff only in Starnews | No supported native/API adapter implemented or inferred from consumer login. |
+
+`bridge/standard-api.mjs` has no fetch, credential field or storage dependency. Its injected transport is currently exercised only by synthetic mocks. It rejects arbitrary endpoints and credential fields, accepts only a complete single assistant text answer, labels facts unverified, and never retries. A mock approval is not a real account connection. Existing ChatGPT routes, pairing state and the running component are untouched by this increment.
+
 Primary references checked 2026-10-09:
 - [SIWC registration](https://developers.openai.com/siwc/token-sharing-open-source/sign-in)
 - [Account-specific model catalog and inference](https://developers.openai.com/siwc/token-sharing-open-source/models-and-inference)

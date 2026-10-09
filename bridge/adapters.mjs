@@ -1,4 +1,5 @@
-// Other providers are contracts only: no spawn, network, keys or OAuth registration.
+// Provider contracts: no spawn, network, keys or OAuth registration.
+// standard-api.mjs implements parsing/cancellation behind an injected, separately approved host transport.
 export const providers=Object.freeze({
  chatgpt:{mode:'official_siwc_loopback',enabled:true,guide:'https://developers.openai.com/siwc/token-sharing-open-source/sign-in'},
  claude:{mode:'official_native_pending_approval',enabled:false,guide:'https://code.claude.com/docs/en/legal-and-compliance'},
