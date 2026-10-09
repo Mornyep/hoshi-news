@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="星闻 BREAK">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' http://127.0.0.1:45457 https://*.workers.dev https://*.supabase.co; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://www.jma.go.jp https://www.data.jma.go.jp http://127.0.0.1:45457 https://*.workers.dev https://*.supabase.co; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'self'">
   <meta name="description" content="星闻 SIGNAL//BREAK：一屏了解重要新闻，切换观点、查看证据，掌控自己的情报节奏。">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
@@ -99,6 +99,7 @@
     <div class="more-list" id="moreList"></div>
     <div class="more-privacy">✳ 共用事实，不共用个人数据。这里没有登录、服务器收藏或个人 AI 密钥。</div>
   </section>
+  <section class="jma-events" id="jmaEvents" aria-label="JMA weather information"></section>
   <section class="brief-desk" id="briefDesk" hidden aria-labelledby="briefHeading"><h2 id="briefHeading">简讯</h2><p id="briefNotice"></p><div id="briefList"></div></section>
   <footer class="bottom-bar"><span class="bottom-title"><span>✳</span> STARNEWS / PUBLIC BETA</span><div class="bottom-center"><span class="bottom-dot"></span> <span id="bottomEdition">早间情报 · 5 条</span></div><button type="button" data-action="saved-only" id="favoritesButton" aria-pressed="false"><span>☆</span> 收藏</button></footer>
 
@@ -128,5 +129,6 @@
 <script src="./personal-config.js"></script>
 <script src="./personal-ai.js"></script>
 <script src="personal-connection.js" defer></script>
+<script src="./jma-events.js" defer></script>
 </body>
 </html>

@@ -2,7 +2,7 @@ name: Legacy Public AI Disabled — Source Tests Only
 on:
   push:
     branches: [main]
-    paths: ['scripts/**', 'tests/**', 'backend/**', 'bridge/**', 'personal-*.js', 'app.js', 'sw.js', '.github/workflows/public-ai.yml']
+    paths: ['scripts/**', 'tests/**', 'backend/**', 'bridge/**', 'personal-*.js', 'jma-events.js', 'app.js', 'sw.js', '.github/workflows/public-ai.yml']
 permissions:
   contents: read
 jobs:
@@ -31,6 +31,7 @@ jobs:
         run: |
           node tests/private-session-dom.cjs
           node tests/connection-dom.cjs
+          node tests/jma-dom.cjs
 
       - name: Official loopback bridge security — fixture identities and providers only
         run: |

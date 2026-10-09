@@ -1,7 +1,7 @@
 // Cache only public static site assets and the public editorial snapshot.
 // NEVER cache personal API responses or credentials in this service worker.
-const CACHE_NAME='starnews-public-news-v55-20261009-local-connection';
-const ASSETS=['./','./index.html','./app.js','./reading-position.js','./locales.js','./personal-evidence.js','./personal-profile.js','./personal-ai.js','./personal-connection.js','./personal-ai.css','./personal-config.js','./style.css','./seed.js','./news.json','./ai-briefs.json','./archive-stories.json','./manifest.webmanifest','./assets/icon.svg','./assets/icon-180.png'];
+const CACHE_NAME='starnews-public-news-v56-20261009-jma-weather';
+const ASSETS=['./','./index.html','./app.js','./reading-position.js','./locales.js','./personal-evidence.js','./personal-profile.js','./personal-ai.js','./personal-connection.js','./jma-events.js','./personal-ai.css','./personal-config.js','./style.css','./seed.js','./news.json','./ai-briefs.json','./archive-stories.json','./manifest.webmanifest','./assets/icon.svg','./assets/icon-180.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(ASSETS.map(asset=>new Request(asset,{cache:'reload'})))).then(()=>self.skipWaiting()));
 });
