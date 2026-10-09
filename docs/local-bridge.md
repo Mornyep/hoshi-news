@@ -41,3 +41,9 @@ Primary references checked 2026-10-09:
 - [Grok native ACP](https://docs.x.ai/build/cli/headless-scripting)
 - [DeepSeek standard API](https://api-docs.deepseek.com/)
 - [Qwen regional API keys](https://help.aliyun.com/en/model-studio/get-api-key)
+
+## Local approval troubleshooting (2026-10-09)
+
+A real Chrome native-form test reproduced the earlier `/approve` rejection before any official authorization: `Referrer-Policy: no-referrer` on the local consent document caused `Origin: null` on its form POST, while the server required the exact loopback Origin. Only the consent document now uses `same-origin`. Its same-origin POST retains the correct Origin; the subsequent authorization redirect and all other responses still use `no-referrer`. Host/loopback checks, exact Origin and one-time expiring CSRF remain mandatory; null, missing and foreign Origins are rejected. No permissive fallback was added.
+
+A GET/reload of `/approve` cannot start authorization. `approval_method_rejected`, `approval_origin_rejected` and `approval_expired` distinguish local failures without returning tokens or request parameters. After a component restart or five-minute consent expiry, return to Starnews → Personal AI → Continue with ChatGPT to obtain a fresh local consent page; do not resubmit an old `/approve` page. Native-form tests use an isolated mocked begin handler and never request official authorization. Actual OpenAI account authentication and a real model call still require the user to complete them. Local Network Access permission remains separate from this local form bug.
