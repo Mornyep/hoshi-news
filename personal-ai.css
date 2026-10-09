@@ -3,3 +3,5 @@
 .personal-ai-handoff{border:2px solid #dcff42;padding:16px;margin:16px 0;background:#fff}.personal-ai-handoff h3{margin:0}.personal-ai-handoff small,.personal-ai-handoff>a{display:block;margin-top:12px}.personal-ai-handoff form button{margin:8px 8px 8px 0}.personal-ai-handoff textarea[readonly]{min-height:220px;font-size:13px;white-space:pre-wrap}
 
 .personal-ai-fallback>summary{cursor:pointer;padding:16px 0;font-weight:800}.personal-ai-fallback{border-top:1px solid #ccc}
+
+.provider-setup{margin:16px 0;padding:16px;border:1px solid #7775}.provider-setup h4{margin:0 0 10px}.provider-setup label{display:flex;flex-direction:column;gap:6px;margin:10px 0}.provider-setup p{line-height:1.7}.provider-setup button,.provider-setup a{display:block;margin:10px 0;max-width:100%;overflow-wrap:anywhere}.provider-setup select{width:100%;min-height:42px}

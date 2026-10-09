@@ -82,7 +82,7 @@
     }),action(tr('copy'),async()=>{if(!material.value)fail('notPublished');try{await navigator.clipboard.writeText(material.value);status(tr('copied'));}catch{status(tr('manualCopy'));}}),material);
     const guide=mk('a',tr('officialGuide'));guide.href='https://developers.openai.com/siwc/token-sharing-open-source';guide.target='_blank';guide.rel='noopener noreferrer';
     const official=mk('a',tr('openOfficial'));official.id='personalAIOfficialLink';official.target='_blank';official.rel='noopener noreferrer';
-    const updateOfficial=()=>{official.href=window.StarnewsEvidence.providers.find(p=>p.id===providers.value)?.url||'https://chatgpt.com/';};providers.addEventListener('change',updateOfficial);updateOfficial();
+    const updateOfficial=()=>{official.href=window.StarnewsEvidence.providers.find(p=>p.id===providers.value)?.url||'https://chatgpt.com/';};providers.addEventListener('change',()=>{includeFocus.checked=false;model.value='';reply.value='';imported.textContent='';imported.hidden=true;material.value='';material.hidden=true;guide.href=window.StarnewsProviderSetup?.guide(providers.value)||'https://developers.openai.com/siwc/token-sharing-open-source';updateOfficial();});updateOfficial();
     const model=field(form,'personalAIHandoffModel',tr('modelLabel'));model.maxLength=80;
     const reply=field(form,'personalAIHandoffReply',tr('replyLabel'),'textarea');reply.maxLength=8000;
     const imported=mk('div');imported.id='personalAIHandoffAnswer';imported.className='personal-ai-answer';imported.hidden=true;
