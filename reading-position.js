@@ -22,6 +22,6 @@
     },
     reset(key){delete records[key];persist();},
     clear(){records={};try{localStorage.removeItem(storageKey);}catch{}},
-    temporary(value){temporary=Boolean(value);if(temporary)this.clear();}
+    temporary(value){temporary=Boolean(value)||!window.StarnewsProfiles?.active();if(temporary)this.clear();}
   };
 })();
