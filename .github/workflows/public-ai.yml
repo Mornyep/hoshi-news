@@ -28,4 +28,11 @@ jobs:
       - name: Session, language and provider isolation — fixture requests only
         env:
           NODE_PATH: ${{ runner.temp }}/starnews-dom/node_modules
-        run: node tests/private-session-dom.cjs
+        run: |
+          node tests/private-session-dom.cjs
+          node tests/connection-dom.cjs
+
+      - name: Official loopback bridge security — fixture identities and providers only
+        run: |
+          npm ci --prefix bridge --ignore-scripts --no-audit --no-fund
+          node --test bridge/tests/*.mjs

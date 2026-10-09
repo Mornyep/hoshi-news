@@ -59,3 +59,8 @@ Backend tests require Node 24 and mock authentication and model networks. `tests
 
 
 To delete a local profile completely, use the Personal AI panel and confirm deletion. This removes only that profile’s name, focus, settings, bookmarks, reading positions, service URL and pending sign-in. Cancel leaves it intact. Other profiles, public caches and remote accounts remain. If the optional private service is enabled later, open its email sign-in link in the original tab that started sign-in.
+
+
+The first automatic route is official ChatGPT authorization on the same Mac: Personal AI → ChatGPT → Continue with ChatGPT → local consent → official sign-in. Credentials stay in dedicated local storage. Sign-in runs no model. One bounded test may be triggered by the user; other providers are not enabled. Phones cannot reach this desktop component. Browser local-network permission may be required. Manual handoff is a fallback.
+
+[Local connection details](local-bridge.md)

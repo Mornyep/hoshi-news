@@ -24,3 +24,6 @@ Local profiles are not authenticated or password-protected accounts. Other peopl
 Subscriptions are not automatically connected. STARNEWS does not read chats or consume a membership allowance. The private backend is undeployed; cross-device sync and nearby disaster notifications are unavailable. Public AI generation has stopped, while historical data keeps its dates.
 
 GitHub Pages publishes the root of `main` without a frontend build. See the [complete guide](docs/guide.en.md) for setup, development checks, deletion and copyright. Media and trademarks belong to their owners. AI summaries may be wrong; linked sources remain essential. The [4.7 technical record](docs/release-4.7.md) is historical.
+
+
+The first automatic route is a prepared local ChatGPT component using official authorization. The user must complete sign-in; readiness does not mean an account is connected. Other providers remain disabled, and manual handoff is a fallback. See [local connection](docs/local-bridge.md).

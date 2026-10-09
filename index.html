@@ -7,14 +7,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="星闻 BREAK">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://*.workers.dev https://*.supabase.co; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' http://127.0.0.1:45457 https://*.workers.dev https://*.supabase.co; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'self'">
   <meta name="description" content="星闻 SIGNAL//BREAK：一屏了解重要新闻，切换观点、查看证据，掌控自己的情报节奏。">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./assets/icon-180.png">
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./personal-ai.css">
-  <title>星闻 // BREAK · 公共个性化新闻</title>
+  <title>星闻 // BREAK · 个人 AI 新闻</title>
 </head>
 <body>
 <div id="app" class="app" data-tone="lime" data-motion="on" data-edition="morning">
@@ -127,5 +127,6 @@
 <script src="./app.js"></script>
 <script src="./personal-config.js"></script>
 <script src="./personal-ai.js"></script>
+<script src="personal-connection.js" defer></script>
 </body>
 </html>
