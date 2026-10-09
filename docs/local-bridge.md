@@ -65,3 +65,5 @@ The second reported failure was reproduced in the actual user Chrome profile: th
 Opening an unconfigured Personal AI dialog also left a misleading “Working…” label after its action had already finished. Its no-service path now settles to the unconfigured status. This was a display-state bug, not evidence of a running OAuth/model request. The dedicated component's host/origin/CSRF checks and the earlier consent referrer-policy fix remain unchanged.
 
 本机确认票据只有效五分钟。过期或重复提交会显示恢复页；已知票据可重新打开原 profile/tab 的确认页，未知票据或刷新 `/approve` 则返回固定星闻地址重新发起。恢复仅打开确认页，不自动批准或启动 OAuth。五分钟期限、一次使用、Origin/Host/CSRF 检查仍保留。
+
+确认表单提交不再用 303 直接跳转官方域名：Chrome 会沿表单重定向检查 `form-action`，先消费票据却阻止导航。现在返回“本机确认已通过”页面，用户再点击普通链接前往固定 `https://auth.openai.com` 登录；链接中的 OAuth 状态有效十分钟。仍保留 `form-action self`、Origin/Host/CSRF 校验，无自动批准、无模型调用。失败显示 confirmation_timeout / confirmation_unavailable / confirmation_invalid，避免统称过期。真实 Chrome 合成夹具已复现旧提交后不导航、再次点击票据不可用，以及修复后的确认成功页。
