@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 import {createWorker,quota,seal} from '../worker.mjs';
 const A='aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',B='bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb';
 class D1 {
- constructor(){this.db=new DatabaseSync(':memory:');this.db.exec(readFileSync(new URL('../migrations/0001_private.sql',import.meta.url),'utf8'));}
+ constructor(){this.db=new DatabaseSync(':memory:');this.db.exec(readFileSync(new URL('../migrations/0001_private.sql',import.meta.url),'utf8'));this.db.exec(readFileSync(new URL('../migrations/0002_history_context.sql',import.meta.url),'utf8'));}
  prepare(sql){const db=this.db;let args=[];return {bind(...v){args=v;return this;},async first(){return db.prepare(sql).get(...args)||null;},async all(){return {results:db.prepare(sql).all(...args)};},async run(){return db.prepare(sql).run(...args);}};}
  async batch(statements){this.db.exec('BEGIN');try{const result=[];for(const s of statements)result.push(await s.run());this.db.exec('COMMIT');return result;}catch(e){this.db.exec('ROLLBACK');throw e;}}
 }
@@ -90,7 +90,7 @@ test('large/malformed input rejected and API rate ceiling enforced',async()=>{
  for(let i=0;i<29;i++)await f.req('/preferences');assert.equal((await f.req('/preferences')).status,429);
 });
 test('scheduled retention removes old history and quotas',async()=>{
- const f=fixture();f.db.db.prepare('INSERT INTO history VALUES(?,?,?,?,?)').run('old',A,'user','old message',1);
+ const f=fixture();f.db.db.prepare('INSERT INTO history(id,user_id,role,content,created_at) VALUES(?,?,?,?,?)').run('old',A,'user','old message',1);
  await quota(f.db,'api:'+A,'minute:1',2);await quota(f.db,'chat:'+A,'day:2020-01-01',2);
  await f.worker.scheduled({},f.env);assert.equal(f.db.db.prepare('SELECT count(*) AS n FROM history').get().n,0);assert.equal(f.db.db.prepare('SELECT count(*) AS n FROM quotas').get().n,0);
 });
@@ -111,4 +111,12 @@ test('Gemini uses fixed endpoint/header and no query key; provider exceptions re
  const result=await (await f.req('/chat','POST',{provider:'gemini',message:'Question',language:'ja'})).json();assert.equal(result.answer,'Gemini answer');
  assert.equal(f.calls[0].url,'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent');assert.equal(f.calls[0].init.headers['x-goog-api-key'],'gemini-private-key');assert.ok(!f.calls[0].url.includes('key='));
  f.setUpstream(async()=>{throw new Error('gemini-private-key debug');});const r=await f.req('/chat','POST',{provider:'gemini',message:'Question'});assert.equal(r.status,502);assert.equal(await r.text(),'{"error":"provider_unavailable"}');
+});
+
+test('history context excludes other languages, providers, models and unscoped legacy rows',async()=>{
+ const f=fixture();await f.req('/keys/groq','PUT',{key:'fixture-groq-key'});await f.req('/keys/openai','PUT',{key:'fixture-openai-key'});
+ f.db.db.prepare('INSERT INTO history(id,user_id,role,content,created_at) VALUES(?,?,?,?,?)').run('legacy',A,'user','legacy secret',1);
+ for(const [provider,language,message] of [['groq','en','EN marker'],['groq','ja','JA marker'],['openai','en','OpenAI marker'],['groq','en','EN second']])assert.equal((await f.req('/chat','POST',{provider,language,message})).status,200);
+ const final=JSON.parse(f.calls.at(-1).init.body);assert(final.messages.some(m=>m.content==='EN marker'));for(const forbidden of ['JA marker','OpenAI marker','legacy secret'])assert(!final.messages.some(m=>m.content===forbidden));
+ const rows=(await (await f.req('/history')).json()).history;assert(rows.some(r=>r.language==='ja'&&r.provider==='groq'&&r.model));assert(rows.some(r=>r.id==='legacy'&&r.language===''));
 });

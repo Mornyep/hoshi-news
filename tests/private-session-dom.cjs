@@ -1,13 +1,13 @@
 // Optional private-service UI; all identities, credentials and network are fixtures.
 const {JSDOM,VirtualConsole}=require('jsdom'),fs=require('node:fs'),assert=require('node:assert/strict');
 const tick=()=>new Promise(r=>setTimeout(r,0));
-async function fixture(){
+async function fixture({foreignTab=false}={}){
  const errors=[],calls=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
  const dom=new JSDOM(fs.readFileSync('index.html','utf8'),{url:'https://example.test/?login_state=fixture-state#access_token=fixture-token&expires_in=3600',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc}),w=dom.window;
  w.crypto.randomUUID=()=>require('node:crypto').randomUUID();w.AbortSignal=AbortSignal;w.AbortController=AbortController;
  w.eval(fs.readFileSync('personal-profile.js','utf8'));const a=w.StarnewsProfiles.create('Fixture A'),b=w.StarnewsProfiles.create('Fixture B');w.StarnewsProfiles.select(a.id);
- const endpoint='https://fixture.workers.dev',prefix=w.StarnewsProfiles.prefix();w.localStorage.setItem(prefix+':private:endpoint',endpoint);w.localStorage.setItem(prefix+':private:login',JSON.stringify({state:'fixture-state',email:'fixture@example.test',endpoint,expires:Date.now()+60000}));
- let language='en',release;
+ const endpoint='https://fixture.workers.dev',prefix=w.StarnewsProfiles.prefix();w.localStorage.setItem(prefix+':private:endpoint',endpoint);w.localStorage.setItem(prefix+':private:login',JSON.stringify({state:'fixture-state',email:'fixture@example.test',endpoint,profile:a.id,tab:'fixture-tab',expires:Date.now()+60000}));
+ w.sessionStorage.setItem('starnews:private-tab:v1',foreignTab?'foreign-tab':'fixture-tab');let language='en',release;
  w.StarnewsBridge={getLocale:()=>language,getArticle:()=>({title:'Fixture report',summary:'Supplied excerpt',url:'https://example.org/report'}),getEvidenceArticle:()=>({title:'Fixture report'}),getTopics:()=>[],getArticles:()=>[]};
  w.fetch=async(url,init={})=>{calls.push({url,init});let data={ok:true};
   if(url.endsWith('/health'))data={enabled:true,auth:{url:'https://fixture.supabase.co',anonKey:'fixture-public-anon'},publicPool:false};
@@ -17,13 +17,15 @@ async function fixture(){
   return {ok:true,status:200,json:async()=>data};
  };
  w.eval(fs.readFileSync('personal-evidence.js','utf8'));w.eval(fs.readFileSync('personal-ai.js','utf8'));for(let i=0;i<5;i++)await tick();
- assert.equal(w.document.querySelector('#personalAISigned').hidden,false);
+ if(!foreignTab)assert.equal(w.document.querySelector('#personalAISigned').hidden,false);
  function ask(){w.document.querySelector('#personalAIConsent').checked=true;w.document.querySelector('#personalAIQuestion').value='fixture question';w.document.querySelector('#personalAIConsent').closest('form').querySelector('button').click();}
  return {w,a,b,calls,errors,ask,release:()=>release(),language:l=>language=l,close:()=>w.close()};
 }
 (async()=>{
- for(const scenario of ['logout','profile-switch','profile-exit','language-change','provider-change']){
+ for(const scenario of ['logout','profile-switch','profile-exit','language-change','provider-change','delete-cancel','delete-current','delete-other-tab']){
   const f=await fixture();f.ask();await tick();const call=f.calls.find(x=>x.url.endsWith('/chat'));assert(call);assert.equal(call.init.cache,'no-store');assert.equal(call.init.credentials,'omit');assert.equal(call.init.redirect,'error');
+  if(scenario==='delete-cancel'||scenario==='delete-current'){f.w.confirm=()=>scenario==='delete-current';const before=f.w.localStorage.getItem('starnews:profiles:v1');Array.from(f.w.document.querySelector('#personalProfileSelect').closest('form').querySelectorAll('button')).find(b=>b.textContent==='Delete this local profile completely').click();await tick();if(scenario==='delete-cancel'){assert.equal(f.w.localStorage.getItem('starnews:profiles:v1'),before);assert.equal(call.init.signal.aborted,false);}else {assert.equal(f.w.StarnewsProfiles.active(),null);assert.equal(f.w.StarnewsProfiles.list().length,1);assert.equal(f.w.StarnewsProfiles.list()[0].id,f.b.id);}}
+  if(scenario==='delete-other-tab'){f.w.StarnewsProfiles.remove(f.a.id);f.w.dispatchEvent(new f.w.StorageEvent('storage',{key:'starnews:profiles:v1'}));}
   if(scenario==='logout')f.w.document.querySelector('#personalAISigned').querySelector('button').click();
   if(scenario==='profile-switch'||scenario==='profile-exit'){
    if(scenario==='profile-switch')f.w.document.querySelector('#personalProfileSelect').value=f.b.id;
@@ -32,12 +34,13 @@ async function fixture(){
   if(scenario==='language-change'){f.language('ja');f.w.dispatchEvent(new f.w.Event('starnews:locale'));}
   if(scenario==='provider-change')f.w.document.querySelector('#personalAIProvider').value='gemini';
   await tick();
-  if(['logout','profile-switch','profile-exit'].includes(scenario)){
+  if(['logout','profile-switch','profile-exit','delete-current','delete-other-tab'].includes(scenario)){
    assert.equal(f.w.document.querySelector('#personalAISigned').hidden,true,'Exit must work during a pending request');assert.equal(call.init.signal.aborted,true);
   }
   if(scenario==='profile-switch')assert.equal(f.w.StarnewsProfiles.active().id,f.b.id);
   if(scenario==='profile-exit')assert.equal(f.w.StarnewsProfiles.active(),null);
-  f.release();await tick();await tick();assert.equal(f.w.document.querySelector('#personalAIAnswer').textContent,'','Late response cannot cross personal context');
+  f.release();await tick();await tick();assert.equal(f.w.document.querySelector('#personalAIAnswer').textContent,scenario==='delete-cancel'?'A-fixture-late-answer':'','Late response cannot cross personal context');
   assert.deepEqual(f.errors.filter(e=>!e.startsWith('Not implemented: navigation')),[]);f.close();console.log(scenario+' late-response isolation passed');
  }
+ const wrong=await fixture({foreignTab:true});assert.equal(wrong.calls.length,0);assert.equal(wrong.w.document.querySelector('#personalAISigned').hidden,true);assert(wrong.w.localStorage.getItem(wrong.w.StarnewsProfiles.prefix()+':private:login'));assert(!wrong.w.location.href.includes('access_token'));wrong.close();console.log('foreign callback rejected without consuming owner challenge');
 })().catch(e=>{console.error(e);process.exitCode=1});

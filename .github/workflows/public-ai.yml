@@ -2,7 +2,7 @@ name: Legacy Public AI Disabled — Source Tests Only
 on:
   push:
     branches: [main]
-    paths: ['scripts/**', 'tests/**', 'backend/**', 'personal-*.js', 'app.js', 'sw.js', '.github/workflows/public-ai.yml']
+    paths: ['scripts/**', 'tests/**', 'backend/**', 'bridge/**', 'personal-*.js', 'app.js', 'sw.js', '.github/workflows/public-ai.yml']
 permissions:
   contents: read
 jobs:
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '24'
       - name: Personal boundaries and backend isolation — mocked providers only
-        run: node --test tests/personal-boundaries.cjs backend/tests/private.test.mjs
+        run: node --test tests/personal-boundaries.cjs tests/bridge-pairing.mjs backend/tests/private.test.mjs
 # Public AI retired by product direction. No schedule, dispatch, provider secrets,
 # model calls, data commits, or write permission. Pages deployment is unchanged.
       - name: Install DOM fixture dependency

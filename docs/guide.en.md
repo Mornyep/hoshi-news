@@ -56,3 +56,6 @@ Backend tests require Node 24 and mock authentication and model networks. `tests
 2026-10-09: retired public inference; introduced personal requirements, manual official AI handoff, local profiles, bounded presentation JSON and archive offline/error labels. Kept historical data and Pages. Documentation now covers five languages.
 
 2026-10-08: the historical release added four-language evidence labels, source associations, article archives and reading positions. Earlier public generation and allowance instructions are superseded by retirement. The [technical record](release-4.7.md) remains historical.
+
+
+To delete a local profile completely, use the Personal AI panel and confirm deletion. This removes only that profile’s name, focus, settings, bookmarks, reading positions, service URL and pending sign-in. Cancel leaves it intact. Other profiles, public caches and remote accounts remain. If the optional private service is enabled later, open its email sign-in link in the original tab that started sign-in.

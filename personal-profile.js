@@ -12,5 +12,6 @@
   function focus(value){const key=prefix();if(!key)throw new Error('Choose a local profile');if(value===undefined)return String(read(key+':focus')||'');store.setItem(key+':focus',JSON.stringify(String(value).slice(0,2000)));}
   function exit(){session.removeItem(ACTIVE);}
   function importLegacy(){const key=prefix();if(!key)throw new Error('Choose a local profile');const old=read('starnews:guest:v4.3');if(old?.version===43)store.setItem(key+':preferences',JSON.stringify(old));}
-  return Object.freeze({list,active,prefix,create,select,exit,focus,importLegacy});
+  function remove(id){if(!list().some(p=>p.id===id))throw new Error('Unknown local profile');const scope='starnews:profile:'+id+':';const keys=[];for(let i=0;i<store.length;i++){const key=store.key(i);if(key?.startsWith(scope))keys.push(key);}for(const key of keys)store.removeItem(key);store.setItem(INDEX,JSON.stringify(list().filter(p=>p.id!==id)));if(active()?.id===id||session.getItem(ACTIVE)===id)exit();}
+  return Object.freeze({list,active,prefix,create,select,exit,focus,importLegacy,remove});
 });

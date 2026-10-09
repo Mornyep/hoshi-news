@@ -113,7 +113,7 @@ export function createWorker(fetcher=fetch) { return {async fetch(request,env) {
       if(method==='PUT'){const body=await boundedJSON(request,4096);only(body,['key']);const key=textField(body.key,512,true);if(key.length<10||/\s/.test(key))fail(400,'invalid_key');await stmt(db,'INSERT INTO keys(user_id,provider,cipher) VALUES(?,?,?) ON CONFLICT(user_id,provider) DO UPDATE SET cipher=excluded.cipher',user,keyMatch[1],await seal(env,user,keyMatch[1],key)).run();}
       else await stmt(db,'DELETE FROM keys WHERE user_id=? AND provider=?',user,keyMatch[1]).run();return respond({ok:true});
     }
-    if(path==='/history'&&method==='GET') { const rows=await stmt(db,'SELECT id,role,content,created_at AS createdAt FROM history WHERE user_id=? ORDER BY created_at DESC,id DESC LIMIT 100',user).all();return respond({history:rows.results.reverse()}); }
+    if(path==='/history'&&method==='GET') { const rows=await stmt(db,'SELECT id,role,content,language,provider,model,created_at AS createdAt FROM history WHERE user_id=? ORDER BY created_at DESC,id DESC LIMIT 100',user).all();return respond({history:rows.results.reverse()}); }
     if(path==='/history'&&method==='DELETE'){await stmt(db,'DELETE FROM history WHERE user_id=?',user).run();return respond({ok:true});}
     if(path==='/account'&&method==='DELETE') {
       // Quotas retained until scheduled expiry to prevent delete/recreate quota evasion.
@@ -139,11 +139,11 @@ export function createWorker(fetcher=fetch) { return {async fetch(request,env) {
       const day=`day:${new Date(now).toISOString().slice(0,10)}`;
       await quota(db,`chat:${user}`,day,stored?30:5);
       if(!stored)await quota(db,'pool:global',day,100);
-      const prior=await stmt(db,'SELECT role,content FROM history WHERE user_id=? ORDER BY created_at DESC,id DESC LIMIT 6',user).all();
+      const prior=await stmt(db,'SELECT role,content FROM history WHERE user_id=? AND language=? AND provider=? AND model=? ORDER BY created_at DESC,id DESC LIMIT 6',user,body.language||'en',body.provider,PROVIDERS[body.provider].model).all();
       const answer=await providerAnswer(env,fetcher,body.provider,key,body,prefs,prior.results.reverse());
       await db.batch([
-        stmt(db,'INSERT INTO history(id,user_id,role,content,created_at) VALUES(?,?,?,?,?)',crypto.randomUUID(),user,'user',body.message,now),
-        stmt(db,'INSERT INTO history(id,user_id,role,content,created_at) VALUES(?,?,?,?,?)',crypto.randomUUID(),user,'assistant',answer,now+1),
+        stmt(db,'INSERT INTO history(id,user_id,role,content,created_at,language,provider,model) VALUES(?,?,?,?,?,?,?,?)',crypto.randomUUID(),user,'user',body.message,now,body.language||'en',body.provider,PROVIDERS[body.provider].model),
+        stmt(db,'INSERT INTO history(id,user_id,role,content,created_at,language,provider,model) VALUES(?,?,?,?,?,?,?,?)',crypto.randomUUID(),user,'assistant',answer,now+1,body.language||'en',body.provider,PROVIDERS[body.provider].model),
         stmt(db,'DELETE FROM history WHERE user_id=? AND id NOT IN (SELECT id FROM history WHERE user_id=? ORDER BY created_at DESC,id DESC LIMIT 100)',user,user)
       ]);
       return respond({answer,provider:body.provider,model:PROVIDERS[body.provider].model});

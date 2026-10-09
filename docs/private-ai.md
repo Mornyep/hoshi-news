@@ -87,3 +87,6 @@
 - Gemini [Pricing](https://ai.google.dev/gemini-api/docs/pricing)、[Generate content](https://ai.google.dev/api/generate-content)：免费/付费条款与模型可用性以账号及当前页面为准。
 - OpenRouter [Chat API](https://openrouter.ai/docs/api/api-reference/chat/send-chat-completion-request)：固定 endpoint；本候选默认模型不承诺免费。
 - OpenAI [Chat API](https://platform.openai.com/docs/api-reference/chat/create)：标准 chat completion 接口，实际调用按账户定价。
+
+
+Apply both migrations before enabling the optional backend, including `backend/migrations/0002_history_context.sql`. Verified owner, language, provider and fixed model isolate chat context. Legacy unscoped rows remain exportable and are excluded from new prompts and contextual history. Email callbacks require the original tab and local profile. This update does not deploy or enable the service.

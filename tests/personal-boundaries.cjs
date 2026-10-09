@@ -1,6 +1,6 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const evidence=require('../personal-evidence.js'),profilesFactory=require('../personal-profile.js');
-const store=()=>{const map=new Map();return {getItem:k=>map.get(k)||null,setItem:(k,v)=>map.set(k,v),removeItem:k=>map.delete(k),map};};
+const store=()=>{const map=new Map();return {getItem:k=>map.get(k)||null,setItem:(k,v)=>map.set(k,v),removeItem:k=>map.delete(k),get length(){return map.size},key:i=>[...map.keys()][i]||null,map};};
 test('local profiles require explicit entry and isolate focus and settings',()=>{
  const disk=store(),session=store(),p=profilesFactory(disk,session,require('node:crypto'));
  disk.setItem('starnews:guest:v4.3',JSON.stringify({version:43,saved:['old']}));
@@ -46,3 +46,5 @@ test('untrusted JSON and source links cannot introduce executable content',()=>{
  assert(match);const check=vm.runInNewContext('('+match[0]+')',{URL});
  for(const source of story.sources.slice(0,3))assert.equal(check(source.url),null);assert.equal(check(story.sources[3].url),'https://example.org/source');
 });
+
+test('complete local deletion removes exact owner namespace and leaves other profiles and public data',()=>{const disk=store(),session=store(),p=profilesFactory(disk,session,require('node:crypto'));const a=p.create('A');p.focus('A');const prefix=p.prefix();for(const suffix of ['preferences','reading','private:endpoint','private:login'])disk.setItem(prefix+':'+suffix,'fixture');const b=p.create('B');p.focus('B');p.select(a.id);disk.setItem('starnews:guest:v4.3','legacy');p.remove(a.id);assert.equal(p.active(),null);assert.equal(p.list().length,1);assert.equal(p.list()[0].id,b.id);assert(![...disk.map.keys()].some(k=>k.startsWith(prefix+':')));p.select(b.id);assert.equal(p.focus(),'B');assert.equal(disk.getItem('starnews:guest:v4.3'),'legacy');assert.throws(()=>p.remove(a.id));});
