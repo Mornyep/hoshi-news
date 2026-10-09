@@ -1,1 +1,1 @@
-{"name":"starnews-local-bridge","version":"0.1.0","private":true,"type":"module","engines":{"node":">=24"},"dependencies":{"jose":"6.2.12"},"scripts":{"start":"node server.mjs","test":"node --test tests/*.mjs"}}
+{"name":"starnews-local-bridge","version":"0.1.0","private":true,"type":"module","engines":{"node":">=24"},"dependencies":{"jose":"6.2.12"},"scripts":{"start":"node server.mjs","start:local":"node start-local.mjs","test":"node --test tests/*.mjs"}}

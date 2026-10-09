@@ -14,7 +14,7 @@ const tick=()=>new Promise(r=>setTimeout(r,0));
  assert.equal(w.document.querySelector('#hero').hidden,true);assert.equal(w.document.querySelector('#onboardingOverlay').hidden,true);
  assert.equal(w.StarnewsBridge.getArticle(),null);assert.equal(w.StarnewsBridge.getEvidenceArticle(),null);
  assert.equal(w.document.documentElement.lang,language);assert(!calls.some(x=>/chat|health|api|public-status/.test(x)));
- w.document.querySelector('#personalHomeButton').click();await tick();assert.equal(w.document.querySelector('#personalAIOverlay').hidden,false);
+ w.document.querySelector('#personalHomeButton').click();await tick();assert.equal(w.document.querySelector('#personalAIOverlay').hidden,false);assert(!/正在处理|處理中|処理中|Working/.test(w.document.querySelector('#personalAIStatus').textContent),'Opening an unconfigured dialog must settle instead of showing work in progress');
  w.document.querySelector('#personalAIHandoffQuestion').value='Recent science news with verified links';
  const prepare=w.document.querySelector('#personalAIHandoffMaterial').parentElement.querySelector('button');prepare.click();await tick();
  const packet=w.document.querySelector('#personalAIHandoffMaterial').value;assert(packet.includes('personal_research_request'));assert(packet.includes('"response_language": "'+language+'"'));
