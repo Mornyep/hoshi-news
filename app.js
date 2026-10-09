@@ -288,7 +288,7 @@
   }
   function getItems(){return (editionItems||data.items).map(localizeItem);}
   function item(){return getItems()[state.index];}
-  function validUrl(url){try{const u=new URL(url);return u.protocol==='https:'?u.href:null;}catch(e){return null}}
+  function validUrl(url){try{const u=new URL(url);return u.protocol==='https:'&&!u.username&&!u.password?u.href:null;}catch(e){return null}}
   function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('show');clearTimeout(state.toastTimer);state.toastTimer=setTimeout(()=>el.classList.remove('show'),1900);}
   function label(index){const s=getItems()[index];return s?.categoryLabel||'新闻';}
   function indices(){

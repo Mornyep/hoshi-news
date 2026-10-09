@@ -2,7 +2,7 @@ name: Legacy Public AI Disabled — Source Tests Only
 on:
   push:
     branches: [main]
-    paths: ['scripts/**', 'tests/**', '.github/workflows/public-ai.yml']
+    paths: ['scripts/**', 'tests/**', 'backend/**', 'personal-*.js', 'app.js', 'sw.js', '.github/workflows/public-ai.yml']
 permissions:
   contents: read
 jobs:
@@ -23,3 +23,9 @@ jobs:
         run: node --test tests/personal-boundaries.cjs backend/tests/private.test.mjs
 # Public AI retired by product direction. No schedule, dispatch, provider secrets,
 # model calls, data commits, or write permission. Pages deployment is unchanged.
+      - name: Install DOM fixture dependency
+        run: npm install --prefix "$RUNNER_TEMP/starnews-dom" --no-save --ignore-scripts jsdom@26.1.0
+      - name: Session, language and provider isolation — fixture requests only
+        env:
+          NODE_PATH: ${{ runner.temp }}/starnews-dom/node_modules
+        run: node tests/private-session-dom.cjs

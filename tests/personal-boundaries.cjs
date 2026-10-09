@@ -37,3 +37,12 @@ test('automation has no public models, cron, credentials or writes',()=>{
  for(const disallowed of ['schedule:','workflow_dispatch:','secrets.','contents: write','publication_status.py','public_ai.py'])assert(!workflow.includes(disallowed));
  assert(workflow.includes('unittest'));assert(!fs.readFileSync('backend/worker.mjs','utf8').includes('key=env.PUBLIC_POOL_KEY'));
 });
+
+test('untrusted JSON and source links cannot introduce executable content',()=>{
+ const story={title:'Safe title',summary:'Safe summary',sources:[{url:'javascript:alert(1)'},{url:'data:text/html,bad'},{url:'https://trusted.example@evil.example/path'},{url:'https://example.org/source'}]};
+ assert.deepEqual(evidence.packet(story).report.sources.map(s=>s.url),['https://example.org/source']);
+ for(const value of [JSON.parse('{"tone":"lime","highlights":[],"__proto__":{}}'),{tone:'lime',highlights:[{}]},{tone:'lime',highlights:['x'.repeat(81)]},{tone:'lime',highlights:[],html:'<img src=x onerror=alert(1)>'},{tone:'lime',highlights:[],sources:['https://evil.example']}])assert.throws(()=>evidence.presentation(value,story));
+ const fs=require('node:fs'),vm=require('node:vm'),match=fs.readFileSync('app.js','utf8').match(/function validUrl\(url\)\{.*?\}catch\(e\)\{return null\}\}/);
+ assert(match);const check=vm.runInNewContext('('+match[0]+')',{URL});
+ for(const source of story.sources.slice(0,3))assert.equal(check(source.url),null);assert.equal(check(story.sources[3].url),'https://example.org/source');
+});
