@@ -1,3 +1,5 @@
+[简体中文](guide.zh-CN.md) · [繁體中文](guide.zh-TW.md) · [English](guide.en.md) · [日本語](guide.ja.md) · [한국어](guide.ko.md)
+
 # Personal news transition — 2026-10-09
 
 The existing Pages site now opens a personal reading setup. Broad category selection and public morning/noon/evening AI editions are retired. Historical reports retain their original dates, source URLs and original-language warnings. No historical item is relabelled as today's personal news.

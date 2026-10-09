@@ -1,3 +1,5 @@
+[简体中文](guide.zh-CN.md) · [繁體中文](guide.zh-TW.md) · [English](guide.en.md) · [日本語](guide.ja.md) · [한국어](guide.ko.md)
+
 > 2026-10-09：公共 AI 已停用，共享额度分支已删除。以下为未部署的私人服务说明；本站当前提供手动官方 AI 和本机 profile。参见 [迁移边界](personal-transition.md)。
 
 # 私人 AI 后端：部署与隐私
@@ -9,7 +11,7 @@
 - 浏览器登录 Supabase 后，携带 `Authorization: Bearer <access_token>` 调用 Worker。Worker 每次调用 Supabase `/auth/v1/user` 验证 token，要求已验证邮箱并拒绝匿名用户；不信任本地解析 token 得到的用户信息。
 - 所有 D1 查询使用验证后的用户 ID。请求中的 `userId`、`user_id`、`owner`、`subject` 和 query 参数一律拒绝。没有管理员跨用户查询 API。
 - BYOK 只允许一次写入/删除，不提供原始读取接口。服务端用 32 字节 AES-GCM 密钥加密，随机 12 字节 nonce，将用户 ID + 提供商绑定为认证数据。数据库密文被复制到另一用户也无法解密。
-- `KEY_ENCRYPTION_SECRET`  必须保存在 Worker secrets，绝不能放入 Pages、Git、前端 localStorage 或响应。用户输入自己的 key 时浏览器必然短暂持有该 key，前端应立即清空输入，不持久保存。本站不是端到端加密：受授权的服务器运营者具有解密能力。
+- `KEY_ENCRYPTION_SECRET` 必须保存在 Worker secrets，绝不能放入 Pages、Git、前端 localStorage 或响应。用户输入自己的 key 时浏览器必然短暂持有该 key，前端应立即清空输入，不持久保存。本站不是端到端加密：受授权的服务器运营者具有解密能力。
 - Groq / Gemini / OpenRouter / OpenAI 是固定 HTTPS 端点与固定模型。拒绝任意端点、任意模型和 redirect；不抓取客户端 URL，不提供工具执行，防止 SSRF 与高价模型滥用。输入源 URL 仅作为模型引用材料。
 - 源文、用户显式记忆和问题均属不可信材料。用户记忆放在 user message，不放进 system 指令。模型无数据库、身份切换、外部请求或密钥访问工具。提示词限制不能保证模型事实正确；回答必须供用户核查。
 - 不透传提供商错误、响应 headers 或调试 payload；返回固定错误码。成功回复额外清除当前 key 的字面值和 URL 编码值。服务端代码不打印认证、密钥、问答或个人记忆日志。
@@ -73,7 +75,7 @@
 
 ## 已运行检查与待验收
 
-`node --test backend/tests/private.test.mjs` 使用 Node 24 自带 SQLite 执行真实迁移和 SQL，D1 适配层模拟 API；Auth 和模型网络是 mock。覆盖跨用户读写删除、推荐、密文 AAD、伪造身份、错误脱敏、固定端点、并发、每日窗口、公共池额度、请求大小、无缓存、未配置默认关闭与保留清理。
+`node --test backend/tests/private.test.mjs` 使用 Node 24 自带 SQLite 执行真实迁移和 SQL，D1 适配层模拟 API；Auth 和模型网络是 mock。覆盖跨用户读写删除、推荐、密文 AAD、伪造身份、错误脱敏、固定端点、并发、每日窗口、公共池停用、请求大小、无缓存、未配置默认关闭与保留清理。
 
 没有做真实 Cloudflare/D1 部署、Supabase 邮件登录、真实 provider key、实际模型账单、生产流量/地理数据位置或跨浏览器验证。部署后还需验证 D1 远端事务/限流、邮件投递、CSP、真实账户隔离、提供商当前模型可用性与取消/超时。离线通过不代表生产安全审计完成。
 

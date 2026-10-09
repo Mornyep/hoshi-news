@@ -1,9 +1,9 @@
-# 公共新闻与私人服务的边界
+[简体中文](guide.zh-CN.md) · [繁體中文](guide.zh-TW.md) · [English](guide.en.md) · [日本語](guide.ja.md) · [한국어](guide.ko.md)
 
-公共新闻、公共翻译和档案是所有人的只读内容。GitHub Actions 只接收固定发布者资料，不接收访客偏好、历史或身份。
+# Local profiles and private accounts
 
-游客设置继续只在本机，且同浏览器资料并不是独立账户。4.7 增加可选 Worker + D1 + Supabase Auth 私人服务：代码和本地隔离测试已实现，生产服务是否启用取决于部署与真实验证。
+The public Pages site serves read-only historical evidence and the personal AI handoff interface. Public model generation is retired. Personal requirements and replies never enter the repository, public archives or source-test workflow.
 
-配置、身份验证、加密 BYOK、速率限制、删除范围、外部 AI 数据政策和部署步骤统一维护在 [私人服务文档](private-ai.md)。实现与验证边界见 [4.7 实施记录](release-4.7.md)。
+Local profiles use separate storage keys for requirements, settings, bookmarks and reading position. They have no authentication or password protection. Switching or exiting clears the page session while saved local records remain. Shared devices need separate browser profiles.
 
-不要将本地单元测试、模拟登录和静态站发布描述为已验证生产多用户安全。部署前必须配置认证邮箱/反滥用规则、D1 与加密 Secret，并用两个真实账户检查互相访问、登出、删除与模型请求。
+The optional Worker/D1/Supabase backend is undeployed. Its candidate code verifies identity and authorizes records by owner, encrypts user keys, rejects shared model fallback and returns private no-store responses. Mock tests do not establish production isolation. Configuration and genuine two-account acceptance remain necessary before enabling a service. Exact routes and deployment details remain in the [technical appendix](private-ai.md).
