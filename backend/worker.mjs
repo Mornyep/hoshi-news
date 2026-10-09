@@ -90,7 +90,7 @@ export function createWorker(fetcher=fetch) { return {async fetch(request,env) {
     if(origin && origin!==env.ALLOWED_ORIGIN)fail(403,'origin_rejected');
     if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{...headers,'Access-Control-Allow-Methods':'GET, PUT, POST, DELETE, OPTIONS','Access-Control-Allow-Headers':'Authorization, Content-Type','Access-Control-Max-Age':'600'}});
     const url=new URL(request.url),path=url.pathname.replace(/\/$/,'')||'/';
-    if(path==='/health'&&request.method==='GET')return respond(validConfig(env)?{enabled:true,auth:{url:env.SUPABASE_URL,anonKey:env.SUPABASE_ANON_KEY},providers:Object.keys(PROVIDERS),models:Object.fromEntries(Object.entries(PROVIDERS).map(([k,v])=>[k,v.model])),publicPool:env.PUBLIC_POOL_ENABLED==='true'&&!!env.PUBLIC_POOL_KEY}:{enabled:false});
+    if(path==='/health'&&request.method==='GET')return respond(validConfig(env)?{enabled:true,auth:{url:env.SUPABASE_URL,anonKey:env.SUPABASE_ANON_KEY},providers:Object.keys(PROVIDERS),models:Object.fromEntries(Object.entries(PROVIDERS).map(([k,v])=>[k,v.model])),publicPool:false}:{enabled:false});
     if(!validConfig(env))fail(503,'not_configured');
     if(url.search)fail(400,'query_not_allowed');
     user=await identity(request,env,fetcher);
@@ -134,7 +134,7 @@ export function createWorker(fetcher=fetch) { return {async fetch(request,env) {
       if(body.article){only(body.article,['title','url','summary']);body.article={title:textField(body.article.title,500),url:textField(body.article.url,2000),summary:textField(body.article.summary,6000)};if(!/^https?:\/\//.test(body.article.url))fail(400,'invalid_source');}
       const prefs=await preferences(db,user),stored=await stmt(db,'SELECT cipher FROM keys WHERE user_id=? AND provider=?',user,body.provider).first();
       let key;if(stored)key=await unseal(env,user,body.provider,stored.cipher);
-      else if(env.PUBLIC_POOL_ENABLED==='true'&&env.PUBLIC_POOL_KEY&&body.provider===env.PUBLIC_POOL_PROVIDER)key=env.PUBLIC_POOL_KEY;
+      // Public pool retired: only the authenticated user's encrypted key is eligible.
       else fail(409,'provider_key_required');
       const day=`day:${new Date(now).toISOString().slice(0,10)}`;
       await quota(db,`chat:${user}`,day,stored?30:5);

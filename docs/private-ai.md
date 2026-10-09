@@ -1,3 +1,5 @@
+> 2026-10-09：公共 AI 已停用，共享额度分支已删除。以下为未部署的私人服务说明；本站当前提供手动官方 AI 和本机 profile。参见 [迁移边界](personal-transition.md)。
+
 # 私人 AI 后端：部署与隐私
 
 本仓库提供可部署的 Cloudflare Worker + D1 后端候选，Supabase Auth 负责账号认证。GitHub Pages 只发布静态新闻与前端。当前 `backend/wrangler.toml` 保持 `ENABLED=false`，没有创建远端数据库、账号或密钥，没有上线后端，没有实际调用付费模型。普通新闻阅读不依赖此服务。
@@ -7,7 +9,7 @@
 - 浏览器登录 Supabase 后，携带 `Authorization: Bearer <access_token>` 调用 Worker。Worker 每次调用 Supabase `/auth/v1/user` 验证 token，要求已验证邮箱并拒绝匿名用户；不信任本地解析 token 得到的用户信息。
 - 所有 D1 查询使用验证后的用户 ID。请求中的 `userId`、`user_id`、`owner`、`subject` 和 query 参数一律拒绝。没有管理员跨用户查询 API。
 - BYOK 只允许一次写入/删除，不提供原始读取接口。服务端用 32 字节 AES-GCM 密钥加密，随机 12 字节 nonce，将用户 ID + 提供商绑定为认证数据。数据库密文被复制到另一用户也无法解密。
-- `KEY_ENCRYPTION_SECRET` 和可选站长 `PUBLIC_POOL_KEY` 必须保存在 Worker secrets，绝不能放入 Pages、Git、前端 localStorage 或响应。用户输入自己的 key 时浏览器必然短暂持有该 key，前端应立即清空输入，不持久保存。本站不是端到端加密：受授权的服务器运营者具有解密能力。
+- `KEY_ENCRYPTION_SECRET`  必须保存在 Worker secrets，绝不能放入 Pages、Git、前端 localStorage 或响应。用户输入自己的 key 时浏览器必然短暂持有该 key，前端应立即清空输入，不持久保存。本站不是端到端加密：受授权的服务器运营者具有解密能力。
 - Groq / Gemini / OpenRouter / OpenAI 是固定 HTTPS 端点与固定模型。拒绝任意端点、任意模型和 redirect；不抓取客户端 URL，不提供工具执行，防止 SSRF 与高价模型滥用。输入源 URL 仅作为模型引用材料。
 - 源文、用户显式记忆和问题均属不可信材料。用户记忆放在 user message，不放进 system 指令。模型无数据库、身份切换、外部请求或密钥访问工具。提示词限制不能保证模型事实正确；回答必须供用户核查。
 - 不透传提供商错误、响应 headers 或调试 payload；返回固定错误码。成功回复额外清除当前 key 的字面值和 URL 编码值。服务端代码不打印认证、密钥、问答或个人记忆日志。
@@ -20,7 +22,7 @@
 3. 设置 Worker 的 `SUPABASE_URL=https://PROJECT.supabase.co` 和公开的 `SUPABASE_ANON_KEY`（anon/publishable key，绝不是 service-role secret）。`ALLOWED_ORIGIN` 必须与静态站 Origin 完全一致。当前仅允许标准 Supabase 项目域名，定制域名需明确修改服务器校验。
 4. 用密码学安全随机数生成 32 字节并以 base64 保存为 `KEY_ENCRYPTION_SECRET`，通过 `wrangler secret put KEY_ENCRYPTION_SECRET` 交互录入。不要把值打印进共享日志或命令历史。更换该 secret 将使旧 BYOK 无法解密；此版本无轮换迁移工具，更换后应让用户删除并重新录入 BYOK。
 5. 在 `backend/` 安装开发依赖后先执行 `npm test`，再按自己的绑定运行 `npx wrangler d1 migrations apply hoshi-private-ai --remote`。这是远端写入，需由已获授权的运营者执行。
-6. 初次使用保留 `PUBLIC_POOL_ENABLED=false`。确认配置、数据库与认证后设置 `ENABLED=true`，执行 `npx wrangler deploy`。这些命令是待执行步骤，不代表本次已部署。
+6. 公共额度配置不再生效。确认配置、数据库与认证后设置 `ENABLED=true`，执行 `npx wrangler deploy`。这些命令是待执行步骤，不代表本次已部署。
 7. 将部署后的 HTTPS Worker URL 配置到静态前端的个人 AI 设置。前端 CSP 必须放行实际后端和认证域：当前集成使用 `*.workers.dev`、`*.supabase.co`。定制域名必须显式加入 CSP `connect-src`，不能放宽为任意来源。
 8. 在真实部署做 A/B 两个邮箱账号交叉测试：A 的偏好、记忆、历史、BYOK 状态和删除不能影响 B；检查 Worker 日志不含正文或密钥；确认未登录依然可以阅读全部新闻。完成这些才可称为线上多用户验证。
 
@@ -51,7 +53,7 @@
 
 - 所有已登录 API：每用户每自然分钟30次（包含失败路由），D1 单语句条件 UPSERT 原子计数。
 - 同一用户最多1个正在处理的请求，D1 租约60秒；提供商网络超时20秒、认证超时5秒。重复聊天或正在聊天时删除返回429，待前一次结束重试。
-- BYOK 每用户每天30次；可选公共池每用户每天5次且全站每天100次。公共池只在 `PUBLIC_POOL_ENABLED=true`、`PUBLIC_POOL_KEY` 已设置且指定 `PUBLIC_POOL_PROVIDER` 的情况下启用。失败请求也消耗已预留额度，避免重试风暴。
+- BYOK 每用户每天30次。公共池已停用，即使保留旧环境配置也不会回退使用。失败请求也消耗已预留额度，避免重试风暴。
 - 每次回复最多1200输出 token，使用最近6条历史。聊天历史每人最多100条。删除应用数据不重置当天额度；UTC 次日自然重置。
 - 提供商返回429或限额用尽时明确报错；静态新闻仍可读，不自动付费、不购买额度、不悄悄切换服务。
 - 这些是请求上限，不是货币预算。BYOK、OpenAI 与这里默认的 OpenRouter `openai/gpt-4o-mini` 可能收费；只有用户自己的账户/套餐能够决定价格。公共池应使用独立项目 key，在提供商控制台配置硬额度/不启用自动充值。不要仅靠站内限制承诺免费。

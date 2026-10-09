@@ -1,8 +1,8 @@
 /* Optional local reading positions. No network, account data, or article text. */
 (() => {
   'use strict';
-  const storageKey='starnews:reading-positions:v1';
-  let records={},temporary=false;
+  const storageKey=(window.StarnewsProfiles?.prefix()||'starnews:temporary')+':reading-positions:v1';
+  let records={},temporary=!window.StarnewsProfiles?.active();
   const hash=value=>{let h=2166136261;for(const c of value){h^=c.codePointAt(0);h=Math.imul(h,16777619);}return (h>>>0).toString(16);};
   try{
     const parsed=JSON.parse(localStorage.getItem(storageKey)||'{}');

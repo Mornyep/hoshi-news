@@ -1,14 +1,46 @@
 #!/usr/bin/env python3
-"""Run the existing bounded generator once and publish credential-free health."""
+"""Retired publication entry point; retain pure archive-status helpers."""
 import datetime as dt
 import json
-import os
 from pathlib import Path
-import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCALES = ('zh-CN', 'zh-TW', 'ja', 'en')
+
+
+def already_published(payload, now):
+    """An already-complete slot is a NO-OP, including its original timestamps."""
+    local = now.astimezone(dt.timezone(dt.timedelta(hours=9)))
+    session = 'morning' if local.hour < 11 else 'noon' if local.hour < 17 else 'evening'
+    for locale in LOCALES:
+        valid = False
+        for edition in payload.get('editions', []):
+            if not isinstance(edition, dict):
+                continue
+            if (edition.get('date') != local.strftime('%Y-%m-%d') or edition.get('session') != session
+                    or edition.get('locale') != locale or edition.get('ai_status') != 'completed'
+                    or not (edition.get('items') or edition.get('briefs'))):
+                continue
+            try:
+                generated = dt.datetime.fromisoformat(edition['generated_at'].replace('Z', '+00:00'))
+                valid = (generated.tzinfo is not None and generated <= now
+                         and generated.astimezone(local.tzinfo).date() == local.date())
+            except (KeyError, TypeError, ValueError):
+                continue
+            if valid:
+                break
+        if not valid:
+            return False
+    return True
+
+
+def read_publication():
+    try:
+        payload = json.loads((ROOT / 'ai-briefs.json').read_text(encoding='utf-8'))
+        return payload if isinstance(payload, dict) and isinstance(payload.get('editions'), list) else {}
+    except (OSError, ValueError):
+        return {}
 
 
 def result_status(payload, started, finished, returncode):
@@ -32,19 +64,8 @@ def result_status(payload, started, finished, returncode):
 
 
 def main():
-    started = dt.datetime.now(dt.timezone.utc)
-    code = subprocess.run([sys.executable, str(ROOT / 'scripts/public_ai.py')], cwd=ROOT).returncode
-    try:
-        payload = json.loads((ROOT / 'ai-briefs.json').read_text(encoding='utf-8'))
-    except (OSError, ValueError):
-        payload = {}
-    status = result_status(payload, started, dt.datetime.now(dt.timezone.utc), code)
-    run_id = os.environ.get('GITHUB_RUN_ID', '')
-    if run_id.isdigit():
-        status['run_url'] = 'https://github.com/Mornyep/hoshi-news/actions/runs/' + run_id
-    (ROOT / 'public-status.json').write_text(json.dumps(status, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print('Public generation status: ' + status['status'])
-    return 0 if status['status'] == 'published' else 1
+    print('Public AI retired. Use your own personal AI. No generation or timestamp changes.')
+    return 0
 
 
 if __name__ == '__main__':

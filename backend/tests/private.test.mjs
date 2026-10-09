@@ -76,11 +76,14 @@ test('in-flight lock prevents duplicate upstream calls and deletion/history race
  assert.equal((await f.req('/account','DELETE')).status,429);release();assert.equal((await pending).status,200);assert.equal(f.calls.length,1);
  assert.equal((await f.req('/account','DELETE')).status,200);
 });
-test('shared pool is opt-in and hard bounded; deletion cannot refill quota',async()=>{
+test('retired shared pool cannot be used even with old configuration',async()=>{
  const f=fixture({PUBLIC_POOL_ENABLED:'true',PUBLIC_POOL_PROVIDER:'groq',PUBLIC_POOL_KEY:'server-pool-secret'});
- for(let i=0;i<5;i++)assert.equal((await f.req('/chat','POST',{provider:'groq',message:'news'})).status,200);
- await f.req('/account','DELETE');assert.equal((await f.req('/chat','POST',{provider:'groq',message:'news'})).status,429);assert.equal(f.calls.length,5);
- const disabled=fixture();assert.equal((await disabled.req('/chat','POST',{provider:'groq',message:'news'})).status,409);
+ assert.equal((await f.req('/chat','POST',{provider:'groq',message:'news'})).status,409);
+ assert.equal(f.calls.length,0);
+ assert.equal((await (await f.req('/health')).json()).publicPool,false);
+ await f.req('/keys/groq','PUT',{key:'my-own-test-key'});
+ assert.equal((await f.req('/chat','POST',{provider:'groq',message:'news'})).status,200);
+ assert.equal(f.calls.length,1);
 });
 test('large/malformed input rejected and API rate ceiling enforced',async()=>{
  const f=fixture();assert.equal((await f.req('/chat','POST',{provider:'groq',message:'x'.repeat(25000)})).status,413);

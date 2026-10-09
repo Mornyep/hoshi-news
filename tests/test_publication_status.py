@@ -4,7 +4,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from publication_status import result_status, LOCALES
+from publication_status import result_status, already_published, LOCALES
 
 
 class PublicationStatusTests(unittest.TestCase):
@@ -39,6 +39,31 @@ class PublicationStatusTests(unittest.TestCase):
 
     def test_failed_process_cannot_claim_complete_success(self):
         self.assertEqual(result_status(self.payload(), self.start, self.finish, 1)['status'], 'failed')
+
+    def complete(self):
+        payload = self.payload(timestamp='2026-10-08T23:30:00Z')
+        for edition in payload['editions']:
+            edition['ai_status'] = 'completed'
+        return payload
+
+    def test_complete_same_slot_skips_without_rewriting_time(self):
+        payload = self.complete()
+        import copy
+        before = copy.deepcopy(payload)
+        self.assertTrue(already_published(payload, self.start))
+        self.assertEqual(payload, before)
+
+    def test_next_natural_slot_and_incomplete_locale_are_not_skipped(self):
+        payload = self.complete()
+        self.assertFalse(already_published(payload, self.start + dt.timedelta(hours=4)))
+        payload['editions'].pop()
+        self.assertFalse(already_published(payload, self.start))
+
+    def test_date_only_or_future_generated_time_never_passes(self):
+        for stamp in ['2026-10-07T23:30:00Z', '2026-10-09T04:00:00Z', 'invalid', '2026-10-08T23:30:00']:
+            payload = self.complete()
+            payload['editions'][0]['generated_at'] = stamp
+            self.assertFalse(already_published(payload, self.start))
 
 
 if __name__ == '__main__':

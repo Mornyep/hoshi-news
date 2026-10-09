@@ -414,7 +414,10 @@ def main():
     parser.add_argument("--rss-only", action="store_true", help="publish source-language RSS editions with explicit translation fallback; no API calls")
     parser.add_argument("--now", help="ISO 8601 timestamp (for deterministic integration tests)")
     args = parser.parse_args()
-    provider, key = select_provider()
+    if not args.dry_run and not args.rss_only:
+        print('Public AI retired: automatic public model generation is disabled. --dry-run and --rss-only remain source-only tools.')
+        return 1
+    provider, key = None, None
     if not key and not args.dry_run and not args.rss_only:
         print("AI CORE NOT ACTIVATED: no AI provider secret configured. Existing public snapshot stays unchanged.")
         return 0

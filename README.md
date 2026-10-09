@@ -1,49 +1,30 @@
 # 星闻 / BREAK · 4.7
 
-公开、移动端优先的新闻阅读器。保留原有 lime 漫画式视觉，提供简体中文、繁體中文、日本語、English 界面与按语言优先的公共新闻。默认浏览器语言，设置可持久化。
+个人 AI 优先、移动端新闻阅读器，保留 lime 漫画式视觉和简体中文、繁體中文、日本語、English。新新闻由本人官方 AI 按自由填写要求整理；公共历史档案保留。
 
 网站由 GitHub Pages 发布：`main` → `/(root)`，无需前端构建。公共数据使用 `news.json`、`ai-briefs.json`，长篇档案独立存放在 `archive-stories.json`，离线快照使用 `seed.js`；私人 AI 必须另部署后端。
 
 ## 已实现的代码
 
-- 四语 UI、时段/类别/搜索/主题与设置语言，来源语言优先新闻池，跨语言译文与明确原语回退。
+- 四语 UI、个人 AI 手动入口、本机 profile、自由填写要求、历史档案、主题和明确原语回退。
 - 档案单滚动区、缩小标题、深色遮罩、手机/电脑布局、来源与证据范围说明。
 - 来源约束的摘要/翻译管线和 NASA 四语原创长篇示例；RSS 数据不足时明确缺失，不能冒充长篇全文核验。
 - Cloudflare Worker + D1 + Supabase Auth 的用户独立服务，私人偏好、显式记忆、历史、推荐、AI 分析与加密 BYOK；默认未启用。页面已接入连接/登录/提交密钥/提问/导出/删除流程。
 
 完整边界见 [4.7 实施记录](docs/release-4.7.md)，后端配置与隐私见 [私人 AI 部署说明](docs/private-ai.md)。本仓库包含可部署代码不等于后端已经运行。
 
-## 公共新闻更新
+## 个人新闻 · 2026-10-09
 
-`.github/workflows/public-ai.yml` 每天日本时间约 08:13、12:13、19:13 运行（GitHub 定时任务可能延迟）。按公开来源语言选择每版最多六条主报道和四条简讯，每语种最多一次模型请求，另用最多一次共享请求补充一篇已取得正文的四语分析，总计最多五次；失败显式回退，不隐藏来源缺口。
+公共模型自动生成已经停用。首页由本人自由填写阅读要求，使用自己的官方 AI 手动提问；网站不会代用订阅、读取聊天或自动发送个人材料。旧公共数据仅供历史档案，保留真实生成日期。
 
-晨报、午报、晚报仅展示当天日本时间对应时段的数据；未发布时显示等待及最近成功更新时间，历史快照从「档案」进入。页面回到前台、恢复联网及每五分钟会重新读取公共数据。ChatGPT 定时早报与本网站 Actions 发布互相独立。
+本机 profile 分开保存设置、收藏、阅读位置与关注要求；并非认证账号或密码保护。切换/退出清空本页会话。跨设备私人服务尚未部署。AI 展示 JSON 只接受固定色板和有界原文强调，不能覆盖官方警报颜色。
 
-Actions 用 `scripts/publication_status.py` 有界执行原生成器一次，将成功或失败写入无凭据的 `public-status.json` 并发布；无新数据或部分语言失败不会被标为整期成功。失败保留历史数据，并在发布状态后令运行失败。
-
-模型 Key 仅放仓库 Actions Secret：`GROQ_API_KEY`、`GEMINI_API_KEY` 或 `OPENROUTER_API_KEY`。默认自动选择有 Secret 的供应商。免费额度会变化，供应商可拒绝请求；不要承诺永久免费或无限量。ChatGPT 订阅不能直接给站点提供 API。
+具体可用能力、授权与未部署项见 [个人新闻迁移说明](docs/personal-transition.md)。`public-ai.yml` 仅运行源码测试，无定时/模型/Secret/写权限；Pages 发布继续使用既有配置。ChatGPT 定时早报与本站相互独立。
 
 ```sh
-python3 -m unittest discover -s tests -v
-python3 scripts/public_ai.py --dry-run   # 只抓 RSS，不调用模型、不写数据
-python3 scripts/public_ai.py --rss-only  # 明确发布原语 RSS，有翻译回退标记
+python3 -m unittest discover -s tests -q
+node --test tests/personal-boundaries.cjs backend/tests/private.test.mjs
 node --check app.js
-node --test backend/tests/*.test.mjs     # Node >=22，含 node:sqlite
-```
-
-默认执行生成脚本时如果没有 Secret，保留旧快照；不假装 AI 已启用。源码更新触发后台时，会依仓库已有 Secret 使用其额度。
-
-浏览器测试需要 Playwright 与 Chrome，本地启动静态服务后运行：
-
-```sh
-python3 -m http.server 8877 --bind 127.0.0.1
-node tests/browser-archive.cjs http://127.0.0.1:8877
-node tests/browser-locales.cjs http://127.0.0.1:8877
-node tests/browser-private.cjs http://127.0.0.1:8877
-node tests/browser-startup.cjs http://127.0.0.1:8877
-node tests/browser-scroll.cjs http://127.0.0.1:8877
-node tests/browser-interactions.cjs http://127.0.0.1:8877
-node tests/browser-editions.cjs http://127.0.0.1:8877 --fixture
 ```
 
 ## 隐私和版权

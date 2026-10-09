@@ -20,14 +20,15 @@
 <div id="app" class="app" data-tone="lime" data-motion="on" data-edition="morning">
   <header class="topbar">
     <div class="identity"><span class="brand-star" aria-hidden="true">✳</span><div class="identity-word"><strong>星闻<span>//</span>BREAK</strong><small>YOUR NEWS. YOUR PERSPECTIVE.</small></div></div>
-    <div class="top-actions"><span class="snapshot-tag"><i></i><b>公开测试</b> · 本机访客</span><span class="ai-runtime-pill" id="aiTopState" aria-label="公共 AI 引擎状态">✳ PUBLIC AI</span><button type="button" class="archive-btn" data-action="archive" aria-label="新闻档案">档案</button><button type="button" class="settings-btn" data-action="settings" aria-label="设置显示和动效">☷</button></div>
+    <div class="top-actions"><span class="snapshot-tag"><i></i><b>公开测试</b> · 本机访客</span><span class="ai-runtime-pill" id="aiTopState" aria-label="个人 AI 连接状态">○ PERSONAL AI</span><button type="button" class="archive-btn" data-action="archive" aria-label="新闻档案">档案</button><button type="button" class="settings-btn" data-action="settings" aria-label="设置显示和动效">☷</button></div>
   </header>
-  <nav class="edition-tabs" aria-label="简报时段">
-    <button type="button" data-edition-choice="morning" class="active" aria-current="true"><span>01 / MORNING</span><b>晨报</b></button>
-    <button type="button" data-edition-choice="noon"><span>02 / MIDDAY</span><b>午报</b></button>
-    <button type="button" data-edition-choice="evening"><span>03 / EVENING</span><b>晚报</b></button>
+  <nav class="edition-tabs" aria-label="个人新闻">
+    <button type="button" data-edition-choice="personal" class="active"><span>01 / PERSONAL</span><b>我的新闻</b></button>
+    <button type="button" hidden data-edition-choice="morning" class="active" aria-current="true"><span>01 / MORNING</span><b>晨报</b></button>
+    <button type="button" hidden data-edition-choice="noon"><span>02 / MIDDAY</span><b>午报</b></button>
+    <button type="button" hidden data-edition-choice="evening"><span>03 / EVENING</span><b>晚报</b></button>
     <button type="button" data-edition-choice="breaking" class="edition-breaking"><span>!! / ALERT</span><b>突发</b></button>
-    <button type="button" data-edition-choice="ai" class="edition-ai"><span>✳ / TODAY</span><b>综合新闻</b></button>
+    <button type="button" hidden data-edition-choice="ai" class="edition-ai"><span>✳ / TODAY</span><b>综合新闻</b></button>
   </nav>
   <div class="signal-ribbon"><span class="ribbon-label">◈ SHARED FACTS / LOCAL PREFERENCES</span><span class="ribbon-center">每个人的排序与外观互不影响</span><label class="news-search"><span data-i18n="搜索新闻">搜索新闻</span><input id="newsSearch" type="search" placeholder="搜索标题、摘要与来源" autocomplete="off"><span id="searchStatus" role="status" aria-live="polite"></span></label><span class="ribbon-right" id="snapshotStatus">2026.10.08 / 早间快照</span></div>
 
@@ -103,24 +104,26 @@
 
   <div class="overlay" id="readerOverlay" hidden><div class="backdrop" data-action="close-reader"></div><section class="reader" role="dialog" aria-modal="true" aria-labelledby="readerTitle"><header class="reader-top"><button type="button" data-action="close-reader" aria-label="返回情报台">← 返回</button><span>◈ INTELLIGENCE FILE</span><button type="button" data-action="save" id="readerSave" aria-label="收藏新闻">☆</button></header><div class="reader-scroll"><div class="reader-cover"><span class="reader-cover-code" id="readerCode">FILE_01</span><span class="reader-cover-art" id="readerArt">01</span><h2 id="readerTitle">标题</h2><span class="reader-cover-time" id="readerDate">2026.10.08</span></div><div class="reader-lenses"><button type="button" data-lens="brief" class="active">01 / 速览</button><button type="button" data-lens="personal">02 / 与你有关</button><button type="button" data-lens="verify">03 / 核查证据</button></div><div class="reader-copy" id="readerCopy"></div><div class="sources"><div class="sources-heading">SOURCE LOG <span>↗ 原文可追溯</span></div><div id="readerSources"></div></div><button class="reader-analysis" type="button" data-personal-ai="analyze">AI · 分析这条新闻</button><div class="reader-footer-actions"><button type="button" data-action="prev">← 上一条</button><button type="button" data-action="next">下一条 →</button></div><p class="source-disclaimer">2026 年 10 月 8 日上午的新闻快照。并非实时新闻、官方紧急警报或自动更新服务。</p></div></section></div>
 
-  <div class="overlay" id="settingsOverlay" hidden><div class="backdrop" data-action="close-settings"></div><section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><div class="settings-heading"><div><span>PERSONAL OPTIONS / ON THIS DEVICE</span><h2 id="settingsTitle">我的星闻 ✳</h2></div><button type="button" data-action="close-settings" aria-label="关闭设置">✕</button></div><div class="settings-section-title">01 / 选择关注领域 <small>多选 · 综合头条始终优先，不屏蔽公共重大事件</small></div>
+  <div class="overlay" id="settingsOverlay" hidden><div class="backdrop" data-action="close-settings"></div><section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><div class="settings-heading"><div><span>PERSONAL OPTIONS / ON THIS DEVICE</span><h2 id="settingsTitle">我的星闻 ✳</h2></div><button type="button" data-action="close-settings" aria-label="关闭设置">✕</button></div><div class="settings-section-title">01 / 本人填写关注要求 <small>在个人 AI 中配置</small></div>
 <label class="language-setting" for="languageSelect"><strong data-i18n="语言与新闻">语言与新闻</strong><select id="languageSelect"><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option><option value="ja">日本語</option><option value="en">English</option></select></label>
 <div id="personalAISettings"></div>
-<div class="interest-options" id="interestOptions" aria-label="兴趣频道选择"></div>
+<div hidden class="interest-options" id="interestOptions" aria-label="兴趣频道选择"></div>
 <div class="settings-section-title">02 / 外观主题 <small>颜色与阅读布局</small></div>
 <div class="theme-options" id="themeOptions" aria-label="选择外观配色"></div>
 <div class="layout-options" id="layoutOptions"><button type="button" data-layout-choice="overdrive">⚡ OVERDRIVE</button><button type="button" data-layout-choice="quiet">▤ 舒适阅读</button></div>
 <div class="settings-section-title">03 / 阅读偏好</div>
 <label class="settings-row"><span><strong>动态转场</strong><small>漫画扫屏与标题冲击</small></span><input type="checkbox" id="motionToggle" checked></label><label class="settings-row"><span><strong>防剧透模式</strong><small>不展示游戏剧情内容</small></span><input type="checkbox" id="spoilerToggle" checked></label><label class="settings-row"><span><strong>舒适阅读</strong><small>略微放大正文字号</small></span><input type="checkbox" id="largeTextToggle"></label><label class="settings-row"><span><strong>临时访客模式</strong><small>不保存新的偏好，清除此前保存在本机的星闻设置</small></span><input type="checkbox" id="privateModeToggle"></label>
-<div class="settings-explain"><b>独立数据边界 · 当前公开版本</b><p>新闻是所有人共享的公开数据；兴趣、收藏与主题只保存在当前浏览器，不上传到网站。不同设备互不相见；同一浏览器的使用者仍可能看到本机设置，公用设备建议开启临时模式。尚未实现账号或跨设备同步。</p></div>
-<div class="settings-extras"><button type="button" data-action="share-theme">↗ 分享外观（不包含收藏与兴趣）</button><button type="button" data-action="reset-guest" class="danger-button">清空本机的星闻数据</button></div><button type="button" class="settings-done" data-action="close-settings">保存并返回 ✓</button></section></div>
-  <div class="overlay onboarding" id="onboardingOverlay" hidden><div class="onboarding-backdrop"></div><section class="onboarding-panel" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle"><span class="onboarding-eyebrow">WELCOME TO SIGNAL//BREAK</span><div class="onboarding-graphic" aria-hidden="true"><span>✳</span><b>YOU ARE<br>THE SIGNAL.</b></div><h2 id="onboardingTitle">欢迎来到<br>你的新闻世界。</h2><p>所有人共享同一组可追溯的综合新闻。世界要闻先出现，你的兴趣只改变其他内容的排列；外观与收藏仅属于当前设备。不需要注册，也不会上传个人设置。</p><div class="onboarding-picks" id="onboardingPicks"></div><div class="onboarding-actions"><button type="button" data-action="onboarding-skip">先随便看看</button><button type="button" data-action="onboarding-done">开始我的星闻 ↗</button></div><small>稍后也可以在右上角 ☷ 随时调整 · 本版没有云端账号</small></section></div>
+<div class="settings-explain"><b>独立数据边界 · 当前公开版本</b><p>本机 profile 分开保存关注要求、设置、收藏与阅读位置；这不是经过身份验证的账号，也不是密码保护。退出或切换会清空本页会话，公用设备应使用独立浏览器 profile。跨设备私人服务需另外验证身份与授权。</p></div>
+<div class="settings-extras"><button type="button" data-action="share-theme">↗ 分享外观（不包含收藏与兴趣）</button><button type="button" data-action="reset-guest" class="danger-button">清空当前 profile 阅读数据</button></div><button type="button" class="settings-done" data-action="close-settings">保存并返回 ✓</button></section></div>
+  <div class="overlay onboarding" id="onboardingOverlay" hidden><div class="onboarding-backdrop"></div><section class="onboarding-panel" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle"><span class="onboarding-eyebrow">WELCOME TO SIGNAL//BREAK</span><div class="onboarding-graphic" aria-hidden="true"><span>✳</span><b>YOU ARE<br>THE SIGNAL.</b></div><h2 id="onboardingTitle">欢迎来到<br>你的新闻世界。</h2><p>新新闻由你自己的 AI 按本人填写的要求整理。可使用已授权私人服务，或手动交给本人官方 AI。旧公开报道只保留为历史档案，不再自动生成公共 AI 新闻。</p><div hidden class="onboarding-picks" id="onboardingPicks"></div><div class="onboarding-actions"><button type="button" data-action="onboarding-skip">先随便看看</button><button type="button" data-action="onboarding-done">开始我的星闻 ↗</button></div><small>稍后也可以在右上角 ☷ 随时调整 · 本版没有云端账号</small></section></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <div class="switch-fx" aria-hidden="true"><strong>SWITCH!</strong></div>
 </div>
 <script src="./seed.js"></script>
 <script src="./locales.js"></script>
+<script src="./personal-profile.js"></script>
 <script src="./reading-position.js"></script>
+<script src="./personal-evidence.js"></script>
 <script src="./app.js"></script>
 <script src="./personal-config.js"></script>
 <script src="./personal-ai.js"></script>

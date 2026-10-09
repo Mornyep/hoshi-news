@@ -1,0 +1,30 @@
+// jsdom is an optional development dependency, supplied outside the public site.
+const {JSDOM,VirtualConsole}=require('jsdom'),fs=require('node:fs'),assert=require('node:assert/strict');
+const tick=()=>new Promise(r=>setTimeout(r,0));
+(async()=>{for(const mode of ['online','offline','error'])for(const language of ['zh-CN','zh-TW','ja','en']){
+ const errors=[],calls=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
+ const dom=new JSDOM(fs.readFileSync('index.html','utf8'),{url:'https://example.test/hoshi-news/',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc});
+ const w=dom.window;Object.defineProperty(w.navigator,'languages',{value:[language]});
+ w.matchMedia=()=>({matches:false,addEventListener(){},removeEventListener(){}});w.scrollTo=()=>{};w.HTMLElement.prototype.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};
+ w.fetch=async(url,options)=>{calls.push(String(url));const file=String(url).replace('./','');return {ok:mode!=='error',headers:{get:()=>mode==='offline'?'offline':null},json:async()=>JSON.parse(fs.readFileSync(file,'utf8'))};};
+ w.crypto.randomUUID=()=>require('node:crypto').randomUUID();
+ for(const file of ['personal-profile.js','reading-position.js','locales.js','seed.js','personal-evidence.js','app.js','personal-ai.js'])w.eval(fs.readFileSync(file,'utf8'));
+ await tick();await tick();
+ assert.equal(w.document.querySelector('#app').dataset.edition,'personal');assert.equal(w.document.querySelector('#app').dataset.newsMode,'empty');
+ assert.equal(w.document.querySelector('#hero').hidden,true);assert.equal(w.document.querySelector('#onboardingOverlay').hidden,true);
+ assert.equal(w.StarnewsBridge.getArticle(),null);assert.equal(w.StarnewsBridge.getEvidenceArticle(),null);
+ assert.equal(w.document.documentElement.lang,language);assert(!calls.some(x=>/chat|health|api|public-status/.test(x)));
+ w.document.querySelector('#personalHomeButton').click();await tick();assert.equal(w.document.querySelector('#personalAIOverlay').hidden,false);
+ w.document.querySelector('#personalAIHandoffQuestion').value='Recent science news with verified links';
+ const prepare=w.document.querySelector('#personalAIHandoffMaterial').parentElement.querySelector('button');prepare.click();await tick();
+ const packet=w.document.querySelector('#personalAIHandoffMaterial').value;assert(packet.includes('personal_research_request'));assert(packet.includes('"response_language": "'+language+'"'));
+ w.document.querySelector('#personalAIHandoffReply').value='<script>window.evil=1</script> Pasted answer';
+ const answer=w.document.querySelector('#personalAIHandoffAnswer');answer.previousElementSibling.click();await tick();
+ assert(answer.textContent.includes('<script>'));assert.equal(answer.querySelector('script'),null);assert.equal(w.evil,undefined);
+ assert.equal(w.localStorage.length,0,'No pasted answer or packet persisted');
+ w.document.querySelector('#personalAIOverlay').dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));assert.equal(w.document.querySelector('#personalAIOverlay').hidden,true);
+ w.document.querySelector('[data-action="archive"]').click();await tick();assert.equal(w.document.querySelector('#hero').hidden,false);assert(w.StarnewsBridge.getEvidenceArticle()?.title);
+ assert.equal(w.document.querySelector('#personalHomeButton'),null);
+ if(mode!=='online')assert(w.document.querySelector('#snapshotStatus').textContent.includes(w.StarnewsLocales.messages[language][mode==='offline'?'离线历史快照':'历史档案加载失败 · 保留旧快照']));
+ assert.deepEqual(errors,[]);console.log(JSON.stringify({language,mode,result:'passed',requests:calls}));w.close();
+}})().catch(e=>{console.error(e);process.exitCode=1;});
